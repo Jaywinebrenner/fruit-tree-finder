@@ -25,7 +25,7 @@ export const TREES = {
                latitude: 45.5753,
                longitude: -122.675,
              },
-             title: "Cherry Tree",
+             title: "Pear Tree",
              description:
                "Well maintained tree. There are hundreds of cherries. Owner of property doesn't mind if you collect them.",
              // image: Images[2],
