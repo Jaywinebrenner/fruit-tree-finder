@@ -9,21 +9,20 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
-
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").width;
 
-export const ViewList = ({ navigation, toggleToListView }) => {
-         return (
-           <TouchableOpacity
-             style={styles.container}
-             onPress={() => toggleToListView()}
-           >
-             {/* <Ionicons name="md-list" size={44} color="darkgray" /> */}
-             <Text>List View</Text>
-           </TouchableOpacity>
-         );
-       };
+export const ViewMapButton = ({ navigation, toggleToMapView }) => {
+  return (
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => toggleToMapView()}
+    >
+      {/* <Ionicons name="md-list" size={44} color="darkgray" /> */}
+      <Text>View Map</Text>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -45,5 +44,4 @@ const styles = StyleSheet.create({
   },
 });
 
-
-export default ViewList
+export default ViewMapButton;

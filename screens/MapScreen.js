@@ -12,7 +12,7 @@ import Geocoder from "react-native-geocoding";
 import Modal from "react-native-modal";
 Geocoder.init(API_KEY);
 import { TREES } from "../constants/Markers";
-import ViewList from "../components/ViewList"
+import ViewListButton from "../components/ViewListButton"
 
 
 const MapScreen = ({navigation}) => {
@@ -138,7 +138,7 @@ const MapScreen = ({navigation}) => {
         MAP AP!!!
       </Text> */}
       {/* <DestinationButton /> */}
-      <ViewList toggleToListView={toggleToListView} />
+      <ViewListButton toggleToListView={toggleToListView} />
       <CurrentLocationButton
         cb={() => {
           centerMap();

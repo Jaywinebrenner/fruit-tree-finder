@@ -4,11 +4,19 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import logo from "../media/logo.png";
 import apples from "../media/apples.jpg";
+import ViewMap from "../components/ViewMapButton"
 
-const ListScreen = () => {
+const ListScreen = ({ navigation }) => {
+
+  const toggleToMapView = () => {
+    navigation.navigate("Map");
+  };
+
+
   return (
     <View style={styles.container}>
         <Text>LIST SCREEN</Text>
+        <ViewMap toggleToMapView={toggleToMapView} />
     </View>
   );
 };
