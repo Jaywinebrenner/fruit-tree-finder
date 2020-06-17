@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 const WIDTH = Dimensions.get('window').width;
 
-export const DesinationButton = function(props) {
+const DestinationButton = (props) => {
     return (
       <TouchableOpacity onPress={() => {}} style={styles.container}>
         <View style={styles.leftCol}>
@@ -59,3 +59,5 @@ const styles = StyleSheet.create({
         borderColor: 'blue'
     }
 })
+
+export default DestinationButton;

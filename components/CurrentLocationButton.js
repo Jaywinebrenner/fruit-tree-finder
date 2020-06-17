@@ -14,7 +14,7 @@ const HEIGHT = Dimensions.get("window").width;
 
 export const CurrentLocationButton = (props) => {
     const cb = props.cb ? props.cb : () => console.log("callback function not passed to CurrentLocationButton")
-    const bottom = props.bottom ? props.bottom : 65
+    const bottom = props.bottom ? props.bottom : -175
 
     
 
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     backgroundColor: "white",
-    left: WIDTH - 70,
+    left: WIDTH-70,
     borderRadius: 50,
     shadowColor: "black",
     elevation: 5,
