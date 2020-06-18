@@ -13,6 +13,7 @@ import Modal from "react-native-modal";
 Geocoder.init(API_KEY);
 import { TREES } from "../constants/Markers";
 import ViewListButton from "../components/ViewListButton"
+import { Button } from "@material-ui/core";
 
 
 const MapScreen = ({navigation}) => {
@@ -111,7 +112,7 @@ const MapScreen = ({navigation}) => {
       }
     }
   };
-  console.log("REGION", region);
+
 
   const centerMap = () => {
     const { latitude, longitude, latitudeDelta, longitudeDelta } = region;
@@ -130,14 +131,6 @@ const MapScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      {console.log("LOCATRION RETURN", { region })}
-      {/* <Text
-        style={styles.testText}
-        onPress={() => navigation.navigate("ListScreen")}
-      >
-        MAP AP!!!
-      </Text> */}
-      {/* <DestinationButton /> */}
       <ViewListButton toggleToListView={toggleToListView} />
       <CurrentLocationButton
         cb={() => {

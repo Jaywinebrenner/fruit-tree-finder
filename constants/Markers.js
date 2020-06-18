@@ -5,6 +5,7 @@ export const TREES = {
                latitude: 45.524548,
                longitude: -122.6749817,
              },
+             id: "1",
              title: "Cherry Tree",
              description:
                "Neglected tree with tons of fruit that goes to waste. Come get it. ",
@@ -15,6 +16,7 @@ export const TREES = {
                latitude: 45.5751,
                longitude: -122.6789,
              },
+             id: "18",
              title: "Fig Tree",
              description:
                "Nice fig tree that leaves many to rot. Owner of the tree doesn't eat any.",
@@ -25,6 +27,7 @@ export const TREES = {
                latitude: 45.5753,
                longitude: -122.675,
              },
+             id: "155",
              title: "Pear Tree",
              description:
                "Well maintained tree. There are hundreds of cherries. Owner of property doesn't mind if you collect them.",
@@ -35,6 +38,7 @@ export const TREES = {
                latitude: 45.5757345,
                longitude: -122.6784,
              },
+             id: "1099",
              title: "Italian plum tree",
              description:
                "Delicious plum tree that fruits in the hundreds. Owner doens't care if you collect them.",

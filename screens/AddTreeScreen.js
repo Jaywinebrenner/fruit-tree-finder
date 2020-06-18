@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 24,
+    fontWeight: "bold",
     color: "white",
     paddingLeft: 10,
     paddingRight: 10,
