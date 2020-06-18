@@ -4,15 +4,19 @@ import { TREES } from "../constants/Markers";
 import { Navigation } from "react-native-navigation";
 
 
-const ListItemDetailScreen = (props, { navigation }) => {
+const ListItemDetailScreen = (props, { navigation, title }) => {
+
+    const { goBack } = props.navigation;
 
   const treeKey = props.route.key;
-  console.log("TREE KEY", props.route.key);
+  console.log("TREE KEY", props.route.key); 
+    console.log("PROPS", props); 
 
   const trees = TREES.markers;
   console.log("TREES", trees);
 
   let client = null;
+
 
   // if (
   //   props.listOfClientProfiles.find((x) => x.userID === jobDetails.clientID)
@@ -29,7 +33,7 @@ const ListItemDetailScreen = (props, { navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.top}>
-        <Text style={styles.titleText}>{trees.title}</Text>
+        <Text style={styles.titleText}>{title}</Text>
         <Text style={styles.distanceText}>65 Meters away</Text>
       </View>
 
@@ -38,10 +42,7 @@ const ListItemDetailScreen = (props, { navigation }) => {
       </View>
 
       <View style={styles.bottom}>
-        <TouchableOpacity
-          style={styles.detailsButtonWrapper}
-          onPress={() => navigation.navigate("ListScreen")}
-        >
+        <TouchableOpacity style={styles.detailsButtonWrapper} onPress={goBack}>
           <Text style={styles.detailsButtonText}>Back to Tree List</Text>
         </TouchableOpacity>
       </View>
