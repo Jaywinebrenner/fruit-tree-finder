@@ -4,10 +4,18 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import pears from "../media/pears.jpg";
 import Modal from "react-native-modal";
+import firebase from "firebase";
 
 const AddTreeScreen = () => {
 
   const [isModalVisible, setIsModalVisible] = useState(false)
+
+  const fakeSignOut = () => {
+      try {
+        firebase.auth().signOut();
+      } catch (error) {}
+      return null;
+  }
 
   return (
     <View style={styles.container}>
@@ -31,6 +39,8 @@ const AddTreeScreen = () => {
             </TouchableOpacity>
           </View>
       </View>
+      <Text style={styles.fake} onPress={()=> fakeSignOut()}>FAKE SIGN OUT</Text>
+
     </View>
   );
 };
@@ -77,6 +87,9 @@ const styles = StyleSheet.create({
   inputText: {
     color: "white",
   },
+  fake: {
+    fontSize: 30
+  }
 });
 
 export default AddTreeScreen;

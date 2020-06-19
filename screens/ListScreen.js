@@ -13,11 +13,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import logo from "../media/logo.png";
 import apples from "../media/apples.jpg";
-import ViewMap from "../components/ViewMapButton"
+import ViewMapButton from "../components/ViewMapButton"
 import ListItemDetailScreen from "./ListItemDetailScreen";
 import { TREES } from "../constants/Markers";
 
-const ListScreen = ({ navigation, title, description }) => {
+const ListScreen = (  { navigation, title, description }) => {
 
   const trees = TREES.markers;
   console.log("TREES", trees);
@@ -25,6 +25,8 @@ const ListScreen = ({ navigation, title, description }) => {
   const toggleToMapView = () => {
     navigation.navigate("Map");
   };
+
+
 
 const TreeCard = ( { title, description } ) => {
   return (
@@ -58,10 +60,13 @@ const TreeCard = ( { title, description } ) => {
 
       <FlatList
         data={trees}
-        renderItem={({ item }) => <TreeCard title={item.title} description={item.description} />}
-        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <TreeCard title={item.title} description={item.description} />
+        )}
+        keyExtractor={(item, index) => index.toString()}
       />
-      <ViewMap toggleToMapView={toggleToMapView} />
+
+      <ViewMapButton toggleToMapView={toggleToMapView} />
     </View>
   );
 };

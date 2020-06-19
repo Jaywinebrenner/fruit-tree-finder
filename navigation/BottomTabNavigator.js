@@ -4,23 +4,26 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import MapScreen from '../screens/MapScreen'
+import HomeScreen from "../screens/HomeScreen";
+import AddTreeScreen from "../screens/AddTreeScreen";
+import ListMapNavigator from "../navigation/ListMapNavigator";
 
-const BottomTabNavigator = () => {
-  
-  const Tabs = createBottomTabNavigator();
+const Tabs = createBottomTabNavigator();
 
+
+const BottomTabNavigator =  () => {
   return (
     <Tabs.Navigator
       tabBarOptions={{
-        activeBackgroundColor: "lightblue",
-        inactiveBackgroundColor: "#092455",
-        activeTintColor: "#092455",
-        inactiveTintColor: "white",
-        showLabel: false,
+        // activeBackgroundColor: "#d6efc7",
+        // inactiveBackgroundColor: "#96bb7c",
+        // activeTintColor: "#092455",
+        // inactiveTintColor: "white",
+        showLabel: true,
       }}
     >
       <Tabs.Screen
-        name="HomeScreen"
+        name="Home"
         labelStyle={{ color: "white" }}
         component={HomeScreen}
         options={{
@@ -30,17 +33,25 @@ const BottomTabNavigator = () => {
         }}
       />
       <Tabs.Screen
-        name="MapScreen"
-        component={MapScreen}
+        name="Add a tree"
+        component={AddTreeScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 name="helicopter" size={20} color={color} />
+            <FontAwesome5 name="tree" size={20} color={color} />
           ),
         }}
       />
-
+      <Tabs.Screen
+        name="Map"
+        component={ListMapNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Entypo name="hand" size={24} color={color} />
+          ),
+        }}
+      />
     </Tabs.Navigator>
-  );
-}
+  )
+      }
 
-export default BottomTabNavigator;
+export {BottomTabNavigator};

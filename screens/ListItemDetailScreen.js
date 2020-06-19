@@ -4,18 +4,24 @@ import { TREES } from "../constants/Markers";
 import { Navigation } from "react-native-navigation";
 
 
-const ListItemDetailScreen = (props, { navigation, title }) => {
+const ListItemDetailScreen = ( { navigation, title }) => {
 
-    const { goBack } = props.navigation;
+    // const { goBack } = props.navigation;
 
-  const treeKey = props.route.key;
-  console.log("TREE KEY", props.route.key); 
-    console.log("PROPS", props); 
+  // const treeKey = props.route.key;
+  // console.log("TREE KEY", props.route.key); 
+  //   console.log("PROPS", props); 
 
   const trees = TREES.markers;
   console.log("TREES", trees);
+  console.log("TREE KEY FROM WHOLE LIST", trees);
+  
 
   let client = null;
+
+  // if (
+  //   treeKey.find((x) => )
+  // )
 
 
   // if (
@@ -42,7 +48,7 @@ const ListItemDetailScreen = (props, { navigation, title }) => {
       </View>
 
       <View style={styles.bottom}>
-        <TouchableOpacity style={styles.detailsButtonWrapper} onPress={goBack}>
+        <TouchableOpacity style={styles.detailsButtonWrapper} onPress={() => navigation.navigate("ListScreen")}>
           <Text style={styles.detailsButtonText}>Back to Tree List</Text>
         </TouchableOpacity>
       </View>

@@ -15,64 +15,11 @@ import { TREES } from "../constants/Markers";
 import ViewListButton from "../components/ViewListButton"
 import { Button } from "@material-ui/core";
 
-
 const MapScreen = ({navigation}) => {
-
-  // latitude: 45.5757745,
-  //     longitude: -122.673,
 
   const trees = TREES.markers;
 
-  
-  const mapTrees = () => {
-    trees.map((tree, index) => {
-      let latitude = tree.coordinate.latitude;
-      let longitude = tree.coordinate.longetude;
-      return (
-        <Marker
-          key={index}
-          coordinate={{
-            latitude: latitude,
-            longitude: longitude,
-          }}
-          title={tree.title}
-          description={tree.description}
-        ></Marker>
-      )
-    });
-  };
-
-  console.log("TEST LATITIDUE", trees[0].coordinate.latitude);
-
-  const singleTest = () => {
-    return (
-      <View>
-        <Marker
-          coordinate={{
-            latitude: trees[0].coordinate.latitude,
-            longitude: trees[0].coordinate.longitude,
-          }}
-          title="Italian Plum"
-          description="Giant Tree. Tall, terrifying."
-        ></Marker>
-      </View>
-    );
-  };
-
-    // const singleTestTwo = () => {
-    //   return (
-    //     <View>
-    //       <Marker
-    //         coordinate={{
-    //           latitude: trees[1].coordinate.latitude,
-    //           longitude: trees[1].coordinate.longitude,
-    //         }}
-    //         title="Giant Pear"
-    //         description="Lots of Pears, huge, ripe, terrifying."
-    //       ></Marker>
-    //     </View>
-    //   );
-    // };
+  console.log("TEST LATITUDE", trees[0].coordinate.latitude);
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -113,17 +60,15 @@ const MapScreen = ({navigation}) => {
     }
   };
 
-
-  const centerMap = () => {
-    const { latitude, longitude, latitudeDelta, longitudeDelta } = region;
-
-    region.map.animateToRegion({
-      latitude,
-      longitude,
-      longitudeDelta,
-      latitudeDelta,
-    });
-  };
+  // const centerMap = () => {
+  //   const { latitude, longitude, latitudeDelta, longitudeDelta } = region;
+  //   region.map.animateToRegion({
+  //     latitude,
+  //     longitude,
+  //     longitudeDelta,
+  //     latitudeDelta,
+  //   });
+  // };
 
   const toggleToListView = () => {
     navigation.navigate("ListScreen")
@@ -151,9 +96,27 @@ const MapScreen = ({navigation}) => {
         }}
         rotateEnabled={false}
       >
-        {mapTrees()}
-        {singleTest()}
+        {/* {mapTrees} */}
+        {/* {singleTest()} */}
         {/* {singleTestTwo()} */}
+
+      {trees.map((tree, index) => {
+        let latitude = tree.coordinate.latitude;
+        let longitude = tree.coordinate.longitude;
+
+        return (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: latitude,
+              longitude: longitude,
+            }}
+            title={tree.title}
+            description={tree.description}
+          ></Marker>
+        );
+      })}
+
       </MapView>
     </View>
   );

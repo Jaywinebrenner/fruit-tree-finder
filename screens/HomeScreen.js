@@ -4,8 +4,17 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import logo from '../media/logo.png'
 import apples from "../media/apples.jpg";
+import firebase from "firebase";
 
 const HomeScreen = () => {
+
+    const fakeSignOut = () => {
+      try {
+        firebase.auth().signOut();
+      } catch (error) {}
+      return null;
+    };
+
   return (
     <View style={styles.container}>
       <View style={styles.headerWrapper}>
@@ -28,6 +37,9 @@ const HomeScreen = () => {
           neightborhood.
         </Text>
       </View>
+      <Text style={styles.fake} onPress={() => fakeSignOut()}>
+        FAKE SIGN OUT
+      </Text>
     </View>
   );
 };

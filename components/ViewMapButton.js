@@ -16,7 +16,7 @@ export const ViewMapButton = ({ navigation, toggleToMapView }) => {
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => toggleToMapView()}
+      onPress={toggleToMapView}
     >
       {/* <Ionicons name="md-list" size={44} color="darkgray" /> */}
       <Text>View Map</Text>
