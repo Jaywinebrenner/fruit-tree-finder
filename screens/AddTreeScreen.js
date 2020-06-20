@@ -10,37 +10,64 @@ const AddTreeScreen = () => {
 
   const [isModalVisible, setIsModalVisible] = useState(false)
 
-  const fakeSignOut = () => {
-      try {
-        firebase.auth().signOut();
-      } catch (error) {}
-      return null;
-  }
+console.log("modal visible?", isModalVisible);
+
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.top}>
         <ImageBackground source={pears} style={styles.pearsImage}>
-          <Text style={styles.headerText}>
-            Promote food justice. Prevent food waste. Strengthen our community.
-          </Text>
+          <Text style={styles.headerText}>Add a fruit tree</Text>
         </ImageBackground>
       </View>
 
-      <View>
-        <Modal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
-        </Modal>
-          <View style={styles.modalButton}>
-            <TouchableOpacity
-              style={styles.openSettingsButton}
-              onPress={() => setIsModalVisible(true)}
-            >
-              <Text style={styles.inputText}>Input a Tree</Text>
-            </TouchableOpacity>
-          </View>
-      </View>
-      <Text style={styles.fake} onPress={()=> fakeSignOut()}>FAKE SIGN OUT</Text>
+      <View style={styles.middle}>
+        <TouchableOpacity
+          style={styles.inputButton}
+          onPress={() => toggleModal()}
+        >
+          <Text style={styles.inputButtonText}>Type of Tree</Text>
+        </TouchableOpacity>
 
+        <TouchableOpacity
+          style={styles.inputButton}
+          onPress={() => toggleModal()}
+        >
+          <Text style={styles.inputButtonText}>Description of Tree</Text>
+        </TouchableOpacity>
+
+
+        <TouchableOpacity
+          style={styles.inputButton}
+          onPress={() => toggleModal()}
+        >
+          <Text style={styles.inputButtonText}>Location of Tree</Text>
+        </TouchableOpacity>
+      </View>
+
+      <TouchableOpacity style={styles.modalButton}>
+        <Text style={styles.inputText}>Submit Tree</Text>
+      </TouchableOpacity>
+
+      <Modal isVisible={isModalVisible} setIsModalVisible={setIsModalVisible}>
+        <View style={styles.insideModalContainer}>
+          <Text>Here's a Modal</Text>
+
+          {/* <TouchableOpacity style={styles.submitTreeButton}>
+            <Text style={styles.submitTreeText}>Submit Tree</Text>
+          </TouchableOpacity> */}
+
+          <TouchableOpacity
+            style={styles.closeModal}
+            onPress={() => toggleModal()}
+          >
+            <Text style={styles.closeModalText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -54,20 +81,29 @@ const styles = StyleSheet.create({
     backgroundColor: "#f9fcfb",
   },
   top: {
+    flex: 1,
     textAlign: "center",
   },
   pearsImage: {
-    width: "110%",
-    flex: 0.6,
+    height: "40%",
+    width: "125%",
+    // flex: 1,
     resizeMode: "cover",
     justifyContent: "center",
   },
   headerText: {
-    fontSize: 24,
+    fontSize: 44,
     fontWeight: "bold",
     color: "white",
-    paddingLeft: 10,
-    paddingRight: 10,
+    marginBottom: 110,
+    alignSelf: "center",
+    marginRight: 25,
+    color: "#FFFFFF",
+    paddingLeft: 50,
+    paddingRight: 30,
+    textShadowColor: "black",
+    textShadowOffset: { width: 5, height: 5 },
+    textShadowRadius: 10,
   },
   modalButton: {
     width: 100,
@@ -87,9 +123,72 @@ const styles = StyleSheet.create({
   inputText: {
     color: "white",
   },
-  fake: {
-    fontSize: 30
-  }
+  insideModalContainer: {
+    flex: 1,
+    backgroundColor: "lightgray",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  modalTop: {
+    flex: 1,
+  },
+  modalMiddle: {
+    flex: 1,
+  },
+  modalBottom: {
+    flex: 1,
+  },
+  closeModal: {
+    alignSelf: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+    height: 40,
+    width: 80,
+    padding: 5,
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: "#802941",
+    marginTop: 20,
+  },
+  closeModalText: {
+    alignSelf: "center",
+    color: "#802941",
+  },
+  submitTreeButton: {
+    alignSelf: "center",
+    justifyContent: "center",
+    backgroundColor: "#802941",
+    height: 60,
+    width: 250,
+    marginTop: "2%",
+    marginBottom: "1%",
+    padding: 5,
+    borderRadius: 3,
+  },
+  submitTreeText: {
+    alignSelf: "center",
+    color: "white",
+    fontSize: 20,
+    marginTop: 10,
+  },
+  inputButton: {
+    alignSelf: "center",
+    justifyContent: "center",
+    backgroundColor: "#802941",
+    height: 60,
+    width: 250,
+    shadowColor: "black",
+    elevation: 2,
+    shadowRadius: 5,
+    shadowOpacity: 0.6,
+    padding: 5,
+    borderRadius: 3,
+  },
+  inputButtonText: {
+    alignSelf: "center",
+    color: "white",
+    fontSize: 20,
+  },
 });
 
 export default AddTreeScreen;

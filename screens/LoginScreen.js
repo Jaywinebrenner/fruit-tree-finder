@@ -13,7 +13,8 @@ import {
   Image,sfgj
 } from "react-native";
 import logo from "../media/logo.png";
-import firebase from "firebase"
+import firebase from "firebase";
+import apples from "../media/apples.jpg";
 
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -25,7 +26,7 @@ function LoginScreen({ navigation }) {
   console.log("email", email);
   console.log("password", password);
   
-''
+
    async function signUp(email, password) {
      try {
        if (password.length < 5) {
@@ -50,7 +51,7 @@ function LoginScreen({ navigation }) {
       Alert.alert("Please enter a password.");
       return;
     }
-     navigation.push("Loading");
+
    try {
      await firebase.auth().signInWithEmailAndPassword(email, password).then(function (user) {
        console.log("USER", user)
@@ -64,17 +65,17 @@ function LoginScreen({ navigation }) {
   return (
     <KeyboardAwareScrollView style={styles.container}>
       <View style={styles.top}>
-        {/* <Text>Hello</Text> */}
-        {/* <Image source={logo} style={styles.logo} resizeMode="center" /> */}
+        {/* <ImageBackground source={apples} style={styles.applesImage}>
+        </ImageBackground> */}
       </View>
 
       <View style={styles.middle}>
-        <Text style={styles.imageText}>PORTLAND FRUIT TREE PROJECT</Text>
+        <Text style={styles.imageText}>PORTLAND FRUIT TREE {"\n"} PROJECT</Text>
         <Text style={styles.imageTextTwo}>
-          THE FASTEST WAY TO GET AERIAL IMAGES AND DATA
+          Gather food from the plentiful bounties {"\n"} of your neighborhood
         </Text>
         <TouchableOpacity>
-          <Text style={styles.text}>Welcome Back</Text>
+          <Text style={styles.text}>Welcome!</Text>
           <TextInput
             autoCapitalize="none"
             keyboardType={"email-address"}
@@ -149,10 +150,11 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: "center",
-      borderColor: "#802941",
+    borderColor: "#802941",
     fontSize: 17,
   },
   imageText: {
+    alignSelf: "center",
     fontSize: 30,
     fontWeight: "bold",
     color: "#802941",
@@ -161,9 +163,10 @@ const styles = StyleSheet.create({
     marginTop: "40%",
   },
   imageTextTwo: {
+    alignSelf: "center",
     fontSize: 13,
     fontWeight: "bold",
-    color: "#3E90D0",
+    color: "#184d47",
     textAlign: "left",
     margin: "2%",
   },
@@ -171,7 +174,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
     backgroundColor: "#802941",
-    height: 40,
+    height: 60,
     width: 250,
     marginTop: "2%",
     marginBottom: "1%",
@@ -183,13 +186,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "white",
     height: 40,
-    width: 100,
-    marginTop: "5%",
-    marginBottom: "1%",
+    width: 80,
     padding: 5,
     borderRadius: 3,
     borderWidth: 1,
     borderColor: "#802941",
+    marginTop: 20,
   },
   signUpButtonText: {
     alignSelf: "center",
@@ -198,7 +200,14 @@ const styles = StyleSheet.create({
   loginButtonText: {
     alignSelf: "center",
     color: "white",
+    fontSize: 20,
   },
+  // applesImage: {
+  //   flex: 1,
+  //   resizeMode: "cover",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
 });
 
 export default LoginScreen;

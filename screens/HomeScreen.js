@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, StyleSheet, Image, ImageBackground } from "react-native";
+import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import logo from '../media/logo.png'
@@ -37,9 +37,11 @@ const HomeScreen = () => {
           neightborhood.
         </Text>
       </View>
-      <Text style={styles.fake} onPress={() => fakeSignOut()}>
-        FAKE SIGN OUT
-      </Text>
+      <TouchableOpacity style={styles.signOut}>
+        <Text style={styles.signOutButtonText} onPress={() => fakeSignOut()}>
+          SIGN OUT
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -95,9 +97,25 @@ const HomeScreen = () => {
    footer: {
      paddingLeft: 10,
      paddingRight: 10,
-     flex: .3,
+     flex: 0.3,
      justifyContent: "center",
      alignItems: "center",
+   },
+   signOut: {
+     textAlign: "center",
+     justifyContent: "center",
+     backgroundColor: "white",
+     height: 40,
+     width: 100,
+    marginTop: 20,
+     borderRadius: 3,
+     borderWidth: 1,
+     borderColor: "#802941",
+   },
+   signOutButtonText: {
+     marginTop: 5,
+     alignSelf: "center",
+     color: "#802941",
    },
  });
 
