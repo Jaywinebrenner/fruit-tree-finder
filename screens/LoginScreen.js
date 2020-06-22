@@ -88,6 +88,7 @@ function LoginScreen({ navigation }) {
           />
           <TextInput
             placeholder="Password"
+            secureTextEntry={true}
             placeholderTextColor="grey"
             secureTextEntry={true}
             value={password}
