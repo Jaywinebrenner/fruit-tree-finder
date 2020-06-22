@@ -5,6 +5,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import pears from "../media/pears.jpg";
 import Modal from "react-native-modal";
 import firebase from "firebase";
+import {TypeModal} from "../components/TypeModal";
+import { DescriptionModal } from "../components/DescriptionModal";
+import { LocationModal } from "../components/LocationModal";
 
 const AddTreeScreen = () => {
 
@@ -13,11 +16,11 @@ const AddTreeScreen = () => {
     false,
   );
   const [isLocationModalVisible, setIsLocationModalVisible] = useState(false);
+
+  
   const [type, setType] = useState(null);
   const [description, setDescription] = useState(null);
   const [location, setLocation] = useState(null);
-
-
 
   const toggleTypeModal = () => {
     setIsTypeModalVisible(!isTypeModalVisible);
@@ -30,24 +33,6 @@ const AddTreeScreen = () => {
   const toggleLocationModal = () => {
     setIsLocationModalVisible(!isLocationModalVisible);
   };
-
-  const enterType = () => {
-    toggleTypeModal()
-  }
-
-  const enterDescription = () => {
-    toggleDescriptionModal();
-  };
-
-  const enterLocation = () => {
-    toggleLocationModal();
-  };
-
-
-console.log("TYPE OF TREE", type);
-console.log("DESCRIPTION", description);
-
-
 
   return (
     <View style={styles.container}>
@@ -84,105 +69,27 @@ console.log("DESCRIPTION", description);
         <Text style={styles.inputText}>Submit Tree</Text>
       </TouchableOpacity>
 
-      <Modal
-        isVisible={isTypeModalVisible}
-        // setIsModalVisible={setIsTypeModalVisible}
-      >
-        <View style={styles.insideModalContainer}>
-          <Text style={styles.modalTextSubHeader}>
-            Please enter the type of tree
-          </Text>
+      <TypeModal
+        isTypeModalVisible={isTypeModalVisible}
+        setIsModalVisible={setIsTypeModalVisible}
+        type={type}
+        setType={setType}
+        toggleTypeModal={toggleTypeModal}
+      />
 
-          <TextInput
-            placeholder="e.x., Cherry Tree, Pear Tree"
-            autoFocus={true}
-            value={type}
-            onChangeText={setType}
-            style={styles.modalInput}
-          />
+      <DescriptionModal
+        description={description}
+        setDescription={setDescription}
+        toggleDescriptionModal={toggleDescriptionModal}
+        isDescriptionModalVisible={isDescriptionModalVisible}
+      />
 
-          <TouchableOpacity style={styles.submitTreeButton} onPress={enterType}>
-            <Text style={styles.submitTreeText}>Enter</Text>
-          </TouchableOpacity>
+      <LocationModal 
+      location={location} 
+      setLocation={setLocation} 
+      toggleLocationModal={toggleLocationModal} setIsLocationModalVisible={setIsLocationModalVisible}
+      isLocationModalVisible={isLocationModalVisible} />
 
-          <TouchableOpacity
-            style={styles.closeModal}
-            onPress={() => toggleTypeModal()}
-          >
-            <Text style={styles.closeModalText}>Close</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
-
-      <Modal
-        isVisible={isDescriptionModalVisible}
-        // setIsModalVisible={setIsDescriptionModalVisible}
-      >
-        <View style={styles.insideDescriptionModalContainer}>
-          <Text style={styles.modalDescriptionTextSubHeader}>
-            Please add a description
-          </Text>
-
-          <TextInput
-            placeholder="e.x., Unmaintained large tree. Overhang on public property with hundreds if not thousands of Cherries going to waste every year."
-            autoFocus={true}
-            avoidKeyboard
-            multiline={true}
-            value={description}
-            onChangeText={setDescription}
-            style={styles.descriptionModalInput}
-          />
-
-          <TouchableOpacity
-            style={styles.submitTreeButton}
-            onPress={enterDescription}
-          >
-            <Text style={styles.submitTreeText}>Enter</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.closeModal}
-            onPress={() => toggleDescriptionModal()}
-          >
-            <Text style={styles.closeModalText}>Close</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
-
-      <Modal
-        isVisible={isLocationModalVisible}
-        // setIsModalVisible={setIsDescriptionModalVisible}
-      >
-        <View style={styles.insideDescriptionModalContainer}>
-          <Text style={styles.modalDescriptionTextSubHeader}>
-            Please enter the address of the tree
-          </Text>
-
-          <TextInput
-            placeholder="1234 Apple Avenue"
-    
-            autoFocus={true}
-            avoidKeyboard
-            value={description}
-            onChangeText={setLocation}
-            style={styles.addressModalInput}
-          />
-
-          <TouchableOpacity
-            style={styles.submitTreeButton}
-            onPress={enterLocation}
-          >
-            <Text style={styles.submitTreeText}>Enter</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.closeModal}
-            onPress={() => toggleLocationModal()}
-          >
-            <Text style={styles.closeModalText}>Close</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
     </View>
   );
 };
@@ -204,12 +111,10 @@ const styles = StyleSheet.create({
   pearsImage: {
     height: "40%",
     width: "125%",
-    // flex: 1,
     resizeMode: "cover",
     justifyContent: "center",
   },
   headerText: {
-    // position: "absolute",
     fontSize: 44,
     fontWeight: "bold",
     color: "white",
@@ -247,48 +152,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  modalTop: {
-    flex: 1,
-  },
-  modalMiddle: {
-    flex: 1,
-  },
-  modalBottom: {
-    flex: 1,
-  },
-  closeModal: {
-    alignSelf: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-    height: 40,
-    width: 80,
-    padding: 5,
-    borderRadius: 3,
-    borderWidth: 1,
-    borderColor: "#802941",
-    marginTop: 20,
-  },
-  closeModalText: {
-    alignSelf: "center",
-    color: "#802941",
-  },
-  submitTreeButton: {
-    alignSelf: "center",
-    justifyContent: "center",
-    backgroundColor: "#802941",
-    height: 60,
-    width: 250,
-    marginTop: "2%",
-    marginBottom: "1%",
-    padding: 5,
-    borderRadius: 3,
-  },
-  submitTreeText: {
-    alignSelf: "center",
-    color: "white",
-    fontSize: 20,
-    marginTop: 10,
-  },
   inputButton: {
     alignSelf: "center",
     justifyContent: "center",
@@ -307,60 +170,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: "white",
     fontSize: 20,
-  },
-  // insideModalContainer: {
-  //   width: "90%",
-  //   height: "60%",
-  //   backgroundColor: "gray"
-  // },
-  modalInput: {
-    height: 40,
-    borderColor: "grey",
-    borderWidth: 2,
-    margin: 10,
-    width: "80%",
-    alignItems: "center",
-    textAlign: "center",
-    color: "black",
-    fontSize: 15,
-    backgroundColor: "white",
-  },
-  modalTextSubHeader: {
-    fontSize: 24,
-  },
-  descriptionModalInput: {
-    height: 150,
-    borderColor: "grey",
-    borderWidth: 2,
-    margin: 10,
-    width: "80%",
-    alignItems: "center",
-    textAlign: "center",
-    color: "black",
-    fontSize: 15,
-    backgroundColor: "white",
-  },
-  insideDescriptionModalContainer: {
-    flex: 1,
-    backgroundColor: "lightgray",
-    alignItems: "center",
-    marginTop: 50,
-  },
-  modalDescriptionTextSubHeader: {
-    fontSize: 24,
-    marginTop: 5,
-  },
-  addressModalInput: {
-    height: 50,
-    borderColor: "grey",
-    borderWidth: 2,
-    margin: 10,
-    width: "80%",
-    alignItems: "center",
-    textAlign: "center",
-    color: "black",
-    fontSize: 15,
-    backgroundColor: "white",
   },
 });
 
