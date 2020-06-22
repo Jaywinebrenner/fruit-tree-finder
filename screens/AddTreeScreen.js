@@ -9,9 +9,13 @@ import firebase from "firebase";
 const AddTreeScreen = () => {
 
   const [isTypeModalVisible, setIsTypeModalVisible] = useState(false)
-  const [isDescriptionModalVisible, setIsDescriptionModalVisible] = useState(false);
+  const [isDescriptionModalVisible, setIsDescriptionModalVisible] = useState(
+    false,
+  );
   const [isLocationModalVisible, setIsLocationModalVisible] = useState(false);
   const [type, setType] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [location, setLocation] = useState(null);
 
 
 
@@ -20,15 +24,29 @@ const AddTreeScreen = () => {
   };
 
   const toggleDescriptionModal = () => {
-    setIsDescrptionModalVisible(!isDescrptionModalVisible);
+    setIsDescriptionModalVisible(!isDescriptionModalVisible);
   };
 
-  const toggleLocationocationModal = () => {
+  const toggleLocationModal = () => {
     setIsLocationModalVisible(!isLocationModalVisible);
+  };
+
+  const enterType = () => {
+    toggleTypeModal()
+  }
+
+  const enterDescription = () => {
+    toggleDescriptionModal();
+  };
+
+  const enterLocation = () => {
+    toggleLocationModal();
   };
 
 
 console.log("TYPE OF TREE", type);
+console.log("DESCRIPTION", description);
+
 
 
   return (
@@ -49,14 +67,14 @@ console.log("TYPE OF TREE", type);
 
         <TouchableOpacity
           style={styles.inputButton}
-          onPress={() => toggleModal()}
+          onPress={() => toggleDescriptionModal()}
         >
           <Text style={styles.inputButtonText}>Description of Tree</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.inputButton}
-          onPress={() => toggleModal()}
+          onPress={() => toggleLocationModal()}
         >
           <Text style={styles.inputButtonText}>Location of Tree</Text>
         </TouchableOpacity>
@@ -68,8 +86,7 @@ console.log("TYPE OF TREE", type);
 
       <Modal
         isVisible={isTypeModalVisible}
-        setIsModalVisible={setIsTypeModalVisible}
-
+        // setIsModalVisible={setIsTypeModalVisible}
       >
         <View style={styles.insideModalContainer}>
           <Text style={styles.modalTextSubHeader}>
@@ -78,19 +95,89 @@ console.log("TYPE OF TREE", type);
 
           <TextInput
             placeholder="e.x., Cherry Tree, Pear Tree"
+            autoFocus={true}
             value={type}
             onChangeText={setType}
             style={styles.modalInput}
-
           />
 
-          <TouchableOpacity style={styles.submitTreeButton}>
+          <TouchableOpacity style={styles.submitTreeButton} onPress={enterType}>
             <Text style={styles.submitTreeText}>Enter</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.closeModal}
             onPress={() => toggleTypeModal()}
+          >
+            <Text style={styles.closeModalText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      <Modal
+        isVisible={isDescriptionModalVisible}
+        // setIsModalVisible={setIsDescriptionModalVisible}
+      >
+        <View style={styles.insideDescriptionModalContainer}>
+          <Text style={styles.modalDescriptionTextSubHeader}>
+            Please add a description
+          </Text>
+
+          <TextInput
+            placeholder="e.x., Unmaintained large tree. Overhang on public property with hundreds if not thousands of Cherries going to waste every year."
+            autoFocus={true}
+            avoidKeyboard
+            multiline={true}
+            value={description}
+            onChangeText={setDescription}
+            style={styles.descriptionModalInput}
+          />
+
+          <TouchableOpacity
+            style={styles.submitTreeButton}
+            onPress={enterDescription}
+          >
+            <Text style={styles.submitTreeText}>Enter</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.closeModal}
+            onPress={() => toggleDescriptionModal()}
+          >
+            <Text style={styles.closeModalText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      <Modal
+        isVisible={isLocationModalVisible}
+        // setIsModalVisible={setIsDescriptionModalVisible}
+      >
+        <View style={styles.insideDescriptionModalContainer}>
+          <Text style={styles.modalDescriptionTextSubHeader}>
+            Please enter the address of the tree
+          </Text>
+
+          <TextInput
+            placeholder="1234 Apple Avenue"
+    
+            autoFocus={true}
+            avoidKeyboard
+            value={description}
+            onChangeText={setLocation}
+            style={styles.addressModalInput}
+          />
+
+          <TouchableOpacity
+            style={styles.submitTreeButton}
+            onPress={enterLocation}
+          >
+            <Text style={styles.submitTreeText}>Enter</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.closeModal}
+            onPress={() => toggleLocationModal()}
           >
             <Text style={styles.closeModalText}>Close</Text>
           </TouchableOpacity>
@@ -236,10 +323,45 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "black",
     fontSize: 15,
+    backgroundColor: "white",
   },
-  modalTextSubHeader:{
-    fontSize: 24
-  }
+  modalTextSubHeader: {
+    fontSize: 24,
+  },
+  descriptionModalInput: {
+    height: 150,
+    borderColor: "grey",
+    borderWidth: 2,
+    margin: 10,
+    width: "80%",
+    alignItems: "center",
+    textAlign: "center",
+    color: "black",
+    fontSize: 15,
+    backgroundColor: "white",
+  },
+  insideDescriptionModalContainer: {
+    flex: 1,
+    backgroundColor: "lightgray",
+    alignItems: "center",
+    marginTop: 50,
+  },
+  modalDescriptionTextSubHeader: {
+    fontSize: 24,
+    marginTop: 5,
+  },
+  addressModalInput: {
+    height: 50,
+    borderColor: "grey",
+    borderWidth: 2,
+    margin: 10,
+    width: "80%",
+    alignItems: "center",
+    textAlign: "center",
+    color: "black",
+    fontSize: 15,
+    backgroundColor: "white",
+  },
 });
 
 export default AddTreeScreen;
