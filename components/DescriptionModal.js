@@ -15,6 +15,7 @@ export const DescriptionModal = ({
          toggleDescriptionModal,
          setIsDescriptionModalVisible,
          isDescriptionModalVisible,
+         closeDescriptionModal
        }) => {
          return (
            <Modal
@@ -44,9 +45,9 @@ export const DescriptionModal = ({
 
                <TouchableOpacity
                  style={styles.closeModal}
-                 onPress={() => toggleDescriptionModal()}
+                 onPress={() => closeDescriptionModal()}
                >
-                 <Text style={styles.closeModalText}>Close</Text>
+                 <Text style={styles.closeModalText}>Cancel</Text>
                </TouchableOpacity>
              </View>
            </Modal>

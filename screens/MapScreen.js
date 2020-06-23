@@ -13,7 +13,7 @@ import Modal from "react-native-modal";
 Geocoder.init(API_KEY);
 import { TREES } from "../constants/Markers";
 import ViewListButton from "../components/ViewListButton"
-import { Button } from "@material-ui/core";
+import firebase, { database } from "firebase";
 
 const MapScreen = ({navigation}) => {
 
@@ -21,33 +21,56 @@ const MapScreen = ({navigation}) => {
 
   console.log("TEST LATITUDE", trees[0].coordinate.latitude);
 
-  const [location, setLocation] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
   const [region, setRegion] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-
+  const [currentDatabase, setCurrentDatabase] = useState([]);
 
   useEffect(() => {
-    _getLocationsAsync();
+    _getUserLocactionAsync();
+
+        // Pulling down database
+      let result = firebase.database().
+      ref("/tree").
+      limitToFirst(20);
+      result.on("value", (snapshot) => {
+        console.log("snapshot val", snapshot.val());
+        let database = snapshot.val();
+        setCurrentDatabase(database);
+
+      });
   }, []);
 
-  const _getLocationsAsync = async () => {
+    if (!currentDatabase) {
+      console.log("I DONT EXIST");
+    }
+    if (currentDatabase) {
+      console.log("I EXIST");
+      console.log("CURRENT DATABASE", currentDatabase);
+      Object.values(currentDatabase).forEach((value) => {
+        console.log("Value", value.type);
+      });
+    }
+
+
+  const _getUserLocactionAsync = async () => {
     try {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
 
       if (status !== "granted") {
         setErrorMessage("Permissions to access location was denied");
       }
-      let location = await Location.getCurrentPositionAsync({
+      let userLocation = await Location.getCurrentPositionAsync({
         enabledHighAccuracy: true,
       });
 
       let region = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
+        latitude: userLocation.coords.latitude,
+        longitude: userLocation.coords.longitude,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput } from "react-native";
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput, Alert } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import pears from "../media/pears.jpg";
@@ -7,9 +7,22 @@ import Modal from "react-native-modal";
 import firebase from "firebase";
 import {TypeModal} from "../components/TypeModal";
 import { DescriptionModal } from "../components/DescriptionModal";
-import { LocationModal } from "../components/LocationModal";
+import { TreeLocationModal } from "../components/TreeLocationModal";
+import { FontAwesome5 } from "@expo/vector-icons";
+Geocoder.init(API_KEY);
+import { API_KEY } from "../geocoder";
+import Geocoder from "react-native-geocoding";
+
 
 const AddTreeScreen = () => {
+
+    let userID = null;
+    if (firebase.auth().currentUser) {
+      userID = firebase.auth().currentUser.uid;
+    }
+
+    // console.log("USER ID", userID);
+    
 
   const [isTypeModalVisible, setIsTypeModalVisible] = useState(false)
   const [isDescriptionModalVisible, setIsDescriptionModalVisible] = useState(
@@ -17,10 +30,11 @@ const AddTreeScreen = () => {
   );
   const [isLocationModalVisible, setIsLocationModalVisible] = useState(false);
 
-  
+
   const [type, setType] = useState(null);
   const [description, setDescription] = useState(null);
-  const [location, setLocation] = useState(null);
+  const [treeLocation, setTreeLocation] = useState(null);
+  const [treeCoordinates, setTreeCoordinates] = useState(null);
 
   const toggleTypeModal = () => {
     setIsTypeModalVisible(!isTypeModalVisible);
@@ -33,7 +47,87 @@ const AddTreeScreen = () => {
   const toggleLocationModal = () => {
     setIsLocationModalVisible(!isLocationModalVisible);
   };
+  
 
+  const closeTypeModal = () => {
+    toggleTypeModal()
+    setType(null)
+  }
+
+
+  const closeDescriptionModal = () => {
+    toggleDescriptionModal();
+    setDescription(null);
+  };
+
+
+  const closeLocationModal = () => {
+    toggleLocationModal();
+    setTreeLocation(null);
+  };
+
+  const renderSubmitButton = () => {
+    if (type && description && treeLocation) {
+      return (
+      
+        <TouchableOpacity
+          style={styles.submitButton}
+          onPress={() => submit()}
+        >
+          <View style={styles.submitButtonTextWrapper}>
+            <Text style={styles.submitButtonText}>Submit Tree</Text>
+          </View>
+
+          <View style={styles.submitButtonTreeIconWrapper}>
+            <FontAwesome5
+              style={styles.treeIcon}
+              name="tree"
+              size={32}
+              color="white"
+            />
+          </View>
+
+        </TouchableOpacity>
+      );
+    }
+  }
+        console.log("TREE COORINATES", treeCoordinates);
+  async function submit() {
+    try {
+      let treeCoordinates = await convertLocation(treeLocation);
+      setTreeCoordinates(treeCoordinates)
+
+      firebase.database().ref("/tree").push({
+        type,
+        description,
+        treeLocation,
+        treeCoordinates,
+        userID,
+      });
+      setType(null);
+      setDescription(null);
+      setTreeLocation(null);
+      alert("Tree Added Successfully!");
+    } catch (error) {
+      return Alert.alert(error);
+    }
+  };
+
+  async function convertLocation(location) {
+    let treeCoordinates = await Geocoder.from(location)
+      .then((json) => {
+        const { lat, lng } = json.results[0].geometry.location;
+        let treeCoords = [lat, lng];
+        
+     console.log("TREE COORDS", treeCoords);
+        return treeCoords;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    return treeCoordinates;
+  }
+  
   return (
     <View style={styles.container}>
       <View style={styles.top}>
@@ -47,14 +141,14 @@ const AddTreeScreen = () => {
           style={styles.inputButton}
           onPress={() => toggleTypeModal()}
         >
-          <Text style={styles.inputButtonText}>Type of Tree</Text>
+          <Text style={styles.inputButtonText}>{type ? type : "Type of Tree" }</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.inputButton}
           onPress={() => toggleDescriptionModal()}
         >
-          <Text style={styles.inputButtonText}>Description of Tree</Text>
+          <Text style={styles.inputButtonText}>{ description ? " Description Set" : "Description of Tree"}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -65,9 +159,9 @@ const AddTreeScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.modalButton}>
-        <Text style={styles.inputText}>Submit Tree</Text>
-      </TouchableOpacity>
+
+
+      {renderSubmitButton()}
 
       <TypeModal
         isTypeModalVisible={isTypeModalVisible}
@@ -75,6 +169,7 @@ const AddTreeScreen = () => {
         type={type}
         setType={setType}
         toggleTypeModal={toggleTypeModal}
+        closeTypeModal={closeTypeModal}
       />
 
       <DescriptionModal
@@ -82,14 +177,17 @@ const AddTreeScreen = () => {
         setDescription={setDescription}
         toggleDescriptionModal={toggleDescriptionModal}
         isDescriptionModalVisible={isDescriptionModalVisible}
+        closeDescriptionModal={closeDescriptionModal}
       />
 
-      <LocationModal 
-      location={location} 
-      setLocation={setLocation} 
-      toggleLocationModal={toggleLocationModal} setIsLocationModalVisible={setIsLocationModalVisible}
-      isLocationModalVisible={isLocationModalVisible} />
-
+      <TreeLocationModal
+        treeLocation={treeLocation}
+        setTreeLocation={setTreeLocation}
+        toggleLocationModal={toggleLocationModal}
+        setIsLocationModalVisible={setIsLocationModalVisible}
+        isLocationModalVisible={isLocationModalVisible}
+        closeLocationModal={closeLocationModal}
+      />
     </View>
   );
 };
@@ -152,6 +250,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  middle: {
+    flex: 1,
+    marginTop: 70,
+  },
   inputButton: {
     alignSelf: "center",
     justifyContent: "center",
@@ -164,12 +266,52 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.6,
     padding: 5,
     borderRadius: 3,
-    marginTop: 30,
+    marginTop: 50,
   },
   inputButtonText: {
     alignSelf: "center",
     color: "white",
     fontSize: 20,
+  },
+  submitButton: {
+    flex: 1,
+    flexDirection: "row",
+    alignSelf: "center",
+    justifyContent: "center",
+    backgroundColor: "#184d47",
+    // height: 20,
+    width: 250,
+    shadowColor: "black",
+    elevation: 2,
+    shadowRadius: 5,
+    shadowOpacity: 0.6,
+    padding: 5,
+    borderRadius: 3,
+    marginTop: 290,
+    marginBottom: 50,
+  },
+  submitButtonText: {
+    alignSelf: "center",
+    color: "white",
+    fontSize: 30,
+  },
+  treeIcon: {
+    textAlign: "center",
+    justifyContent: "center",
+    marginTop: 30,
+    paddingRight: 30
+  },
+  // submitButtonWrapper: {
+  //   flex: 1,
+  //   flexDirection: "row"
+  // },
+  submitButtonTextWrapper: {
+    flex: 1,
+    textAlign: "center",
+    justifyContent: "center",
+  },
+  submitButtonTreeIconWrapper: {
+    flex: 0.25,
   },
 });
 

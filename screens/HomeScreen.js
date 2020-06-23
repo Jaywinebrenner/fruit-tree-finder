@@ -1,12 +1,15 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import logo from '../media/logo.png'
 import apples from "../media/apples.jpg";
-import firebase from "firebase";
+import firebase, { database } from "firebase";
+import { LongPressGestureHandler } from "react-native-gesture-handler";
 
 const HomeScreen = () => {
+
+  const [currentDatabase, setCurrentDatabase] = useState([])
 
     const fakeSignOut = () => {
       try {
@@ -14,6 +17,34 @@ const HomeScreen = () => {
       } catch (error) {}
       return null;
     };
+
+    // useEffect(() => {
+
+    //   // Pulling down database
+    //   let result = firebase.database().
+    //   ref("/tree").
+    //   limitToFirst(20);
+    //   result.on("value", (snapshot) => {
+    //     console.log("snapshot val", snapshot.val());
+    //     let database = snapshot.val();
+    //     setCurrentDatabase(database);
+    //   });
+    // }, []);
+      
+  // if (!currentDatabase) {
+  //   console.log("I DONT EXIST");
+  // } 
+
+  // if (currentDatabase) {
+  //   console.log("I EXIST");
+  //   console.log("CURRENT DATABASE", currentDatabase);
+  //   Object.values(currentDatabase).forEach((value) => {
+  //     console.log("Value", value.type);
+  //   })
+    
+  // }
+
+
 
   return (
     <View style={styles.container}>
