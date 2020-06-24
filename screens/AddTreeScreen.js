@@ -8,6 +8,7 @@ import firebase from "firebase";
 import {TypeModal} from "../components/TypeModal";
 import { DescriptionModal } from "../components/DescriptionModal";
 import { TreeLocationModal } from "../components/TreeLocationModal";
+import { TreeLocationModalTest } from "../components/TreeLocationModalTest";
 import { FontAwesome5 } from "@expo/vector-icons";
 Geocoder.init(API_KEY);
 import { API_KEY } from "../geocoder";
@@ -34,6 +35,13 @@ const AddTreeScreen = () => {
   const [type, setType] = useState(null);
   const [description, setDescription] = useState(null);
   const [treeLocation, setTreeLocation] = useState(null);
+
+  const [address, setAddress] = useState(null);
+  const [city, setCity] = useState(null);
+  const [state, setState] = useState(null);
+  const [zipCode, setZipCode] = useState(null);
+
+
   const [treeCoordinates, setTreeCoordinates] = useState(null);
 
   const toggleTypeModal = () => {
@@ -91,7 +99,8 @@ const AddTreeScreen = () => {
       );
     }
   }
-        console.log("TREE COORINATES", treeCoordinates);
+  console.log("TREE COORINATES", treeCoordinates);
+
   async function submit() {
     try {
       let treeCoordinates = await convertLocation(treeLocation);
@@ -180,7 +189,11 @@ const AddTreeScreen = () => {
         closeDescriptionModal={closeDescriptionModal}
       />
 
-      <TreeLocationModal
+      <TreeLocationModalTest
+        setAddress={setAddress}
+        setCity={setCity}
+        setState={setState}
+        setZipCode={setZipCode}
         treeLocation={treeLocation}
         setTreeLocation={setTreeLocation}
         toggleLocationModal={toggleLocationModal}

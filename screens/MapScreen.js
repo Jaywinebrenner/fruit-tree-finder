@@ -19,12 +19,12 @@ const MapScreen = ({navigation}) => {
 
   const trees = TREES.markers;
 
-  console.log("TEST LATITUDE", trees[0].coordinate.latitude);
+  // console.log("TEST LATITUDE", trees[0].coordinate.latitude);
 
-  const [userLocation, setUserLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
+  // const [userLocation, setUserLocation] = useState(null);
+  // const [errorMsg, setErrorMsg] = useState(null);
+  // const [latitude, setLatitude] = useState(null);
+  // const [longitude, setLongitude] = useState(null);
 
   const [region, setRegion] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -50,12 +50,12 @@ const MapScreen = ({navigation}) => {
     }
     if (currentDatabase) {
       console.log("I EXIST");
-      console.log("CURRENT DATABASE", currentDatabase);
       Object.values(currentDatabase).forEach((value) => {
         console.log("Value", value.type);
       });
     }
 
+    console.log("CURRENT DATABASE", currentDatabase);
 
   const _getUserLocactionAsync = async () => {
     try {
@@ -97,6 +97,27 @@ const MapScreen = ({navigation}) => {
     navigation.navigate("ListScreen")
   }
 
+
+
+
+  // const renderMarkers = () => {
+  //   Object.values(currentDatabase).forEach((tree, index) => {
+  //     let latitude = tree.treeCoordinates[0];
+  //     let longitude = tree.treeCoordinates[1];
+  //     return (
+  //       <Marker
+  //         key={index}
+  //         coordinate={{
+  //           latitude: console.log("LAT IN RETURN", latitude),
+  //           longitude: longitude,
+  //         }}
+  //         title={console.log("TITLE IN RETURN", tree.type)}
+  //         description={tree.description}
+  //       ></Marker>
+  //     );
+  //   });
+  // }
+
   return (
     <View style={styles.container}>
       <ViewListButton toggleToListView={toggleToListView} />
@@ -119,26 +140,26 @@ const MapScreen = ({navigation}) => {
         }}
         rotateEnabled={false}
       >
-        {/* {mapTrees} */}
-        {/* {singleTest()} */}
-        {/* {singleTestTwo()} */}
 
-      {trees.map((tree, index) => {
-        let latitude = tree.coordinate.latitude;
-        let longitude = tree.coordinate.longitude;
+        {/* {renderMarkers()} */}
 
-        return (
-          <Marker
-            key={index}
-            coordinate={{
-              latitude: latitude,
-              longitude: longitude,
-            }}
-            title={tree.title}
-            description={tree.description}
-          ></Marker>
-        );
-      })}
+
+        {Object.values(currentDatabase).map((tree, index) => {
+          let latitude = tree.treeCoordinates[0];
+          let longitude = tree.treeCoordinates[1];
+            return (
+              <Marker
+                key={index}
+                coordinate={{
+                  latitude: latitude,
+                  longitude: longitude,
+                }}
+                title= {tree.type}
+                description={tree.description}
+              ></Marker>
+            );
+        })}
+
 
       </MapView>
     </View>

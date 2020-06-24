@@ -17,49 +17,52 @@ export const TreeLocationModal = ({
          isLocationModalVisible,
          closeLocationModal
        }) => {
-         return (
-           <Modal isVisible={isLocationModalVisible}>
 
 
-             <View style={styles.insideDescriptionModalContainer}>
-               <Text style={styles.modalDescriptionTextSubHeader}>
-                 Please enter the address of the tree
-               </Text>
 
-               {/* <TextInput
-                 placeholder="1234 Apple Avenue"
-                 autoFocus={true}
-                 avoidKeyboard
-                 value={location}
-                 onChangeText={setLocation}
-                 style={styles.addressModalInput}
-               /> */}
-               <TextInput
-                 placeholder="City, State"
-                 autoFocus={true}
-                 avoidKeyboard
-                 value={treeLocation}
-                 onChangeText={setTreeLocation}
-                 style={styles.addressModalInput}
-               /> 
 
-               <TouchableOpacity
-                 style={styles.submitTreeButton}
-                 onPress={() => toggleLocationModal()}
-               >
-                 <Text style={styles.submitTreeText}>Enter</Text>
-               </TouchableOpacity>
+  return (
+    <Modal isVisible={isLocationModalVisible}>
 
-               <TouchableOpacity
-                 style={styles.closeModal}
-                 onPress={() => closeLocationModal()}
-               >
-                 <Text style={styles.closeModalText}>Cancel</Text>
-               </TouchableOpacity>
-             </View>
-           </Modal>
-         );
-       };
+      <View style={styles.insideDescriptionModalContainer}>
+        <Text style={styles.modalDescriptionTextSubHeader}>
+          Please enter the address of the tree
+        </Text>
+
+        {/* <TextInput
+          placeholder="1234 Apple Avenue"
+          autoFocus={true}
+          avoidKeyboard
+          value={location}
+          onChangeText={setLocation}
+          style={styles.addressModalInput}
+        /> */}
+        <TextInput
+          placeholder="City, State"
+          autoFocus={true}
+          avoidKeyboard
+          value={treeLocation}
+          onChangeText={setTreeLocation}
+          style={styles.addressModalInput}
+        /> 
+
+        <TouchableOpacity
+          style={styles.submitTreeButton}
+          onPress={() => toggleLocationModal()}
+        >
+          <Text style={styles.submitTreeText}>Enter</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.closeModal}
+          onPress={() => closeLocationModal()}
+        >
+          <Text style={styles.closeModalText}>Cancel</Text>
+        </TouchableOpacity>
+      </View>
+    </Modal>
+  );
+};
 
 
 const styles = StyleSheet.create({

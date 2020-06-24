@@ -37,3 +37,24 @@ const mapTrees = () => {
       </View>
     );
   };
+
+// map loop that spins out markers on maps for data like constants>markers
+
+  {
+    trees.map((tree, index) => {
+      let latitude = tree.coordinate.latitude;
+      let longitude = tree.coordinate.longitude;
+
+      return (
+        <Marker
+          key={index}
+          coordinate={{
+            latitude: latitude,
+            longitude: longitude,
+          }}
+          title={tree.title}
+          description={tree.description}
+        ></Marker>
+      );
+    });
+  }
