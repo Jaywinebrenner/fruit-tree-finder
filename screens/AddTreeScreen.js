@@ -23,6 +23,7 @@ const AddTreeScreen = () => {
     }
 
     // console.log("USER ID", userID);
+
     
 
   const [isTypeModalVisible, setIsTypeModalVisible] = useState(false)
@@ -35,12 +36,7 @@ const AddTreeScreen = () => {
   const [type, setType] = useState(null);
   const [description, setDescription] = useState(null);
   const [treeLocation, setTreeLocation] = useState(null);
-
-  const [address, setAddress] = useState(null);
-  const [city, setCity] = useState(null);
-  const [state, setState] = useState(null);
-  const [zipCode, setZipCode] = useState(null);
-
+  const [treeLocationTest, setTreeLocationTest] = useState(null)
 
   const [treeCoordinates, setTreeCoordinates] = useState(null);
 
@@ -75,7 +71,7 @@ const AddTreeScreen = () => {
   };
 
   const renderSubmitButton = () => {
-    if (type && description && treeLocation) {
+    if (type && description && treeLocationTest) {
       return (
       
         <TouchableOpacity
@@ -99,23 +95,23 @@ const AddTreeScreen = () => {
       );
     }
   }
-  console.log("TREE COORINATES", treeCoordinates);
+  // console.log("TREE COORINATES", treeCoordinates);
 
   async function submit() {
     try {
-      let treeCoordinates = await convertLocation(treeLocation);
+      let treeCoordinates = await convertLocation(treeLocationTest);
       setTreeCoordinates(treeCoordinates)
 
       firebase.database().ref("/tree").push({
         type,
         description,
-        treeLocation,
+        treeLocationTest,
         treeCoordinates,
         userID,
       });
       setType(null);
       setDescription(null);
-      setTreeLocation(null);
+      setTreeLocationTest(null);
       alert("Tree Added Successfully!");
     } catch (error) {
       return Alert.alert(error);
@@ -128,13 +124,34 @@ const AddTreeScreen = () => {
         const { lat, lng } = json.results[0].geometry.location;
         let treeCoords = [lat, lng];
         
-     console.log("TREE COORDS", treeCoords);
+    //  console.log("TREE COORDS", treeCoords);
         return treeCoords;
       })
       .catch((error) => {
         console.error(error);
       });
     return treeCoordinates;
+  }
+
+      console.log("TREE LOCATION TEST", treeLocationTest);
+
+  const createAddressObject = (location) => {
+    console.log("LOCATION PASSED INTO CREATE OBJECT", location);
+    console.log("location Address", location.address);
+    
+    let properlyFormatedAddress =
+      location.address +
+      " " +
+      location.city +
+      " " +
+      location.state +
+      " " +
+      location.zipCode;
+    console.log("PROPERLY FORMATED ADDRESS", properlyFormatedAddress);
+    
+    setTreeLocationTest(properlyFormatedAddress)
+    console.log("TREE LOCATION TEST", treeLocationTest);
+    setIsLocationModalVisible(false)
   }
   
   return (
@@ -150,14 +167,18 @@ const AddTreeScreen = () => {
           style={styles.inputButton}
           onPress={() => toggleTypeModal()}
         >
-          <Text style={styles.inputButtonText}>{type ? type : "Type of Tree" }</Text>
+          <Text style={styles.inputButtonText}>
+            {type ? type : "Type of Tree"}
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.inputButton}
           onPress={() => toggleDescriptionModal()}
         >
-          <Text style={styles.inputButtonText}>{ description ? " Description Set" : "Description of Tree"}</Text>
+          <Text style={styles.inputButtonText}>
+            {description ? " Description Set" : "Description of Tree"}
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -167,8 +188,6 @@ const AddTreeScreen = () => {
           <Text style={styles.inputButtonText}>Location of Tree</Text>
         </TouchableOpacity>
       </View>
-
-
 
       {renderSubmitButton()}
 
@@ -190,11 +209,8 @@ const AddTreeScreen = () => {
       />
 
       <TreeLocationModalTest
-        setAddress={setAddress}
-        setCity={setCity}
-        setState={setState}
-        setZipCode={setZipCode}
-        treeLocation={treeLocation}
+        createAddressObject={createAddressObject}
+        setTreeLocationTest={setTreeLocationTest}
         setTreeLocation={setTreeLocation}
         toggleLocationModal={toggleLocationModal}
         setIsLocationModalVisible={setIsLocationModalVisible}

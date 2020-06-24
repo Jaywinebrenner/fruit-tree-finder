@@ -12,17 +12,19 @@ import Modal from "react-native-modal";
 import { Formik } from "formik";
 
 export const TreeLocationModalTest = ({
-  setAddress,
-  setCity,
-  setState,
-  setZipCode,
-  treeLocation,
+  createAddressObject,
+  setTreeLocationTest,
   setTreeLocation,
   toggleLocationModal,
   setIsLocationModalVisible,
   isLocationModalVisible,
   closeLocationModal,
 }) => {
+
+
+
+
+
   return (
     <Modal isVisible={isLocationModalVisible}>
       <View style={styles.insideDescriptionModalContainer}>
@@ -35,6 +37,7 @@ export const TreeLocationModalTest = ({
               zipCode: "",
             }}
             onSubmit={(values) => {
+              createAddressObject(values)
               console.log("Form Values", values);
             }}
           >
