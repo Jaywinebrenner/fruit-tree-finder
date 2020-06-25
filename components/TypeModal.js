@@ -6,6 +6,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   TextInput,
+  TouchableWithoutFeedback
 } from "react-native";
 import Modal from "react-native-modal";
 
@@ -14,40 +15,41 @@ export const TypeModal = ({
     setType,
     toggleTypeModal,
     isTypeModalVisible,
-    closeTypeModal
+    closeTypeModal,
+    submitType
 }) => {
     return (
-    <Modal
-        isVisible={isTypeModalVisible}
-    >
-        <View style={styles.insideModalContainer}>
-        <Text style={styles.modalTextSubHeader}>
-            Please enter the type of tree
-        </Text>
+      <Modal isVisible={isTypeModalVisible}>
+        <TouchableWithoutFeedback>
+          <View style={styles.insideModalContainer}>
+            <Text style={styles.modalTextSubHeader}>
+              Please enter the type of tree
+            </Text>
 
-        <TextInput
-            placeholder="e.x., Cherry Tree, Pear Tree"
-            autoFocus={true}
-            value={type}
-            onChangeText={setType}
-            style={styles.modalInput}
-        />
+            <TextInput
+              placeholder="e.x., Cherry Tree, Pear Tree"
+              autoFocus={true}
+              value={type}
+              onChangeText={setType}
+              style={styles.modalInput}
+            />
 
-        <TouchableOpacity
-            style={styles.submitTreeButton}
-            onPress={toggleTypeModal}
-        >
-            <Text style={styles.submitTreeText}>Enter</Text>
-        </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.submitTreeButton}
+              onPress={() => submitType()}
+            >
+              <Text style={styles.submitTreeText}>Enter</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity
-            style={styles.closeModal}
-            onPress={() => closeTypeModal()}
-        >
-            <Text style={styles.closeModalText}>Cancel</Text>
-        </TouchableOpacity>
-        </View>
-    </Modal>
+            <TouchableOpacity
+              style={styles.closeModal}
+              onPress={() => closeTypeModal()}
+            >
+              <Text style={styles.closeModalText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     );
     };
 

@@ -7,37 +7,34 @@ import Modal from "react-native-modal";
 import firebase from "firebase";
 import {TypeModal} from "../components/TypeModal";
 import { DescriptionModal } from "../components/DescriptionModal";
-import { TreeLocationModal } from "../components/TreeLocationModal";
 import { TreeLocationModalTest } from "../components/TreeLocationModalTest";
 import { FontAwesome5 } from "@expo/vector-icons";
 Geocoder.init(API_KEY);
 import { API_KEY } from "../geocoder";
 import Geocoder from "react-native-geocoding";
+import { useNavigation } from "@react-navigation/native";
+import LoadingScreen from './LoadingScreen';
 
 
 const AddTreeScreen = () => {
 
-    let userID = null;
-    if (firebase.auth().currentUser) {
-      userID = firebase.auth().currentUser.uid;
-    }
+  const navigation = useNavigation();
 
-    // console.log("USER ID", userID);
+  let userID = null;
+  if (firebase.auth().currentUser) {
+    userID = firebase.auth().currentUser.uid;
+  }
 
-    
-
+  const [loadingActive, setLoadingActive] = useState(false);
   const [isTypeModalVisible, setIsTypeModalVisible] = useState(false)
   const [isDescriptionModalVisible, setIsDescriptionModalVisible] = useState(
     false,
   );
   const [isLocationModalVisible, setIsLocationModalVisible] = useState(false);
 
-
   const [type, setType] = useState(null);
   const [description, setDescription] = useState(null);
-  const [treeLocation, setTreeLocation] = useState(null);
   const [treeLocationTest, setTreeLocationTest] = useState(null)
-
   const [treeCoordinates, setTreeCoordinates] = useState(null);
 
   const toggleTypeModal = () => {
@@ -53,11 +50,28 @@ const AddTreeScreen = () => {
   };
   
 
+  const submitType = () => {
+      if (type === null) {
+        Alert.alert("Please fill in the type of tree");
+        return
+      } else {
+        toggleTypeModal()
+      }
+  }
+
   const closeTypeModal = () => {
     toggleTypeModal()
     setType(null)
   }
 
+  const submitDescription = () => {
+    if (description === null) {
+      Alert.alert("Please fill in the description of the tree");
+      return;
+    } else {
+      toggleDescriptionModal();
+    }
+  };
 
   const closeDescriptionModal = () => {
     toggleDescriptionModal();
@@ -67,7 +81,7 @@ const AddTreeScreen = () => {
 
   const closeLocationModal = () => {
     toggleLocationModal();
-    setTreeLocation(null);
+    setTreeLocationTest(null);
   };
 
   const renderSubmitButton = () => {
@@ -98,11 +112,11 @@ const AddTreeScreen = () => {
   // console.log("TREE COORINATES", treeCoordinates);
 
   async function submit() {
+    setLoadingActive(true);
     try {
       let treeCoordinates = await convertLocation(treeLocationTest);
       setTreeCoordinates(treeCoordinates)
-
-      firebase.database().ref("/tree").push({
+      await firebase.database().ref("/tree").push({
         type,
         description,
         treeLocationTest,
@@ -112,9 +126,12 @@ const AddTreeScreen = () => {
       setType(null);
       setDescription(null);
       setTreeLocationTest(null);
-      alert("Tree Added Successfully!");
+      setLoadingActive(false);
+      Alert.alert("Tree Added Successfully!");
     } catch (error) {
-      return Alert.alert(error);
+      alert("SHIT IS WRONG")
+      Alert.alert(error);
+      return 
     }
   };
 
@@ -123,17 +140,15 @@ const AddTreeScreen = () => {
       .then((json) => {
         const { lat, lng } = json.results[0].geometry.location;
         let treeCoords = [lat, lng];
-        
     //  console.log("TREE COORDS", treeCoords);
         return treeCoords;
       })
       .catch((error) => {
+        Alert.alert("This location BLOWS")
         console.error(error);
       });
     return treeCoordinates;
   }
-
-      console.log("TREE LOCATION TEST", treeLocationTest);
 
   const createAddressObject = (location) => {
     console.log("LOCATION PASSED INTO CREATE OBJECT", location);
@@ -153,8 +168,10 @@ const AddTreeScreen = () => {
     console.log("TREE LOCATION TEST", treeLocationTest);
     setIsLocationModalVisible(false)
   }
-  
-  return (
+
+
+  const renderAddTreeScreen = () => {
+    return (
     <View style={styles.container}>
       <View style={styles.top}>
         <ImageBackground source={pears} style={styles.pearsImage}>
@@ -192,6 +209,7 @@ const AddTreeScreen = () => {
       {renderSubmitButton()}
 
       <TypeModal
+        submitType={submitType}
         isTypeModalVisible={isTypeModalVisible}
         setIsModalVisible={setIsTypeModalVisible}
         type={type}
@@ -201,6 +219,7 @@ const AddTreeScreen = () => {
       />
 
       <DescriptionModal
+        submitDescription={submitDescription}
         description={description}
         setDescription={setDescription}
         toggleDescriptionModal={toggleDescriptionModal}
@@ -211,13 +230,19 @@ const AddTreeScreen = () => {
       <TreeLocationModalTest
         createAddressObject={createAddressObject}
         setTreeLocationTest={setTreeLocationTest}
-        setTreeLocation={setTreeLocation}
         toggleLocationModal={toggleLocationModal}
         setIsLocationModalVisible={setIsLocationModalVisible}
         isLocationModalVisible={isLocationModalVisible}
         closeLocationModal={closeLocationModal}
       />
     </View>
+    )
+  }
+  
+  return (
+    <React.Fragment>
+      {loadingActive ? <LoadingScreen /> : renderAddTreeScreen()}
+    </React.Fragment>
   );
 };
 
@@ -341,6 +366,16 @@ const styles = StyleSheet.create({
   },
   submitButtonTreeIconWrapper: {
     flex: 0.25,
+  },
+    loadingBody: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+  },
+  loadingImage: {
+    width: 300,
+    height: 110,
+    marginBottom: 30
   },
 });
 

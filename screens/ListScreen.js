@@ -26,8 +26,6 @@ const ListScreen = (  { navigation, title, description }) => {
     navigation.navigate("Map");
   };
 
-
-
 const TreeCard = ( { title, description } ) => {
   return (
     <View style={styles.cardContainer}>

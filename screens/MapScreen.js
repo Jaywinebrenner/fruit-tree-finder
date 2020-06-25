@@ -19,13 +19,6 @@ const MapScreen = ({navigation}) => {
 
   const trees = TREES.markers;
 
-  // console.log("TEST LATITUDE", trees[0].coordinate.latitude);
-
-  // const [userLocation, setUserLocation] = useState(null);
-  // const [errorMsg, setErrorMsg] = useState(null);
-  // const [latitude, setLatitude] = useState(null);
-  // const [longitude, setLongitude] = useState(null);
-
   const [region, setRegion] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [currentDatabase, setCurrentDatabase] = useState([]);
@@ -96,27 +89,6 @@ const MapScreen = ({navigation}) => {
   const toggleToListView = () => {
     navigation.navigate("ListScreen")
   }
-
-
-
-
-  // const renderMarkers = () => {
-  //   Object.values(currentDatabase).forEach((tree, index) => {
-  //     let latitude = tree.treeCoordinates[0];
-  //     let longitude = tree.treeCoordinates[1];
-  //     return (
-  //       <Marker
-  //         key={index}
-  //         coordinate={{
-  //           latitude: console.log("LAT IN RETURN", latitude),
-  //           longitude: longitude,
-  //         }}
-  //         title={console.log("TITLE IN RETURN", tree.type)}
-  //         description={tree.description}
-  //       ></Marker>
-  //     );
-  //   });
-  // }
 
   return (
     <View style={styles.container}>

@@ -6,6 +6,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   TextInput,
+  TouchableWithoutFeedback
 } from "react-native";
 import Modal from "react-native-modal";
 
@@ -15,41 +16,42 @@ export const DescriptionModal = ({
          toggleDescriptionModal,
          setIsDescriptionModalVisible,
          isDescriptionModalVisible,
-         closeDescriptionModal
+         closeDescriptionModal,
+         submitDescription,
        }) => {
          return (
-           <Modal
-             isVisible={isDescriptionModalVisible}
-           >
-             <View style={styles.insideDescriptionModalContainer}>
-               <Text style={styles.modalDescriptionTextSubHeader}>
-                 Please add a description
-               </Text>
+           <Modal isVisible={isDescriptionModalVisible}>
+             <TouchableWithoutFeedback>
+               <View style={styles.insideDescriptionModalContainer}>
+                 <Text style={styles.modalDescriptionTextSubHeader}>
+                   Please add a description
+                 </Text>
 
-               <TextInput
-                 placeholder="e.x., Unmaintained large tree. Overhang on public property with hundreds if not thousands of Cherries going to waste every year."
-                 autoFocus={true}
-                 avoidKeyboard
-                 multiline={true}
-                 value={description}
-                 onChangeText={setDescription}
-                 style={styles.descriptionModalInput}
-               />
+                 <TextInput
+                   placeholder="e.x., Unmaintained large tree. Overhang on public property with hundreds if not thousands of Cherries going to waste every year."
+                   autoFocus={true}
+                   avoidKeyboard
+                   multiline={true}
+                   value={description}
+                   onChangeText={setDescription}
+                   style={styles.descriptionModalInput}
+                 />
 
-               <TouchableOpacity
-                 style={styles.submitTreeButton}
-                 onPress={toggleDescriptionModal}
-               >
-                 <Text style={styles.submitTreeText}>Enter</Text>
-               </TouchableOpacity>
+                 <TouchableOpacity
+                   style={styles.submitTreeButton}
+                   onPress={() => submitDescription()}
+                 >
+                   <Text style={styles.submitTreeText}>Enter</Text>
+                 </TouchableOpacity>
 
-               <TouchableOpacity
-                 style={styles.closeModal}
-                 onPress={() => closeDescriptionModal()}
-               >
-                 <Text style={styles.closeModalText}>Cancel</Text>
-               </TouchableOpacity>
-             </View>
+                 <TouchableOpacity
+                   style={styles.closeModal}
+                   onPress={() => closeDescriptionModal()}
+                 >
+                   <Text style={styles.closeModalText}>Cancel</Text>
+                 </TouchableOpacity>
+               </View>
+             </TouchableWithoutFeedback>
            </Modal>
          );
        };

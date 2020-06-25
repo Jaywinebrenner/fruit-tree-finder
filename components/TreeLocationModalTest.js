@@ -6,7 +6,9 @@ import {
   ImageBackground,
   TouchableOpacity,
   TextInput,
-  ScrollView
+  ScrollView,
+  TouchableWithoutFeedback,
+  Alert,
 } from "react-native";
 import Modal from "react-native-modal";
 import { Formik } from "formik";
@@ -14,108 +16,91 @@ import { Formik } from "formik";
 export const TreeLocationModalTest = ({
   createAddressObject,
   setTreeLocationTest,
-  setTreeLocation,
   toggleLocationModal,
   setIsLocationModalVisible,
   isLocationModalVisible,
   closeLocationModal,
 }) => {
 
-
-
-
-
   return (
     <Modal isVisible={isLocationModalVisible}>
-      <View style={styles.insideDescriptionModalContainer}>
-        <ScrollView style={styles.scrollView}>
-          <Formik
-            initialValues={{
-              address: "",
-              city: "",
-              state: "",
-              zipCode: "",
-            }}
-            onSubmit={(values) => {
-              createAddressObject(values)
-              console.log("Form Values", values);
-            }}
-          >
-            {(formikProps) => (
-              <View style={styles.insideModalContainer}>
-                <Text style={styles.modalDescriptionTextSubHeader}>
-                  Please enter the address of the tree
-                </Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Address"
-                  onChangeText={formikProps.handleChange("address")}
-                  value={formikProps.values.address}
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="City"
-                  onChangeText={formikProps.handleChange("city")}
-                  value={formikProps.values.city}
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="State"
-                  onChangeText={formikProps.handleChange("state")}
-                  value={formikProps.values.state}
-                />
-                <TextInput
-                keyboardType="numeric"
-                  style={styles.input}
-                  placeholder="Zip Code"
-                  onChangeText={formikProps.handleChange("zipCode")}
-                  value={formikProps.values.zipCode}
-                />
+      <TouchableWithoutFeedback>
+        <View style={styles.insideDescriptionModalContainer}>
+          <ScrollView style={styles.scrollView}>
+            <Formik
+              initialValues={{
+                address: null,
+                city: null,
+                state: null,
+                zipCode: null,
+              }}
+              onSubmit={(values, actions) => {
 
-                <TouchableOpacity
-                  style={styles.submitLocationButtonWrapper}
-                  onPress={formikProps.handleSubmit}
-                >
-                  <Text style={styles.submitLocationButtonText}>Submit</Text>
-                </TouchableOpacity>
-              </View>
-            )}
-          </Formik>
-          <TouchableOpacity
-            style={styles.closeModal}
-            onPress={() => closeLocationModal()}
-          >
-            <Text style={styles.closeModalText}>Cancel</Text>
-          </TouchableOpacity>
+                if (
+                  values.address === null &&
+                  values.city === null &&
+                  values.state === null &&
+                  values.zipCode === null
+                ) {
+                  Alert.alert("Please enter a location.");
+                } else {
+                  actions.resetForm();
+                  createAddressObject(values);
+                  console.log("Form Values", values);
+                }
+              }}
+                
+            >
+              {(formikProps) => (
+                <View style={styles.insideModalContainer}>
+                  <Text style={styles.modalDescriptionTextSubHeader}>
+                    Please enter the address of the tree
+                  </Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Address"
+                    onChangeText={formikProps.handleChange("address")}
+                    value={formikProps.values.address}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="City"
+                    onChangeText={formikProps.handleChange("city")}
+                    value={formikProps.values.city}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="State"
+                    onChangeText={formikProps.handleChange("state")}
+                    value={formikProps.values.state}
+                  />
+                  <TextInput
+                    keyboardType="numeric"
+                    style={styles.input}
+                    placeholder="Zip Code"
+                    onChangeText={formikProps.handleChange("zipCode")}
+                    value={formikProps.values.zipCode}
+                  />
 
-          {/* <Text style={styles.modalDescriptionTextSubHeader}>
-          Please enter the address of the tree
-        </Text>
+                  <TouchableOpacity
+                    style={styles.submitLocationButtonWrapper}
+                    onPress={formikProps.handleSubmit}
+                  >
+                    <Text style={styles.submitLocationButtonText}>Submit</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+            </Formik>
+            <TouchableOpacity
+              style={styles.closeModal}
+              onPress={() => closeLocationModal()}
+            >
+              <Text style={styles.closeModalText}>Cancel</Text>
+            </TouchableOpacity>
 
-        <TextInput
-          placeholder="City, State"
-          autoFocus={true}
-          avoidKeyboard
-          value={treeLocation}
-          onChangeText={setTreeLocation}
-          style={styles.addressModalInput}
-        />
-
-        <TouchableOpacity
-          style={styles.submitTreeButton}
-          onPress={() => toggleLocationModal()}
-        >
-          <Text style={styles.submitTreeText}>Enter</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.closeModal}
-          onPress={() => closeLocationModal()}
-        >
-          <Text style={styles.closeModalText}>Cancel</Text>
-        </TouchableOpacity> */}
-        </ScrollView>
-      </View>
+          </ScrollView>
+        </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
