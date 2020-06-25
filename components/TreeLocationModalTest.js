@@ -35,7 +35,6 @@ export const TreeLocationModalTest = ({
                 zipCode: null,
               }}
               onSubmit={(values, actions) => {
-
                 if (
                   values.address === null &&
                   values.city === null &&
@@ -49,7 +48,6 @@ export const TreeLocationModalTest = ({
                   console.log("Form Values", values);
                 }
               }}
-                
             >
               {(formikProps) => (
                 <View style={styles.insideModalContainer}>
@@ -57,6 +55,7 @@ export const TreeLocationModalTest = ({
                     Please enter the address of the tree
                   </Text>
                   <TextInput
+                    autoFocus={true}
                     style={styles.input}
                     placeholder="Address"
                     onChangeText={formikProps.handleChange("address")}
@@ -97,7 +96,6 @@ export const TreeLocationModalTest = ({
             >
               <Text style={styles.closeModalText}>Cancel</Text>
             </TouchableOpacity>
-
           </ScrollView>
         </View>
       </TouchableWithoutFeedback>

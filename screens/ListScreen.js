@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -16,26 +17,62 @@ import apples from "../media/apples.jpg";
 import ViewMapButton from "../components/ViewMapButton"
 import ListItemDetailScreen from "./ListItemDetailScreen";
 import { TREES } from "../constants/Markers";
+import firebase from "firebase";
 
-const ListScreen = (  { navigation, title, description }) => {
 
-  const trees = TREES.markers;
-  console.log("TREES", trees);
+const ListScreen = (  { navigation }) => {
 
   const toggleToMapView = () => {
     navigation.navigate("Map");
   };
 
-const TreeCard = ( { title, description } ) => {
+  const [currentDatabase, setCurrentDatabase] = useState(null);
+  const [formattedDatabase, setFormattedDatabase] = useState([])
+
+  useEffect(() => {
+    // Pulling down database
+    let result = firebase.database().ref("/tree");
+    result.on("value", (snapshot) => {
+      console.log("snapshot val", snapshot.val());
+      let database = snapshot.val();
+      setCurrentDatabase(database);
+    });
+  }, []);
+
+    if (!currentDatabase) {
+      console.log("I DONT EXIST");
+    }
+    if (currentDatabase) {
+      console.log("I EXIST");
+      Object.values(currentDatabase).forEach((value) => {
+        console.log("Value LIST", value.type);
+      });
+    }
+
+  console.log("CURRENT DATABASE", currentDatabase);
+
+
+    // const formattedDatabase = [];
+    // Object.keys(currentDatabase).map((key, index) => {
+    //   // console.log("KEY", key);
+    //   // console.log("||");
+    //   // console.log("INDEX", index);
+    //   formattedDatabase.push(currentDatabase);
+    //   setFormattedDatabase(formattedDatabase);
+    //   // console.log("FORMATED DB", formattedDatabase);
+    // });
+
+
+const TreeCard = () => {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.cardTop}>
-        <Text style={styles.cardTitleText}>{title}</Text>
+        <Text style={styles.cardTitleText}>tutke</Text>
         <Text style={styles.cardDistanceText}>65 Meters away</Text>
       </View>
 
       <View style={styles.cardMiddle}>
-        <Text style={styles.cardDescriptionText}>{description}</Text>
+        <Text style={styles.cardDescriptionText}>description</Text>
       </View>
 
       <View style={styles.bottom}>
@@ -50,23 +87,60 @@ const TreeCard = ( { title, description } ) => {
   );
 };
 
+
+const renderList = () => {
   return (
     <View style={styles.container}>
       <View style={styles.top}>
         <Text style={styles.headerText}>Fruit Trees in your area </Text>
       </View>
-
-      <FlatList
-        data={trees}
-        renderItem={({ item }) => (
-          <TreeCard title={item.title} description={item.description} />
-        )}
-        keyExtractor={(item, index) => index.toString()}
-      />
-
+      <TreeCard/>
       <ViewMapButton toggleToMapView={toggleToMapView} />
     </View>
   );
+}
+
+return (
+  <React.Fragment>
+    <View style={styles.top}>
+      <Text style={styles.headerText}>Fruit Trees in your area </Text>
+    </View>
+    <ViewMapButton toggleToMapView={toggleToMapView} />
+    <ScrollView style={styles.container}>
+      {currentDatabase &&
+        Object.values(currentDatabase).map((value, index) => {
+          return (
+            <View style={styles.cardContainer}>
+              <View style={styles.cardTop}>
+                <Text style={styles.cardTitleText}>{value.type}</Text>
+                <Text style={styles.cardDistanceText}>65 Meters away</Text>
+              </View>
+
+              <View style={styles.cardMiddle}>
+                <Text style={styles.cardDescriptionText}>
+                  {value.description}
+                </Text>
+              </View>
+
+              <View style={styles.bottom}>
+                <TouchableOpacity
+                  style={styles.cardDetailsButtonWrapper}
+                  onPress={() => navigation.navigate("ListItemDetailScreen")}
+                >
+                  <Text style={styles.cardDetailsButtonText}>Details</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          );
+        })}
+    </ScrollView>
+  </React.Fragment>
+);
+
+
+// return <React.Fragment>{currentDatabase ? renderList() : <Text style={styles.noDataText}>There is no data</Text>}</React.Fragment>;
+
+
 };
 
 const styles = StyleSheet.create({
@@ -144,6 +218,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: 22,
   },
+  noDataText:{
+    fontSize: 60,
+    color: "red"
+  }
 });
 
 export default ListScreen;

@@ -19,31 +19,31 @@ const HomeScreen = () => {
       return null;
     };
 
-    useEffect(() => {
+  //   useEffect(() => {
 
-      // Pulling down database
-      let result = firebase.database().
-      ref("/tree").
-      limitToFirst(20);
-      result.on("value", (snapshot) => {
-        console.log("snapshot val", snapshot.val());
-        let database = snapshot.val();
-        setCurrentDatabase(database);
-      });
-    }, []);
+  //     // Pulling down database
+  //     let result = firebase.database().
+  //     ref("/tree")
+  //     // .limitToFirst(20);
+  //     result.on("value", (snapshot) => {
+  //       console.log("snapshot val", snapshot.val());
+  //       let database = snapshot.val();
+  //       setCurrentDatabase(database);
+  //     });
+  //   }, []);
       
-  if (!currentDatabase) {
-    console.log("I DONT EXIST");
-  } 
+  // if (!currentDatabase) {
+  //   console.log("I DONT EXIST");
+  // } 
 
-  if (currentDatabase) {
-    console.log("I EXIST");
-    console.log("CURRENT DATABASE", currentDatabase);
-    Object.values(currentDatabase).forEach((value) => {
-      console.log("lat", value.treeCoordinates[1]);
-    })
+  // if (currentDatabase) {
+  //   console.log("I EXIST");
+  //   console.log("CURRENT DATABASE", currentDatabase);
+  //   Object.values(currentDatabase).forEach((value) => {
+  //     console.log("lat", value.treeCoordinates[1]);
+  //   })
     
-  }
+  // }
 
 
 

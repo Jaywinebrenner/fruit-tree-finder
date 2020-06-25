@@ -6,7 +6,9 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import MapScreen from '../screens/MapScreen'
 import HomeScreen from "../screens/HomeScreen";
 import AddTreeScreen from "../screens/AddTreeScreen";
+import MyTrees from "../screens/MyTrees";
 import ListMapNavigator from "../navigation/ListMapNavigator";
+import { Ionicons } from "@expo/vector-icons";
 
 const Tabs = createBottomTabNavigator();
 
@@ -37,6 +39,15 @@ const BottomTabNavigator =  () => {
         component={AddTreeScreen}
         options={{
           tabBarIcon: ({ color }) => (
+            <Ionicons name="ios-add" size={24} color="black" />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="My Trees"
+        component={MyTrees}
+        options={{
+          tabBarIcon: ({ color }) => (
             <FontAwesome5 name="tree" size={20} color={color} />
           ),
         }}
@@ -51,7 +62,7 @@ const BottomTabNavigator =  () => {
         }}
       />
     </Tabs.Navigator>
-  )
+  );
       }
 
 export {BottomTabNavigator};

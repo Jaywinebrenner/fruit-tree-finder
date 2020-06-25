@@ -28,8 +28,8 @@ const MapScreen = ({navigation}) => {
 
         // Pulling down database
       let result = firebase.database().
-      ref("/tree").
-      limitToFirst(20);
+      ref("/tree")
+      // .limitToFirst(20);
       result.on("value", (snapshot) => {
         console.log("snapshot val", snapshot.val());
         let database = snapshot.val();
@@ -115,7 +115,6 @@ const MapScreen = ({navigation}) => {
 
         {/* {renderMarkers()} */}
 
-
         {Object.values(currentDatabase).map((tree, index) => {
           let latitude = tree.treeCoordinates[0];
           let longitude = tree.treeCoordinates[1];
@@ -131,7 +130,6 @@ const MapScreen = ({navigation}) => {
               ></Marker>
             );
         })}
-
 
       </MapView>
     </View>

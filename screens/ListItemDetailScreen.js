@@ -1,23 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Alert, TouchableOpacity } from "react-native";
 import { TREES } from "../constants/Markers";
 import { Navigation } from "react-native-navigation";
-
+import firebase from "firebase";
 
 const ListItemDetailScreen = ( { navigation, title }) => {
 
-    // const { goBack } = props.navigation;
+  const [currentDatabase, setCurrentDatabase] = useState([]);
 
-  // const treeKey = props.route.key;
-  // console.log("TREE KEY", props.route.key); 
-  //   console.log("PROPS", props); 
-
-  const trees = TREES.markers;
-  console.log("TREES", trees);
-  console.log("TREE KEY FROM WHOLE LIST", trees);
+  useEffect(() => {
+    // Pulling down database
+    let result = firebase.database().ref("/tree").limitToFirst(20);
+    result.on("value", (snapshot) => {
+      console.log("snapshot val", snapshot.val());
+      let database = snapshot.val();
+      setCurrentDatabase(database);
+    });
+  }, []);
   
+    if (!currentDatabase) {
+      console.log("I DONT EXIST");
+    }
+    if (currentDatabase) {
+      console.log("I EXIST");
+      Object.values(currentDatabase).forEach((value) => {
+        console.log("Value", value.type);
+      });
+    }
 
-  let client = null;
 
   // if (
   //   treeKey.find((x) => )
@@ -32,10 +42,6 @@ const ListItemDetailScreen = ( { navigation, title }) => {
   //   );
   // }
 
-
-
-
-
   return (
     <View style={styles.container}>
       <View style={styles.top}>
@@ -44,7 +50,7 @@ const ListItemDetailScreen = ( { navigation, title }) => {
       </View>
 
       <View style={styles.middle}>
-        <Text style={styles.descriptionText}>{trees.description}</Text>
+        <Text style={styles.descriptionText}>Description</Text>
       </View>
 
       <View style={styles.bottom}>
