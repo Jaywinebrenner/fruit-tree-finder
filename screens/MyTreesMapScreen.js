@@ -16,24 +16,32 @@ import ViewMyListButton from "../components/ViewMyListButton";
 import firebase from "firebase";
 
 const MyTreesMapScreen = ({ navigation }) => {
-  const trees = TREES.markers;
+  
 
   const [region, setRegion] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [currentDatabase, setCurrentDatabase] = useState([]);
 
+  let currentUserID = null;
+
+  if (firebase.auth().currentUser) {
+    currentUserID = firebase.auth().currentUser.uid;
+  }
+
   useEffect(() => {
     _getUserLocactionAsync();
-
     // Pulling down database
-    let result = firebase.database().ref("/tree");
-    // .limitToFirst(20);
-    result.on("value", (snapshot) => {
-      console.log("snapshot val", snapshot.val());
-      let database = snapshot.val();
-      setCurrentDatabase(database);
-    });
+    async function fetchData() {
+      let result = await firebase.database().ref("/tree");
+      await result.on("value", (snapshot) => {
+        console.log("snapshot val", snapshot.val());
+        let database = snapshot.val();
+        setCurrentDatabase(database);
+      });
+    }
+    fetchData();
   }, []);
+
 
   if (!currentDatabase) {
     console.log("I DONT EXIST");
@@ -93,6 +101,26 @@ const MyTreesMapScreen = ({ navigation }) => {
   //   });
   // };
 
+  const MapMarker =
+    currentDatabase &&
+    Object.values(currentDatabase).map((value, index) => {
+      let latitude = value.treeCoordinates[0];
+      let longitude = value.treeCoordinates[1];
+      if (value.userID === currentUserID) {
+        return (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: latitude,
+              longitude: longitude,
+            }}
+            title={value.type}
+            description={value.description}
+          ></Marker>
+        );
+      }
+    });
+
   const toggleToListView = () => {
     navigation.navigate("My Trees");
   };
@@ -119,7 +147,9 @@ const MyTreesMapScreen = ({ navigation }) => {
         }}
         rotateEnabled={false}
       >
-        {Object.values(currentDatabase).map((tree, index) => {
+        {MapMarker}
+        {/* {Object.values(currentDatabase).map((tree, index) => {
+
           let latitude = tree.treeCoordinates[0];
           let longitude = tree.treeCoordinates[1];
           return (
@@ -133,7 +163,7 @@ const MyTreesMapScreen = ({ navigation }) => {
               description={tree.description}
             ></Marker>
           );
-        })}
+        })} */}
       </MapView>
     </View>
   );
