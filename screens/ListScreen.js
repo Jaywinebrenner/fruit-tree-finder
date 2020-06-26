@@ -21,6 +21,7 @@ import firebase from "firebase";
 
 
 const ListScreen = (  { navigation }) => {
+  
 
   const toggleToMapView = () => {
     navigation.navigate("Map");
@@ -87,19 +88,6 @@ const TreeCard = () => {
   );
 };
 
-
-const renderList = () => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.top}>
-        <Text style={styles.headerText}>Fruit Trees in your area </Text>
-      </View>
-      <TreeCard/>
-      <ViewMapButton toggleToMapView={toggleToMapView} />
-    </View>
-  );
-}
-
 return (
   <React.Fragment>
     <View style={styles.top}>
@@ -107,10 +95,11 @@ return (
     </View>
     <ViewMapButton toggleToMapView={toggleToMapView} />
     <ScrollView style={styles.container}>
+
       {currentDatabase &&
         Object.values(currentDatabase).map((value, index) => {
           return (
-            <View style={styles.cardContainer}>
+            <View style={styles.cardContainer} key={index}>
               <View style={styles.cardTop}>
                 <Text style={styles.cardTitleText}>{value.type}</Text>
                 <Text style={styles.cardDistanceText}>65 Meters away</Text>
@@ -133,6 +122,7 @@ return (
             </View>
           );
         })}
+
     </ScrollView>
   </React.Fragment>
 );

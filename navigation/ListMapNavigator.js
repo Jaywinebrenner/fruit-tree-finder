@@ -13,10 +13,13 @@ const ListMapStack = createStackNavigator();
 
 const ListMapNavigator = () => {
   return (
-    <ListMapStack.Navigator initialRouteName="Map">
+    <ListMapStack.Navigator initialRouteName="Map" headerMode="none">
       <ListMapStack.Screen name="Map" component={MapScreen} />
       <ListMapStack.Screen name="ListScreen" component={ListScreen} />
-      <ListMapStack.Screen name="ListItemDetailScreen" component={ListItemDetailScreen} />
+      <ListMapStack.Screen
+        name="ListItemDetailScreen"
+        component={ListItemDetailScreen}
+      />
     </ListMapStack.Navigator>
   );
 };

@@ -6,9 +6,11 @@ import logo from '../media/logo.png'
 import apples from "../media/apples.jpg";
 import firebase, { database } from "firebase";
 import { LongPressGestureHandler } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 
-const HomeScreen = () => {
+const HomeScreen = ( {navigation}) => {
+
 
   const [currentDatabase, setCurrentDatabase] = useState([])
 

@@ -8,6 +8,14 @@ const ListItemDetailScreen = ( { navigation, title }) => {
 
   const [currentDatabase, setCurrentDatabase] = useState([]);
 
+  let user = null;
+
+  if (firebase.auth().currentUser) {
+    userID = firebase.auth().currentUser.uid;
+  }
+  console.log("USERID", userID);
+  
+
   useEffect(() => {
     // Pulling down database
     let result = firebase.database().ref("/tree").limitToFirst(20);
@@ -24,9 +32,19 @@ const ListItemDetailScreen = ( { navigation, title }) => {
     if (currentDatabase) {
       console.log("I EXIST");
       Object.values(currentDatabase).forEach((value) => {
-        console.log("Value", value.type);
+        console.log("Value", value.userID);
       });
     }
+
+
+    // if (
+    //     Object.values(currentDatabase).forEach((value) => {
+    //     value.userID = 
+    //   })
+
+    // ) {
+
+    // }
 
 
   // if (

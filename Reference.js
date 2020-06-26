@@ -1,4 +1,18 @@
 
+// Error handling for user location Input
+
+// My Trees Page - full crud with list of users inputted trees
+
+// List Item Details screen.
+
+// make password private when typing it in
+
+
+
+
+
+
+
 // Didn't work calling in the return and it's making me insane, but works if I run the code (lines 5 - 22) in the return. Fuck me.
 
 const mapTrees = () => {

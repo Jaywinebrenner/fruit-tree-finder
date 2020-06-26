@@ -12,11 +12,10 @@ import Geocoder from "react-native-geocoding";
 import Modal from "react-native-modal";
 Geocoder.init(API_KEY);
 import { TREES } from "../constants/Markers";
-import ViewListButton from "../components/ViewListButton"
-import firebase, { database } from "firebase";
+import ViewMyListButton from "../components/ViewMyListButton";
+import firebase from "firebase";
 
-const MapScreen = ({navigation}) => {
-
+const MyTreesMapScreen = ({ navigation }) => {
   const trees = TREES.markers;
 
   const [region, setRegion] = useState(null);
@@ -26,29 +25,27 @@ const MapScreen = ({navigation}) => {
   useEffect(() => {
     _getUserLocactionAsync();
 
-        // Pulling down database
-      let result = firebase.database().
-      ref("/tree")
-      // .limitToFirst(20);
-      result.on("value", (snapshot) => {
-        console.log("snapshot val", snapshot.val());
-        let database = snapshot.val();
-        setCurrentDatabase(database);
-
-      });
+    // Pulling down database
+    let result = firebase.database().ref("/tree");
+    // .limitToFirst(20);
+    result.on("value", (snapshot) => {
+      console.log("snapshot val", snapshot.val());
+      let database = snapshot.val();
+      setCurrentDatabase(database);
+    });
   }, []);
 
-    if (!currentDatabase) {
-      console.log("I DONT EXIST");
-    }
-    if (currentDatabase) {
-      console.log("I EXIST");
-      Object.values(currentDatabase).forEach((value) => {
-        console.log("Value", value.type);
-      });
-    }
+  if (!currentDatabase) {
+    console.log("I DONT EXIST");
+  }
+  if (currentDatabase) {
+    console.log("I EXIST");
+    Object.values(currentDatabase).forEach((value) => {
+      console.log("Value", value.type);
+    });
+  }
 
-    console.log("CURRENT DATABASE", currentDatabase);
+  console.log("CURRENT DATABASE", currentDatabase);
 
   const _getUserLocactionAsync = async () => {
     try {
@@ -97,12 +94,12 @@ const MapScreen = ({navigation}) => {
   // };
 
   const toggleToListView = () => {
-    navigation.navigate("ListScreen")
-  }
+    navigation.navigate("My Trees");
+  };
 
   return (
     <View style={styles.container}>
-      <ViewListButton toggleToListView={toggleToListView} />
+      <ViewMyListButton toggleToListView={toggleToListView} />
       <CurrentLocationButton
         cb={() => {
           centerMap();
@@ -122,27 +119,25 @@ const MapScreen = ({navigation}) => {
         }}
         rotateEnabled={false}
       >
-
         {Object.values(currentDatabase).map((tree, index) => {
           let latitude = tree.treeCoordinates[0];
           let longitude = tree.treeCoordinates[1];
-            return (
-              <Marker
-                key={index}
-                coordinate={{
-                  latitude: latitude,
-                  longitude: longitude,
-                }}
-                title= {tree.type}
-                description={tree.description}
-              ></Marker>
-            );
+          return (
+            <Marker
+              key={index}
+              coordinate={{
+                latitude: latitude,
+                longitude: longitude,
+              }}
+              title={tree.type}
+              description={tree.description}
+            ></Marker>
+          );
         })}
-
       </MapView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -155,11 +150,10 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  testText:{
+  testText: {
     paddingTop: 50,
-    fontSize: 50
-  }
+    fontSize: 50,
+  },
 });
 
-
-export default MapScreen
+export default MyTreesMapScreen;
