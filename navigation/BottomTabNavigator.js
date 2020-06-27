@@ -7,8 +7,8 @@ import MapScreen from '../screens/MapScreen'
 import HomeScreen from "../screens/HomeScreen";
 import AddTreeScreen from "../screens/AddTreeScreen";
 import MyTrees from "../screens/MyTrees";
-import ListMapNavigator from "../navigation/ListMapNavigator";
-import MyTreesListMapNavigator from "../navigation/MyTreesListMapNavigator";
+import {ListMapNavigator} from "../navigation/ListMapNavigator";
+import {MyTreesListMapNavigator} from "../navigation/MyTreesListMapNavigator";
 import { Ionicons } from "@expo/vector-icons";
 
 const Tabs = createBottomTabNavigator();

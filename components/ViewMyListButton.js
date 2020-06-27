@@ -19,7 +19,7 @@ export const ViewMyListButton = ({ navigation, toggleToListView }) => {
       onPress={() => toggleToListView()}
     >
       {/* <Ionicons name="md-list" size={44} color="darkgray" /> */}
-      <Text>View List</Text>
+      <Text style={styles.buttonText}>View My List</Text>
     </TouchableOpacity>
   );
 };
@@ -41,6 +41,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.6,
     justifyContent: "space-around",
     alignItems: "center",
+  },
+  buttonText: {
+    alignSelf: "center",
+    fontSize: 10,
   },
 });
 

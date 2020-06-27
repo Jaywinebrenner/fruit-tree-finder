@@ -148,22 +148,7 @@ const MyTreesMapScreen = ({ navigation }) => {
         rotateEnabled={false}
       >
         {MapMarker}
-        {/* {Object.values(currentDatabase).map((tree, index) => {
 
-          let latitude = tree.treeCoordinates[0];
-          let longitude = tree.treeCoordinates[1];
-          return (
-            <Marker
-              key={index}
-              coordinate={{
-                latitude: latitude,
-                longitude: longitude,
-              }}
-              title={tree.type}
-              description={tree.description}
-            ></Marker>
-          );
-        })} */}
       </MapView>
     </View>
   );

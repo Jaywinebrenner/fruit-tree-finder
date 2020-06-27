@@ -24,4 +24,4 @@ const ListMapNavigator = () => {
   );
 };
 
-export default ListMapNavigator;
+export {ListMapNavigator};

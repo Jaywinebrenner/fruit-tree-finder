@@ -26,8 +26,6 @@ const MyTrees = ({ navigation }) => {
   };
 
   const [currentDatabase, setCurrentDatabase] = useState([]);
-  const [formattedDatabase, setFormattedDatabase] = useState([]);
-  const [listOfMyTrees, setListOfMyTrees] = useState();
   const [hasTreeData, setHasTreeData] = useState(false)
 
   let currentUserID = null;

@@ -15,6 +15,7 @@ import {
 import logo from "../media/logo.png";
 import firebase from "firebase";
 import apples from "../media/apples.jpg";
+import LoadingScreen from "./LoadingScreen";
 
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -22,12 +23,14 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loadingActive, setLoadingActive] = useState(false);
 
   console.log("email", email);
   console.log("password", password);
   
 
    async function signUp(email, password) {
+     setLoadingActive(true);
      try {
        if (password.length < 5) {
          alert("Please Enter 6 characters");
@@ -35,6 +38,7 @@ function LoginScreen({ navigation }) {
        }
        await firebase.auth().createUserWithEmailAndPassword(email, password);
        console.log("SUCCESS");
+       setLoadingActive(false);
      } catch (error) {
        console.log("ERROR", error.toString());
      }
@@ -57,13 +61,16 @@ function LoginScreen({ navigation }) {
        console.log("USER", user)
      })
    } catch (error) {
+     Alert.alert(error.toString());
      console.log("ERROR", error.toString());
    }
  };
 
 
+
+const renderLoginScreen = () => {
   return (
-    <KeyboardAwareScrollView style={styles.container}>
+ <KeyboardAwareScrollView style={styles.container}>
       <View style={styles.top}>
         {/* <ImageBackground source={apples} style={styles.applesImage}>
         </ImageBackground> */}
@@ -110,7 +117,61 @@ function LoginScreen({ navigation }) {
         </TouchableOpacity>
       </View>
     </KeyboardAwareScrollView>
-  );
+  )
+      }
+
+
+  return <React.Fragment>{loadingActive ? <LoadingScreen/> : renderLoginScreen()}</React.Fragment>
+
+
+
+  // <KeyboardAwareScrollView style={styles.container}>
+  //   <View style={styles.top}>
+  //     {/* <ImageBackground source={apples} style={styles.applesImage}>
+  //     </ImageBackground> */}
+  //   </View>
+
+  //   <View style={styles.middle}>
+  //     <Text style={styles.imageText}>PORTLAND FRUIT TREE {"\n"} PROJECT</Text>
+  //     <Text style={styles.imageTextTwo}>
+  //       Gather food from the plentiful bounties {"\n"} of your neighborhood
+  //     </Text>
+  //     <TouchableOpacity>
+  //       <Text style={styles.text}>Welcome!</Text>
+  //       <TextInput
+  //         autoCapitalize="none"
+  //         keyboardType={"email-address"}
+  //         placeholder="Email"
+  //         placeholderTextColor="grey"
+  //         value={email}
+  //         onChangeText={setEmail}
+  //         style={styles.input}
+  //         autoCapitalize={"none"}
+  //       />
+  //       <TextInput
+  //         placeholder="Password"
+  //         secureTextEntry={true}
+  //         placeholderTextColor="grey"
+  //         secureTextEntry={true}
+  //         value={password}
+  //         onChangeText={setPassword}
+  //         style={styles.input}
+  //       />
+  //     </TouchableOpacity>
+  //     <TouchableOpacity
+  //       style={styles.login}
+  //       onPress={() => login(email, password)}
+  //     >
+  //       <Text style={styles.loginButtonText}>LOGIN</Text>
+  //     </TouchableOpacity>
+  //     <TouchableOpacity
+  //       style={styles.signUp}
+  //       onPress={() => signUp(email, password)}
+  //     >
+  //       <Text style={styles.signUpButtonText}>SIGN UP</Text>
+  //     </TouchableOpacity>
+  //   </View>
+  // </KeyboardAwareScrollView>
 }
 
 const styles = StyleSheet.create({

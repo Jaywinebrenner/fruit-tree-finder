@@ -15,7 +15,6 @@ import Geocoder from "react-native-geocoding";
 import { useNavigation } from "@react-navigation/native";
 import LoadingScreen from './LoadingScreen';
 
-
 const AddTreeScreen = () => {
 
   const navigation = useNavigation();
@@ -129,8 +128,8 @@ const AddTreeScreen = () => {
       setLoadingActive(false);
       Alert.alert("Tree Added Successfully!");
     } catch (error) {
-      alert("SHIT IS WRONG")
-      Alert.alert(error);
+      Alert.alert("This Location didn't work for some reason. Please give it another shot.");
+      setLoadingActive(false);
       return 
     }
   };
@@ -144,8 +143,11 @@ const AddTreeScreen = () => {
         return treeCoords;
       })
       .catch((error) => {
-        Alert.alert("This location BLOWS")
-        console.error(error);
+        Alert.alert("We couldn't find your location, likely because the developer is using a simulator.")
+        console.log(error.toString());
+        
+        navigation.navigate("Add a tree")
+        return;
       });
     return treeCoordinates;
   }

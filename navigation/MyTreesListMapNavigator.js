@@ -23,4 +23,4 @@ const MyTreesListMapNavigator = () => {
   );
 };
 
-export default MyTreesListMapNavigator;
+export {MyTreesListMapNavigator}
