@@ -33,7 +33,7 @@ const AddTreeScreen = () => {
 
   const [type, setType] = useState(null);
   const [description, setDescription] = useState(null);
-  const [treeLocationTest, setTreeLocationTest] = useState(null)
+  const [treeLocationTest, setTreeLocation] = useState(null)
   const [treeCoordinates, setTreeCoordinates] = useState(null);
 
   const toggleTypeModal = () => {
@@ -80,7 +80,7 @@ const AddTreeScreen = () => {
 
   const closeLocationModal = () => {
     toggleLocationModal();
-    setTreeLocationTest(null);
+    setTreeLocation(null);
   };
 
   const renderSubmitButton = () => {
@@ -124,7 +124,7 @@ const AddTreeScreen = () => {
       });
       setType(null);
       setDescription(null);
-      setTreeLocationTest(null);
+      setTreeLocation(null);
       setLoadingActive(false);
       Alert.alert("Tree Added Successfully!");
     } catch (error) {
@@ -166,7 +166,7 @@ const AddTreeScreen = () => {
       location.zipCode;
     console.log("PROPERLY FORMATED ADDRESS", properlyFormatedAddress);
     
-    setTreeLocationTest(properlyFormatedAddress)
+    setTreeLocation(properlyFormatedAddress)
     console.log("TREE LOCATION TEST", treeLocationTest);
     setIsLocationModalVisible(false)
   }
@@ -231,7 +231,7 @@ const AddTreeScreen = () => {
 
       <TreeLocationModalTest
         createAddressObject={createAddressObject}
-        setTreeLocationTest={setTreeLocationTest}
+        setTreeLocation={setTreeLocation}
         toggleLocationModal={toggleLocationModal}
         setIsLocationModalVisible={setIsLocationModalVisible}
         isLocationModalVisible={isLocationModalVisible}

@@ -11,9 +11,9 @@ const ListItemDetailScreen = (props) => {
   
   let cardType = props.route.params.type;
   let cardDescription = props.route.params.description
-  let cardLocation = props.route.params.treeLocationTest.replace("null", "");
+  // let cardLocation = props.route.params.treeLocationTest.replace("null", "");
 
-  console.log("PARAM TEST", cardLocation);
+  console.log("PARAM TEST", props.route.params);
 
   let authUserID = null
   if (firebase.auth().currentUser) {
@@ -48,7 +48,7 @@ const ListItemDetailScreen = (props) => {
     <View style={styles.container}>
       <View style={styles.top}>
   <Text style={styles.titleText}>{cardType}</Text>
-  <Text>{cardLocation}</Text>
+  {/* <Text>{cardLocation}</Text> */}
         <Text style={styles.distanceText}>65 Meters away</Text>
       </View>
 

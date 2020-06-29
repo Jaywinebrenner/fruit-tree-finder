@@ -15,7 +15,7 @@ import { Formik } from "formik";
 
 export const TreeLocationModalTest = ({
   createAddressObject,
-  setTreeLocationTest,
+  setTreeLocation,
   toggleLocationModal,
   setIsLocationModalVisible,
   isLocationModalVisible,
