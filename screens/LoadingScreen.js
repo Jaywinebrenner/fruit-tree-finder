@@ -3,27 +3,29 @@ import { useState, useEffect } from "react";
 import { Image, View, StyleSheet, ActivityIndicator } from "react-native";
 import logo from "../media/logo.png";
 import firebase from "firebase"
+import { useNavigation } from "@react-navigation/native";
 
 
-const LoadingScreen = ({navigation}) => {
+const LoadingScreen = () => {
 
+  const navigation = useNavigation();
 
   useEffect(() => {
-    checkIfLoggedIn()
+    // checkIfLoggedIn()
   }, []);
 
 
 
-  const checkIfLoggedIn = () => {
-    firebase.auth().onAuthStateChanged(function(user) {
-      if(user){
-        navigation.navigate("Home")
-      } else {
-      navigation.navigate("SignIn");
-      }
-    }
-    )
-  }
+  // const checkIfLoggedIn = () => {
+  //   firebase.auth().onAuthStateChanged(function(user) {
+  //     if(user){
+  //       navigation.navigate("Home")
+  //     } else {
+  //     navigation.navigate("SignIn");
+  //     }
+  //   }
+  //   )
+  // }
 
   return (
     <View style={styles.loadingBody}>

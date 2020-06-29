@@ -26,8 +26,8 @@ function LoginScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [loadingActive, setLoadingActive] = useState(false);
 
-  console.log("email", email);
-  console.log("password", password);
+  // console.log("email", email);
+  // console.log("password", password);
   
    async function signUp(email, password) {
      setLoadingActive(true);
@@ -123,7 +123,6 @@ const renderLoginScreen = () => {
 
     return <React.Fragment>{console.log("loading active???", loadingActive)}{loadingActive ? <LoadingScreen/> : renderLoginScreen()}</React.Fragment>
   // return <React.Fragment>{renderLoginScreen()}</React.Fragment>
-
 
 }
 

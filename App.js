@@ -24,7 +24,7 @@ function App() {
   }
   const auth = firebase.auth();
 
-  console.log("AUTH", auth);
+  console.log("CURRENT USER APP", auth.currentUser);
   
     let [loggedIn, setLoggedIn] = useState("loading");
     console.log("LOGGED IN?", loggedIn);
@@ -32,8 +32,10 @@ function App() {
 
     auth.onAuthStateChanged((user) => {
       if (user) {
+        console.log("YES LOGGED OUT TRUE");
         setLoggedIn("true");
       } else {
+        console.log("YES LOGGED OUT FALSE");
         setLoggedIn("false");
       }
     });
@@ -53,7 +55,7 @@ function App() {
           {loggedIn === "false" && (
             <AuthStack.Screen name="SignIn" component={LoginScreen} />
           )}
-          {loggedIn && (
+          {loggedIn === 'true' && (
             <AuthStack.Screen name="Home" component={BottomTabNavigator} />
           )}
         </AuthStack.Navigator>
