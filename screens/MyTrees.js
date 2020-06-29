@@ -68,9 +68,7 @@ const MyTrees = ({ navigation }) => {
             <View style={styles.cardContainer} key={index}>
               <View style={styles.cardTop}>
                 <Text style={styles.cardTitleText}>{value.type}</Text>
-                <Text style={styles.cardDistanceText}>
-                  65 Meters away
-                </Text>
+                <Text style={styles.cardDistanceText}>65 Meters away</Text>
               </View>
 
               <View style={styles.cardMiddle}>
@@ -82,13 +80,12 @@ const MyTrees = ({ navigation }) => {
               <View style={styles.bottom}>
                 <TouchableOpacity
                   style={styles.cardDetailsButtonWrapper}
-                  onPress={() =>
-                    navigation.navigate("ListItemDetailScreen")
+                  onPress={
+                    (() => navigation.navigate("My Trees Details", {...value})
+                    )
                   }
                 >
-                  <Text style={styles.cardDetailsButtonText}>
-                    Details
-                  </Text>
+                  <Text style={styles.cardDetailsButtonText}>Details</Text>
                 </TouchableOpacity>
               </View>
             </View>

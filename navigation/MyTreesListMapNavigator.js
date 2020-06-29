@@ -5,6 +5,7 @@ import ListScreen from "../screens/ListScreen";
 import ListItemDetailScreen from "../screens/ListItemDetailScreen";
 import MyTrees from '../screens/MyTrees'
 import MyTreesMapScreen from "../screens/MyTreesMapScreen";
+import MyTreesDetailScreen from "../screens/MyTreesDetailScreen";
 
 const MyTreesStack = createStackNavigator();
 
@@ -18,7 +19,7 @@ const MyTreesListMapNavigator = () => {
     <MyTreesStack.Navigator initialRouteName="My Trees" headerMode="none">
       <MyTreesStack.Screen name="My Trees" component={MyTrees} />
       <MyTreesStack.Screen name="My Trees Map" component={MyTreesMapScreen} />
-
+      <MyTreesStack.Screen name="My Trees Details" component={MyTreesDetailScreen} />
     </MyTreesStack.Navigator>
   );
 };
