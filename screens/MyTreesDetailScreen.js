@@ -62,6 +62,12 @@ const MyTreesDetailScreen = (props) => {
         >
           <Text style={styles.detailsButtonText}>Back to Tree List</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.detailsButtonWrapper}
+          onPress={() => navigation.navigate("Edit My Tree")}
+        >
+          <Text style={styles.detailsButtonText}>Edit Your Tree</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

@@ -28,12 +28,19 @@ const MyTrees = ({ navigation }) => {
   const [currentDatabase, setCurrentDatabase] = useState([]);
   const [hasTreeData, setHasTreeData] = useState(false)
 
+  // console.log("is there data?", Object.values(currentDatabase));
+
+
+
+
+  
+
   let currentUserID = null;
 
   if (firebase.auth().currentUser) {
       currentUserID = firebase.auth().currentUser.uid;
   }
-  console.log("Current User ID", currentUserID);
+  // console.log("Current User ID", currentUserID);
 
   useEffect( () => {
     // Pulling down database
@@ -45,8 +52,20 @@ const MyTrees = ({ navigation }) => {
         setCurrentDatabase(database);
       });
     }
+
+    // const doesTheUserHaveTrees = () => {
+    //   Object.values(currentDatabase).map((value, index) => {
+    //     if (value.userID !== currentUserID) {
+    //       setHasTreeData(true);
+    //     }
+    //   });
+    // };
+    // doesTheUserHaveTrees();
     fetchData();
   }, []);
+
+  console.log("has tree data", hasTreeData);
+  
 
 
   if (!currentDatabase) {
@@ -111,11 +130,13 @@ const MyTrees = ({ navigation }) => {
       <ViewMyMapButton toggleToMapView={toggleToMapView} />
       <ScrollView style={styles.container}>
 
-        {!hasTreeData ? (
+        {TreeCard}
+
+        {/* {hasTreeData ? (
           TreeCard
         ) : (
           NoDataCard
-        )}
+        )} */}
 
       </ScrollView>
     </React.Fragment>
