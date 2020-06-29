@@ -3,83 +3,70 @@ import { StyleSheet, Text, View, Alert, TouchableOpacity } from "react-native";
 import { TREES } from "../constants/Markers";
 import { Navigation } from "react-native-navigation";
 import firebase from "firebase";
+import { useNavigation } from "@react-navigation/native";
 
-const ListItemDetailScreen = ( { navigation, title }) => {
-
+const ListItemDetailScreen = (props) => {
   const [currentDatabase, setCurrentDatabase] = useState([]);
-
-  let user = null;
-
-  if (firebase.auth().currentUser) {
-    userID = firebase.auth().currentUser.uid;
-  }
-  console.log("USERID", userID);
+  const navigation = useNavigation();
   
+  let cardType = props.route.params.type;
+  let cardDescription = props.route.params.description
+  let cardLocation = props.route.params.treeLocationTest.replace("null", "");
+
+  console.log("PARAM TEST", cardLocation);
+
+  let authUserID = null
+  if (firebase.auth().currentUser) {
+    authUserID = firebase.auth().currentUser.uid;
+  }
 
   useEffect(() => {
     // Pulling down database
-    let result = firebase.database().ref("/tree").limitToFirst(20);
-    result.on("value", (snapshot) => {
-      console.log("snapshot val", snapshot.val());
-      let database = snapshot.val();
-      setCurrentDatabase(database);
-    });
-  }, []);
-  
-    if (!currentDatabase) {
-      console.log("I DONT EXIST");
-    }
-    if (currentDatabase) {
-      console.log("I EXIST");
-      Object.values(currentDatabase).forEach((value) => {
-        console.log("Value", value.userID);
+    async function fetchData() {
+      let result = await firebase.database().ref("/tree");
+      await result.on("value", (snapshot) => {
+        // console.log("snapshot val", snapshot.val());
+        let database = snapshot.val();
+        setCurrentDatabase(database);
       });
     }
+    fetchData();
+  }, []);
 
 
-    // if (
-    //     Object.values(currentDatabase).forEach((value) => {
-    //     value.userID = 
-    //   })
-
-    // ) {
-
-    // }
-
-
-  // if (
-  //   treeKey.find((x) => )
-  // )
-
-
-  // if (
-  //   props.listOfClientProfiles.find((x) => x.userID === jobDetails.clientID)
-  // ) {
-  //   client = props.listOfClientProfiles.find(
-  //     (x) => x.userID === jobDetails.clientID,
-  //   );
-  // }
+  if (!currentDatabase) {
+    console.log("I DONT EXIST");
+  }
+  if (currentDatabase) {
+    console.log("I EXIST");
+    Object.values(currentDatabase).forEach((value) => {
+      // console.log("Value", value.userID);
+    });
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.top}>
-        <Text style={styles.titleText}>{title}</Text>
+  <Text style={styles.titleText}>{cardType}</Text>
+  <Text>{cardLocation}</Text>
         <Text style={styles.distanceText}>65 Meters away</Text>
       </View>
 
       <View style={styles.middle}>
-        <Text style={styles.descriptionText}>Description</Text>
+        <Text style={styles.descriptionText}>{cardDescription}</Text>
       </View>
 
       <View style={styles.bottom}>
-        <TouchableOpacity style={styles.detailsButtonWrapper} onPress={() => navigation.navigate("ListScreen")}>
+        <TouchableOpacity
+          style={styles.detailsButtonWrapper}
+          onPress={() => navigation.navigate("ListScreen")}
+        >
           <Text style={styles.detailsButtonText}>Back to Tree List</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -127,4 +114,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListItemDetailScreen
+export default ListItemDetailScreen;

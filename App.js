@@ -12,7 +12,6 @@ import LoginScreen from './screens/LoginScreen'
 import LoadingScreen from './screens/LoadingScreen'
 import { StatusBar, Platform } from "react-native";
 
-
 SplashScreen.preventAutoHide();
 setTimeout(SplashScreen.hide, 3500);
 const AuthStack = createStackNavigator();
@@ -32,10 +31,8 @@ function App() {
 
     auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log("YES LOGGED OUT TRUE");
         setLoggedIn("true");
       } else {
-        console.log("YES LOGGED OUT FALSE");
         setLoggedIn("false");
       }
     });

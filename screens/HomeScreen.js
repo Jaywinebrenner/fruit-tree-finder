@@ -8,19 +8,12 @@ import firebase, { database } from "firebase";
 import { LongPressGestureHandler } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 
-
 const HomeScreen = () => {
-
-
-    console.log("CURRENT USER HOME", firebase.auth().currentUser);
-  const navigation = useNavigation();
 
     const fakeSignOut = () => {
       try {
         firebase.auth().signOut();
-        // navigation.navigate("SignIn");
       } catch (error) {
-        // console.log("The user signed out");
         Alert.alert(error.toString())
       }
       return null;

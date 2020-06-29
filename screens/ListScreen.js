@@ -79,7 +79,7 @@ const TreeCard = () => {
       <View style={styles.bottom}>
         <TouchableOpacity
           style={styles.cardDetailsButtonWrapper}
-          onPress={() => navigation.navigate("ListItemDetailScreen")}
+          onPress={() => navigation.navigate("ListItemDetailScreen"), {}}
         >
           <Text style={styles.cardDetailsButtonText}>Details</Text>
         </TouchableOpacity>
@@ -114,7 +114,7 @@ return (
               <View style={styles.bottom}>
                 <TouchableOpacity
                   style={styles.cardDetailsButtonWrapper}
-                  onPress={() => navigation.navigate("ListItemDetailScreen")}
+                  onPress={() => navigation.navigate("ListItemDetailScreen", {...value})}
                 >
                   <Text style={styles.cardDetailsButtonText}>Details</Text>
                 </TouchableOpacity>
