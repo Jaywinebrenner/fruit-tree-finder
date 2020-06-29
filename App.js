@@ -10,6 +10,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import {BottomTabNavigator} from "./navigation/BottomTabNavigator";
 import LoginScreen from './screens/LoginScreen'
 import LoadingScreen from './screens/LoadingScreen'
+import { StatusBar, Platform } from "react-native";
+
 
 SplashScreen.preventAutoHide();
 setTimeout(SplashScreen.hide, 3500);
@@ -36,25 +38,27 @@ function App() {
       }
     });
 
-  
-    
-
   console.disableYellowBox = true;
 
+  const isIOS = Platform.OS === "ios";
+
   return (
-    <NavigationContainer>
-      <AuthStack.Navigator headerMode="none">
-        {loggedIn === "loading" && (
-          <AuthStack.Screen name="Loading" component={LoadingScreen} />
-        )}
-        {loggedIn === "false" && (
-          <AuthStack.Screen name="SignIn" component={LoginScreen} />
-        )}
-        {loggedIn && (
-          <AuthStack.Screen name="Home" component={BottomTabNavigator} />
-        )}
-      </AuthStack.Navigator>
-    </NavigationContainer>
+    <React.Fragment>
+      {isIOS && <StatusBar backgroundColor="white" barStyle="light-content" />}
+      <NavigationContainer>
+        <AuthStack.Navigator headerMode="none">
+          {loggedIn === "loading" && (
+            <AuthStack.Screen name="Loading" component={LoadingScreen} />
+          )}
+          {loggedIn === "false" && (
+            <AuthStack.Screen name="SignIn" component={LoginScreen} />
+          )}
+          {loggedIn && (
+            <AuthStack.Screen name="Home" component={BottomTabNavigator} />
+          )}
+        </AuthStack.Navigator>
+      </NavigationContainer>
+    </React.Fragment>
   );
 }
 

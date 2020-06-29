@@ -47,6 +47,7 @@ const BottomTabNavigator =  () => {
       <Tabs.Screen
         name="My Trees"
         component={MyTreesListMapNavigator}
+        // component={MyTrees}
         options={{
           tabBarIcon: ({ color }) => (
             <FontAwesome5 name="tree" size={20} color={color} />

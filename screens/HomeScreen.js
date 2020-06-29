@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity, Alert } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import logo from '../media/logo.png'
@@ -9,45 +9,21 @@ import { LongPressGestureHandler } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 
 
-const HomeScreen = ( {navigation}) => {
+const HomeScreen = () => {
 
+  const navigation = useNavigation();
 
-  const [currentDatabase, setCurrentDatabase] = useState([])
 
     const fakeSignOut = () => {
       try {
         firebase.auth().signOut();
-      } catch (error) {}
+        // navigation.navigate("SignIn");
+      } catch (error) {
+        console.log("The user signed out");
+        Alert.alert(error.toString())
+      }
       return null;
     };
-
-  //   useEffect(() => {
-
-  //     // Pulling down database
-  //     let result = firebase.database().
-  //     ref("/tree")
-  //     // .limitToFirst(20);
-  //     result.on("value", (snapshot) => {
-  //       console.log("snapshot val", snapshot.val());
-  //       let database = snapshot.val();
-  //       setCurrentDatabase(database);
-  //     });
-  //   }, []);
-      
-  // if (!currentDatabase) {
-  //   console.log("I DONT EXIST");
-  // } 
-
-  // if (currentDatabase) {
-  //   console.log("I EXIST");
-  //   console.log("CURRENT DATABASE", currentDatabase);
-  //   Object.values(currentDatabase).forEach((value) => {
-  //     console.log("lat", value.treeCoordinates[1]);
-  //   })
-    
-  // }
-
-
 
   return (
     <View style={styles.container}>
