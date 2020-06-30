@@ -22,9 +22,21 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.headerWrapper}>
+
         <View styles={styles.logoContainer}>
           <Image source={logo} style={styles.logo} />
         </View>
+
+        <View style={styles.logOutWrapper}>
+          <TouchableOpacity style={styles.signOut}>
+            <Text
+              style={styles.signOutButtonText}
+              onPress={() => fakeSignOut()}>
+              SIGN OUT
+            </Text>
+          </TouchableOpacity>
+        </View>
+
       </View>
 
       <View style={styles.body}>
@@ -58,23 +70,32 @@ const HomeScreen = () => {
      justifyContent: "center",
      textAlign: "center",
      backgroundColor: "#f9fcfb",
-     marginBottom: 24,
-     marginTop: 24,
+     //  marginBottom: 24,
+     //  marginTop: 24,
    },
    headerWrapper: {
      marginTop: 16,
      marginBottom: 20,
+     marginRight: 100,
      flex: 0.2,
      backgroundColor: "#f9fcfb",
-     alignItems: "center",
-     justifyContent: "center",
-     textAlign: "center",
+     //  alignItems: "center",
+     //  justifyContent: "center",
+     //  textAlign: "center",
+     //  flexDirection: "row"
    },
+   //  logOutWrapper:{
+   //   // position: "absolute",
+   //   left: 1000
+   //  },
    headerText: {
-     fontSize: 35,
+     fontSize: 34,
+     fontWeight: "bold",
      color: "white",
+     textShadowColor: "black",
+     textShadowOffset: { width: 5, height: 5 },
+     textShadowRadius: 10,
    },
-
    logoContainer: {
      flex: 1,
    },
@@ -106,20 +127,28 @@ const HomeScreen = () => {
      alignItems: "center",
    },
    signOut: {
+     position: "absolute",
+     top: 35,
+     right: 15,
      textAlign: "center",
      justifyContent: "center",
-     backgroundColor: "white",
+     backgroundColor: "#f9fcfb",
      height: 40,
-     width: 100,
-    marginTop: 20,
+     width: 60,
+     marginTop: 20,
      borderRadius: 3,
-     borderWidth: 1,
+     borderWidth: 2,
      borderColor: "#802941",
+     shadowColor: "black",
+     elevation: 1,
+     shadowRadius: 4,
+     shadowOpacity: 0.3,
    },
    signOutButtonText: {
      marginTop: 5,
      alignSelf: "center",
      color: "#802941",
+     fontSize: 10,
    },
  });
 

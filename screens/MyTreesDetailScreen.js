@@ -4,6 +4,7 @@ import { TREES } from "../constants/Markers";
 import { Navigation } from "react-native-navigation";
 import firebase from "firebase";
 import { useNavigation } from "@react-navigation/native";
+import { AntDesign } from "@expo/vector-icons";
 
 const MyTreesDetailScreen = (props) => {
   const [currentDatabase, setCurrentDatabase] = useState([]);
@@ -43,6 +44,13 @@ const MyTreesDetailScreen = (props) => {
     });
   }
 
+  console.log("REFFFF", firebase.database().ref(`5`).remove);
+  
+
+  const deleteTree = (key) => {
+    firebase.database().ref(`/tree/${key}`).remove();
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.top}>
@@ -69,6 +77,11 @@ const MyTreesDetailScreen = (props) => {
           <Text style={styles.detailsButtonText}>Edit Your Tree</Text>
         </TouchableOpacity>
       </View>
+
+
+      <AntDesign name="delete" size={24} color="black" onPress={()=> alert("fart")}/>
+
+
     </View>
   );
 };

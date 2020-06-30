@@ -4,7 +4,8 @@
 
 ##  About
 
-Ken's Kegs is a ReactJS web app which has full CRUD functionality for the fictitious Ken's Kegs Brewery.
+The Fruit Finder is a mobile application which connects people to the pleniful fruit tree bounties in their very back yard. The goal of The Fruit Finder is to document all fruit trees in the Portland area to provide fresh fruit from the bounties of your very own neighborhood. 
+
 
 ## Setup/Installation Requirements
 
@@ -29,9 +30,10 @@ Ken's Kegs is a ReactJS web app which has full CRUD functionality for the fictit
 
 ## Technologies Used
 
- - React
- - CSS
- - HTML
+ - React Native
+ - React Navigation v5
+ ![image of Github repository file system](https://i.imgur.com/Z5dso7Q.png)
+
 
 - - -
 

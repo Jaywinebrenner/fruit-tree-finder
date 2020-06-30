@@ -30,11 +30,6 @@ const MyTrees = ({ navigation }) => {
 
   // console.log("is there data?", Object.values(currentDatabase));
 
-
-
-
-  
-
   let currentUserID = null;
 
   if (firebase.auth().currentUser) {
