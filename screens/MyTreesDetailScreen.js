@@ -22,11 +22,9 @@ const MyTreesDetailScreen = (props) => {
   }
 
   useEffect(() => {
-    // Pulling down database
     async function fetchData() {
       let result = await firebase.database().ref("/tree");
       await result.on("value", (snapshot) => {
-        // console.log("snapshot val", snapshot.val());
         let database = snapshot.val();
         setCurrentDatabase(database);
       });
@@ -51,15 +49,13 @@ const MyTreesDetailScreen = (props) => {
     // firebase.database().ref(`/tree/1`).remove();
   };
 
-  console.log("FIND THE KEY", Object.keys(currentDatabase)[0]);
-
   let firebaseUniqueKey = null;
   const findFirebaseUniqueKeyToDelete = (cardKeyNumber) => {
     firebaseUniqueKey = Object.keys(currentDatabase)[cardKeyNumber]
   }
+
   findFirebaseUniqueKeyToDelete(cardKey)
   console.log("FIREBASE UNIQUE KEY OF THIS CARD", firebaseUniqueKey);
-
 
   return (
     <View style={styles.container}>

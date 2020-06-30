@@ -30,18 +30,18 @@ export const TreeLocationModalTest = ({
             <Formik
               initialValues={{
                 address: null,
-                city: null,
-                state: null,
+                city: "Portland",
+                state: "Oregon",
                 zipCode: null,
               }}
               onSubmit={(values, actions) => {
                 if (
                   values.address === null &&
-                  values.city === null &&
-                  values.state === null &&
+                  // values.city === null &&
+                  // values.state === null &&
                   values.zipCode === null
                 ) {
-                  Alert.alert("Please enter a location.");
+                  Alert.alert("Please enter a more specific location.");
                 } else {
                   actions.resetForm();
                   createAddressObject(values);
@@ -57,7 +57,7 @@ export const TreeLocationModalTest = ({
                   <TextInput
                     autoFocus={true}
                     style={styles.input}
-                    placeholder="Address"
+                    placeholder="Address or Cross Streets"
                     onChangeText={formikProps.handleChange("address")}
                     value={formikProps.values.address}
                   />

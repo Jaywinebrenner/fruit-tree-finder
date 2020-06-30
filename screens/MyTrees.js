@@ -25,8 +25,6 @@ const MyTrees = ({ navigation }) => {
       navigation.navigate("My Trees Map");
   };
 
-  
-
   const [currentDatabase, setCurrentDatabase] = useState([]);
   const [hasTreeData, setHasTreeData] = useState(false)
 
@@ -79,7 +77,6 @@ const MyTrees = ({ navigation }) => {
       console.log("Finding the key---", value);
       });
   }
-
 
   const TreeCard = 
     currentDatabase && (

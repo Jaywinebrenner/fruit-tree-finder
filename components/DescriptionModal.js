@@ -32,6 +32,7 @@ export const DescriptionModal = ({
                    autoFocus={true}
                    avoidKeyboard
                    multiline={true}
+                   maxLength={280}
                    value={description}
                    onChangeText={setDescription}
                    style={styles.descriptionModalInput}
@@ -93,6 +94,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   descriptionModalInput: {
+    padding: 10,
     height: 150,
     borderColor: "grey",
     borderWidth: 2,
