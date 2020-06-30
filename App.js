@@ -18,6 +18,8 @@ const AuthStack = createStackNavigator();
 
 function App() {
 
+  const [hasTreeData, setHasTreeData] = useState(false);
+
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }
@@ -52,8 +54,11 @@ function App() {
           {loggedIn === "false" && (
             <AuthStack.Screen name="SignIn" component={LoginScreen} />
           )}
-          {loggedIn === 'true' && (
-            <AuthStack.Screen name="Home" component={BottomTabNavigator} />
+          {loggedIn === "true" && (
+            <AuthStack.Screen
+              name="Home"
+              component={BottomTabNavigator}
+            />
           )}
         </AuthStack.Navigator>
       </NavigationContainer>

@@ -34,7 +34,6 @@ const MapScreen = ({navigation}) => {
         console.log("snapshot val", snapshot.val());
         let database = snapshot.val();
         setCurrentDatabase(database);
-
       });
   }, []);
 
@@ -71,8 +70,8 @@ const MapScreen = ({navigation}) => {
 
       // On Simulator
       let region = {
-        latitude: 45.5051,
-        longitude: -122.675,
+        latitude: 45.5552595,
+        longitude: -122.6720048,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       };
@@ -88,7 +87,7 @@ const MapScreen = ({navigation}) => {
 
   // const centerMap = () => {
   //   const { latitude, longitude, latitudeDelta, longitudeDelta } = region;
-  //   region.map.animateToRegion({
+  //   this.map.animateToRegion({
   //     latitude,
   //     longitude,
   //     longitudeDelta,
@@ -117,9 +116,9 @@ const MapScreen = ({navigation}) => {
         style={styles.map}
         showUserLocation={true}
         showsCompass={true}
-        ref={(map) => {
-          map = map;
-        }}
+        // ref={(map) => {
+        //   this.map = map;
+        // }}
         rotateEnabled={false}
       >
 

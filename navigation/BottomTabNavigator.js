@@ -14,7 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 const Tabs = createBottomTabNavigator();
 
 
-const BottomTabNavigator =  () => {
+const BottomTabNavigator = () => {
   return (
     <Tabs.Navigator
       tabBarOptions={{
@@ -65,6 +65,6 @@ const BottomTabNavigator =  () => {
       />
     </Tabs.Navigator>
   );
-      }
+};
 
 export {BottomTabNavigator};

@@ -8,21 +8,22 @@ import firebase, { database } from "firebase";
 import { LongPressGestureHandler } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 
-const HomeScreen = () => {
+const HomeScreen = ({ setHasTreeData }) => {
 
-    const fakeSignOut = () => {
-      try {
-        firebase.auth().signOut();
-      } catch (error) {
-        Alert.alert(error.toString())
-      }
-      return null;
-    };
+  console.log("set Tree Data??", setHasTreeData);
+  
+  const fakeSignOut = () => {
+    try {
+      firebase.auth().signOut();
+    } catch (error) {
+      Alert.alert(error.toString());
+    }
+    return null;
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.headerWrapper}>
-
         <View styles={styles.logoContainer}>
           <Image source={logo} style={styles.logo} />
         </View>
@@ -31,12 +32,12 @@ const HomeScreen = () => {
           <TouchableOpacity style={styles.signOut}>
             <Text
               style={styles.signOutButtonText}
-              onPress={() => fakeSignOut()}>
+              onPress={() => fakeSignOut()}
+            >
               SIGN OUT
             </Text>
           </TouchableOpacity>
         </View>
-
       </View>
 
       <View style={styles.body}>

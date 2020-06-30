@@ -13,8 +13,8 @@ const MyTreesDetailScreen = (props) => {
   let cardType = props.route.params.type;
   let cardDescription = props.route.params.description;
   let cardLocation = props.route.params.treeLocationTest.replace("null", "");
-
-  console.log("PARAM TEST", cardLocation);
+  let cardKey = props.route.params.key
+  console.log("card key", cardKey);
 
   let authUserID = null;
   if (firebase.auth().currentUser) {
@@ -44,12 +44,22 @@ const MyTreesDetailScreen = (props) => {
     });
   }
 
-  console.log("REFFFF", firebase.database().ref(`5`).remove);
-  
+  const deleteTree = (firebaseUniqueKey) => {
+    console.log("KEY NUMBER in DELTE FUNCTION?", firebaseUniqueKey);
+    firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
+    navigation.navigate("My Trees");
+    // firebase.database().ref(`/tree/1`).remove();
+  };
 
-  const deleteTree = (key) => {
-    firebase.database().ref(`/tree/${key}`).remove();
+  console.log("FIND THE KEY", Object.keys(currentDatabase)[0]);
+
+  let firebaseUniqueKey = null;
+  const findFirebaseUniqueKeyToDelete = (cardKeyNumber) => {
+    firebaseUniqueKey = Object.keys(currentDatabase)[cardKeyNumber]
   }
+  findFirebaseUniqueKeyToDelete(cardKey)
+  console.log("FIREBASE UNIQUE KEY OF THIS CARD", firebaseUniqueKey);
+
 
   return (
     <View style={styles.container}>
@@ -78,10 +88,12 @@ const MyTreesDetailScreen = (props) => {
         </TouchableOpacity>
       </View>
 
-
-      <AntDesign name="delete" size={24} color="black" onPress={()=> alert("fart")}/>
-
-
+      <AntDesign
+        name="delete"
+        size={24}
+        color="black"
+        onPress={() => deleteTree(firebaseUniqueKey)}
+      />
     </View>
   );
 };

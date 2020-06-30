@@ -25,17 +25,17 @@ const MyTrees = ({ navigation }) => {
       navigation.navigate("My Trees Map");
   };
 
+  
+
   const [currentDatabase, setCurrentDatabase] = useState([]);
   const [hasTreeData, setHasTreeData] = useState(false)
-
-  // console.log("is there data?", Object.values(currentDatabase));
 
   let currentUserID = null;
 
   if (firebase.auth().currentUser) {
       currentUserID = firebase.auth().currentUser.uid;
   }
-  // console.log("Current User ID", currentUserID);
+
 
   useEffect( () => {
     // Pulling down database
@@ -48,18 +48,25 @@ const MyTrees = ({ navigation }) => {
       });
     }
 
-    // const doesTheUserHaveTrees = () => {
-    //   Object.values(currentDatabase).map((value, index) => {
-    //     if (value.userID !== currentUserID) {
-    //       setHasTreeData(true);
-    //     }
-    //   });
-    // };
-    // doesTheUserHaveTrees();
+    const doesTheUserHaveTrees = () => {
+      Object.values(currentDatabase).map((value, index) => {
+        if (value.userID !== currentUserID) {
+          console.log("User Has Tree", hasTreeData);
+          setHasTreeData(false);
+      
+        } else {
+          setHasTreeData(true)
+           console.log("User DOESNT HAVE TREE DATA",hasTreeData);
+        }
+      });
+    };
+ 
+    doesTheUserHaveTrees();
     fetchData();
   }, []);
 
-  console.log("has tree data", hasTreeData);
+
+  console.log("FIND THE UNIQUE FIREBASE KEY", Object.keys(currentDatabase));
   
 
 
@@ -69,9 +76,10 @@ const MyTrees = ({ navigation }) => {
   if (currentDatabase) {
       console.log("I EXIST");
       Object.values(currentDatabase).forEach((value) => {
-      console.log("userID", value.userID);
+      console.log("Finding the key---", value);
       });
   }
+
 
   const TreeCard = 
     currentDatabase && (
@@ -94,10 +102,12 @@ const MyTrees = ({ navigation }) => {
               <View style={styles.bottom}>
                 <TouchableOpacity
                   style={styles.cardDetailsButtonWrapper}
-                  onPress={
-                    (() => navigation.navigate("My Trees Details", {...value})
-                    )
-                  }
+                  onPress={() => {
+                    navigation.navigate("My Trees Details", {
+                      key: index,
+                      ...value,
+                    });
+                  }}
                 >
                   <Text style={styles.cardDetailsButtonText}>Details</Text>
                 </TouchableOpacity>
@@ -107,7 +117,6 @@ const MyTrees = ({ navigation }) => {
         }
       })
     )
-
     const NoDataCard = 
       <View>
         <Text style={styles.noTreesText}>
@@ -125,13 +134,16 @@ const MyTrees = ({ navigation }) => {
       <ViewMyMapButton toggleToMapView={toggleToMapView} />
       <ScrollView style={styles.container}>
 
-        {TreeCard}
 
-        {/* {hasTreeData ? (
-          TreeCard
-        ) : (
-          NoDataCard
-        )} */}
+    {TreeCard}
+        
+
+
+    {/* {hasTreeData ? (
+      TreeCard
+    ) : (
+      NoDataCard
+    )}  */}
 
       </ScrollView>
     </React.Fragment>
