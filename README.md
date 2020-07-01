@@ -6,21 +6,14 @@
 
 The Fruit Finder is a mobile application for Android and iOS which connects people to the pleniful fruit tree bounties in their neighborhood. The goal of The Fruit Finder is to document all fruit trees in the Portland area to provide fresh, delicious fruit to those in want and to prevent needless food waste. 
 
-![image of Github repository file system](https://i.imgur.com/lkijYu7.gif "read")
+![image of Github repository file system](https://i.imgur.com/lkijYu7.gifv "read")
 
+[Imgur](https://i.imgur.com/lkijYu7.gifv)
 
 ## Setup/Installation Requirements
 
 ![image of Github repository file system](https://i.imgur.com/UStodOA.jpg "read")
 
-### Zip:
-
-1. Click [here](https://github.com/eliza85/ascii_group_project.git) to go to the repository location where you will find the clone/download menu.
-
- 2. Navigate to the directory (folder) that contains your browser's downloads via your terminal or Command Line interface.
- 3. Double-click on **Ken's Kegs** directory (folder).
- 4. Open the directory contents by extracting/unzipping the documents from the folder.
- 5. Type // npm i // followed by // npm run start //. This will initialize Ken's Kegs and spin up the server. You can view the sight by visiting localhost:3000 in your browser.
 
 - - -
 
