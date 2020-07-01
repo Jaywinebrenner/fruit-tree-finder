@@ -6,27 +6,27 @@
 
 The Fruit Finder is a mobile application for Android and iOS which connects people to the pleniful fruit tree bounties in their neighborhood. The goal of The Fruit Finder is to document all fruit trees in the Portland area to provide fresh, delicious fruit to those in want and to prevent needless food waste. 
 
-![Farmers Market Finder Demo](x-demo/fruit.gif)
+<!-- ![Fruit Tree Demo](x-demo/fruit.gif) -->
+ <img src="./x-demo/fruit.gif" alt="Fruit Tree Demo" width="300">
 
 
 ## Setup/Installation Requirements
-
-![image of Github repository file system](https://i.imgur.com/UStodOA.jpg "read")
+<img src="https://i.imgur.com/UStodOA.jpg" alt="Github pic" width="300">
 
 ### Zip:
 
-1. Click [here](https://github.com/eliza85/ascii_group_project.git) to go to the repository location where you will find the clone/download menu.
-
+ 1. Go to the repository location where you will find the clone/download button.
  2. Navigate to the directory (folder) that contains your browser's downloads via your terminal or Command Line interface.
- 3. Double-click on **Ken's Kegs** directory (folder).
+ 3. Double-click on **fruit-tree-finder** directory (folder).
  4. Open the directory contents by extracting/unzipping the documents from the folder.
- 5. Type // npm i // followed by // npm run start //. This will initialize Ken's Kegs and spin up the server. You can view the sight by visiting localhost:3000 in your browser.
+ 5. Type // npm i // followed by // npm run start //. This will initialize the Fruit Tree Finder and spin up the server. You can use the app via your phone using Expo Client or an iOS / Android.
 
 - - -
 
 ## Specifications
 
-![image of Github repository file system](https://i.imgur.com/6KRewiw.png)
+- The Fruit Tree Finder uses Functional Components exclusively and uses Hooks to store state. There is not one Classical componenet in the app. Redux was not necessary. 
+
 
 - - -
 
@@ -34,7 +34,10 @@ The Fruit Finder is a mobile application for Android and iOS which connects peop
 
  - React Native
  - React Navigation v5
- ![image of Github repository file system](https://i.imgur.com/Z5dso7Q.png)
+ - Firebase Realtime Database
+ - Firebase Authentication
+
+<img src="./x-demo/nav.png" alt="alt text" width="300">
 
 
 - - -
