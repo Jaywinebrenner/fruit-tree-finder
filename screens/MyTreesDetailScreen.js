@@ -46,16 +46,14 @@ const MyTreesDetailScreen = (props) => {
     console.log("KEY NUMBER in DELTE FUNCTION?", firebaseUniqueKey);
     firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
     navigation.navigate("My Trees");
-    // firebase.database().ref(`/tree/1`).remove();
   };
 
   let firebaseUniqueKey = null;
   const findFirebaseUniqueKeyToDelete = (cardKeyNumber) => {
     firebaseUniqueKey = Object.keys(currentDatabase)[cardKeyNumber]
   }
-
   findFirebaseUniqueKeyToDelete(cardKey)
-  console.log("FIREBASE UNIQUE KEY OF THIS CARD", firebaseUniqueKey);
+ 
 
   return (
     <View style={styles.container}>
@@ -78,7 +76,15 @@ const MyTreesDetailScreen = (props) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.detailsButtonWrapper}
-          onPress={() => navigation.navigate("Edit My Tree")}
+          onPress={() => { navigation.navigate("Edit My Tree",
+          {
+            cardType: cardType,
+            cardDescription: cardDescription,
+            cardLocation: cardLocation,
+            cardKey: cardKey,
+            firebaseUniqueKey: firebaseUniqueKey,
+          }
+          )}}
         >
           <Text style={styles.detailsButtonText}>Edit Your Tree</Text>
         </TouchableOpacity>

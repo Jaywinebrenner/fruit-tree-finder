@@ -1,10 +1,12 @@
-# PORTLAND FRUIT TREE PROJECT FRUIT FINDER
+# FRUIT FINDER MOBILE APP
 
 ## By **Jay Winebrenner**
 
 ##  About
 
-The Fruit Finder is a mobile application which connects people to the pleniful fruit tree bounties in their very back yard. The goal of The Fruit Finder is to document all fruit trees in the Portland area to provide fresh, delicious fruit to those in want and to prevent needless food waste. 
+The Fruit Finder is a mobile application for Android and iOS which connects people to the pleniful fruit tree bounties in their neighborhood. The goal of The Fruit Finder is to document all fruit trees in the Portland area to provide fresh, delicious fruit to those in want and to prevent needless food waste. 
+
+![image of Github repository file system](https://i.imgur.com/lkijYu7.gif "read")
 
 
 ## Setup/Installation Requirements
