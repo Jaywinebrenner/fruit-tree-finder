@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   View,
@@ -10,14 +11,17 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 
-export const TypeModal = ({
+const TypeModal = ({    
+    cameFromUpdateScreen,
+    setCameFromUpdateScreen,
+    firebaseUniqueKey,
     type,
     setType,
     toggleTypeModal,
     isTypeModalVisible,
     closeTypeModal,
-    submitType
-}) => {
+    submitType}) => {
+  
     return (
       <Modal isVisible={isTypeModalVisible}>
         <TouchableWithoutFeedback>
@@ -36,7 +40,7 @@ export const TypeModal = ({
 
             <TouchableOpacity
               style={styles.submitTreeButton}
-              onPress={() => submitType()}
+              onPress={() => submitType(firebaseUniqueKey)}
             >
               <Text style={styles.submitTreeText}>Enter</Text>
             </TouchableOpacity>
@@ -112,6 +116,4 @@ modalTextSubHeader: {
 },
 });
 
-
-
-// console.log("TYPE MODAL VISIBLE??", isTypeModalVisible);
+ export default TypeModal;

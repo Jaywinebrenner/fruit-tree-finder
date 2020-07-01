@@ -2,9 +2,11 @@ Figure out how get the Center Map Button to work on both MapScreen and MyTreesMa
 
 Complete update functionality
 
-If there is no database - make a rendered saying "There are no trees" or something along those lines.
+If there is no database - make a rendered <View> saying "There are no trees" or something along those lines.
 
-Display how far away user is from a Tree on MyTrees, MyTreeDetailScreen, ListScreen, ListItemDetailScreen. Wire up new state. 
+Display how far away the tree is from the user on MyTrees, MyTreeDetailScreen, ListScreen, ListItemDetailScreen. Wire up new state. 
+
+Change color of text button after state is set on AddATreeScreen
 
 Ensure the geolocator tracks location- i THINK it simply finds initial location.
 

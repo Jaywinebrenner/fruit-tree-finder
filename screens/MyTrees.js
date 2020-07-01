@@ -105,7 +105,7 @@ const MyTrees = ({ navigation }) => {
                     });
                   }}
                 >
-                  <Text style={styles.cardDetailsButtonText}>Details</Text>
+                  <Text style={styles.cardDetailsButtonText}>Details | Edit</Text>
                 </TouchableOpacity>
               </View>
             </View>

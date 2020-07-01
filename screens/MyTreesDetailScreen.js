@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Alert, TouchableOpacity } from "react-native";
-import { TREES } from "../constants/Markers";
 import { Navigation } from "react-native-navigation";
 import firebase from "firebase";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
+import TypeModal from '../components/TypeModal'
 
 const MyTreesDetailScreen = (props) => {
   const [currentDatabase, setCurrentDatabase] = useState([]);
@@ -22,6 +22,7 @@ const MyTreesDetailScreen = (props) => {
   }
 
   useEffect(() => {
+
     async function fetchData() {
       let result = await firebase.database().ref("/tree");
       await result.on("value", (snapshot) => {
@@ -30,10 +31,45 @@ const MyTreesDetailScreen = (props) => {
         database !== null && setCurrentDatabase(database);
       });
     }
+    const setInitialState = () => {
+      setType(cardType)
+    }
+
+    setInitialState()
     fetchData();
   }, []);
 
   !currentDatabase && console.log("I DONT EXIST");
+
+  //MODALS
+  const [cameFromUpdateScreen, setCameFromUpdateScreen] = useState(false);
+  const [isTypeModalVisible, setIsTypeModalVisible] = useState(false);
+  const [type, setType] = useState(null);
+  const toggleTypeModal = () => {
+    setIsTypeModalVisible(!isTypeModalVisible);
+    setCameFromUpdateScreen(true)
+  };
+
+  console.log("did it come from update screen?", cameFromUpdateScreen);
+  
+
+  async function submitType(firebaseUniqueKey) {
+    if (type === null) {
+      Alert.alert("Please fill in the type of tree");
+      return;
+    } else {
+      //  firebase.database().ref(`/tree/${firebaseUniqueKey}`).update(type);
+       setCameFromUpdateScreen(false);
+      toggleTypeModal();
+    }
+  };
+ 
+  const closeTypeModal = () => {
+  
+    toggleTypeModal()
+    setType(null)
+  }
+
 
   const areYouSure = () => {
         Alert.alert(
@@ -50,7 +86,6 @@ const MyTreesDetailScreen = (props) => {
         );
   } 
   
-
   const deleteTree = (firebaseUniqueKey) => {
     console.log("KEY NUMBER in DELTE FUNCTION?", firebaseUniqueKey);
     firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
@@ -67,7 +102,10 @@ const MyTreesDetailScreen = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.top}>
-        <TouchableOpacity style={styles.editStateButton}>
+        <TouchableOpacity
+          style={styles.editStateButton}
+          onPress={() => toggleTypeModal()}
+        >
           <Text style={styles.titleText}>{cardType}</Text>
         </TouchableOpacity>
 
@@ -101,6 +139,19 @@ const MyTreesDetailScreen = (props) => {
         size={24}
         color="black"
         onPress={() => areYouSure()}
+      />
+
+      <TypeModal
+        cameFromUpdateScreen={cameFromUpdateScreen}
+        setCameFromUpdateScreen={setCameFromUpdateScreen}
+        firebaseUniqueKey={firebaseUniqueKey}
+        submitType={submitType}
+        isTypeModalVisible={isTypeModalVisible}
+        setIsModalVisible={setIsTypeModalVisible}
+        type={type}
+        setType={setType}
+        toggleTypeModal={toggleTypeModal}
+        closeTypeModal={closeTypeModal}
       />
     </View>
   );

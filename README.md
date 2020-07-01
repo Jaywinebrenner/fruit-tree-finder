@@ -6,7 +6,6 @@
 
 The Fruit Finder is a mobile application for Android and iOS which connects people to the pleniful fruit tree bounties in their neighborhood. The goal of The Fruit Finder is to document all fruit trees in the Portland area to provide fresh, delicious fruit to those in want and to prevent needless food waste. 
 
-<!-- ![Fruit Tree Demo](x-demo/fruit.gif) -->
  <img src="./x-demo/fruit.gif" alt="Fruit Tree Demo" width="300">
 
 
@@ -25,7 +24,7 @@ The Fruit Finder is a mobile application for Android and iOS which connects peop
 
 ## Specifications
 
-- The Fruit Tree Finder uses Functional Components exclusively and uses Hooks to store state. There is not one Classical componenet in the app. Redux was not necessary. 
+- The Fruit Tree Finder uses Functional Components exclusively and uses Hooks for state management. There is not one Classical componenet in the app. Redux was not necessary. 
 
 
 - - -
@@ -37,7 +36,7 @@ The Fruit Finder is a mobile application for Android and iOS which connects peop
  - Firebase Realtime Database
  - Firebase Authentication
 
-<img src="./x-demo/nav.png" alt="alt text" width="300">
+<img src="./x-demo/Nav.png" alt="Navigation structure" width="300">
 
 
 - - -

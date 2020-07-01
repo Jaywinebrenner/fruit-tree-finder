@@ -5,9 +5,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import pears from "../media/pears.jpg";
 import Modal from "react-native-modal";
 import firebase from "firebase";
-import {TypeModal} from "../components/TypeModal";
-import { DescriptionModal } from "../components/DescriptionModal";
-import { TreeLocationModalTest } from "../components/TreeLocationModalTest";
+import TypeModal from "../components/TypeModal";
+import DescriptionModal from "../components/DescriptionModal";
+import TreeLocationModal from "../components/TreeLocationModal";
 import { FontAwesome5 } from "@expo/vector-icons";
 Geocoder.init(API_KEY);
 import { API_KEY } from "../geocoder";
@@ -108,7 +108,6 @@ const AddTreeScreen = () => {
       );
     }
   }
-  // console.log("TREE COORINATES", treeCoordinates);
 
   async function submit() {
     setLoadingActive(true);
@@ -139,13 +138,11 @@ const AddTreeScreen = () => {
       .then((json) => {
         const { lat, lng } = json.results[0].geometry.location;
         let treeCoords = [lat, lng];
-    //  console.log("TREE COORDS", treeCoords);
         return treeCoords;
       })
       .catch((error) => {
         Alert.alert("We couldn't find your location, likely because the developer is using a simulator.")
         console.log(error.toString());
-        
         navigation.navigate("Add a tree")
         return;
       });
@@ -153,9 +150,7 @@ const AddTreeScreen = () => {
   }
 
   const createAddressObject = (location) => {
-    console.log("LOCATION PASSED INTO CREATE OBJECT", location);
-    console.log("location Address", location.address);
-    
+
     let properlyFormatedAddress =
       location.address +
       " " +
@@ -167,10 +162,8 @@ const AddTreeScreen = () => {
     console.log("PROPERLY FORMATED ADDRESS", properlyFormatedAddress);
     
     setTreeLocation(properlyFormatedAddress)
-    console.log("TREE LOCATION TEST", treeLocationTest);
     setIsLocationModalVisible(false)
   }
-
 
   const renderAddTreeScreen = () => {
     return (
@@ -229,7 +222,7 @@ const AddTreeScreen = () => {
         closeDescriptionModal={closeDescriptionModal}
       />
 
-      <TreeLocationModalTest
+      <TreeLocationModal
         createAddressObject={createAddressObject}
         setTreeLocation={setTreeLocation}
         toggleLocationModal={toggleLocationModal}

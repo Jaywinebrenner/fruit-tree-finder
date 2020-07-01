@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 
-export const DescriptionModal = ({
+const DescriptionModal = ({
          description,
          setDescription,
          toggleDescriptionModal,
@@ -123,3 +123,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
+
+export default DescriptionModal

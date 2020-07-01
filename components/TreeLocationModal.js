@@ -13,7 +13,7 @@ import {
 import Modal from "react-native-modal";
 import { Formik } from "formik";
 
-export const TreeLocationModalTest = ({
+const TreeLocationModal = ({
   createAddressObject,
   setTreeLocation,
   toggleLocationModal,
@@ -177,3 +177,6 @@ const styles = StyleSheet.create({
   locationSubmitButtonWrapper: {},
   locationSubmitButtonText: {},
 });
+
+
+export default TreeLocationModal
