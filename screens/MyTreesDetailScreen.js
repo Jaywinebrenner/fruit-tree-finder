@@ -34,7 +34,23 @@ const MyTreesDetailScreen = (props) => {
   }, []);
 
   !currentDatabase && console.log("I DONT EXIST");
+
+  const areYouSure = () => {
+        Alert.alert(
+          "Warning!",
+          "Are you sure you want to delete this tree???",
+          [
+            {
+              text: "NO",
+              onPress: () => console.warn("NO Pressed"),
+              style: "cancel",
+            },
+            { text: "YES", onPress: () => deleteTree(firebaseUniqueKey) },
+          ],
+        );
+  } 
   
+
   const deleteTree = (firebaseUniqueKey) => {
     console.log("KEY NUMBER in DELTE FUNCTION?", firebaseUniqueKey);
     firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
@@ -67,9 +83,7 @@ const MyTreesDetailScreen = (props) => {
       <View style={styles.middle}>
         <TouchableOpacity style={styles.descriptionEditStateButton}>
           <Text style={styles.titleText}> Tree Description:</Text>
-          <Text style={styles.descriptionSubheaderText}>
-          {cardDescription}
-          </Text>
+          <Text style={styles.descriptionSubheaderText}>{cardDescription}</Text>
         </TouchableOpacity>
       </View>
 
@@ -86,7 +100,7 @@ const MyTreesDetailScreen = (props) => {
         name="delete"
         size={24}
         color="black"
-        onPress={() => deleteTree(firebaseUniqueKey)}
+        onPress={() => areYouSure()}
       />
     </View>
   );
