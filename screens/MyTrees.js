@@ -36,22 +36,13 @@ const MyTrees = ({ navigation }) => {
 
 
   useEffect( () => {
-    // Pulling down database
-
-
     async function fetchData() {
-
-      try {
         let result = await firebase.database().ref("/tree");
         await result.on("value", (snapshot) => {
           // console.log("snapshot val", snapshot.val());
           let database = snapshot.val();
           setCurrentDatabase(database);
         });
-      } catch (error) {
-        alert(error.toString())
-        return;
-      }
 
       }
     // const doesTheUserHaveTrees = () => {

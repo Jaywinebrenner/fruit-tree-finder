@@ -20,6 +20,8 @@ Customize pins - possibly 2 different kinds
 
 Customize map
 
+Need to render loading screen logic in places... too lazy to check which ones right now.
+
 Think about adding profiles for users? 
 
 If Profiles are added, think about the abiltiy to add comments to be displayed on ListItemDetailScreen???

@@ -26,7 +26,8 @@ const MyTreesDetailScreen = (props) => {
       let result = await firebase.database().ref("/tree");
       await result.on("value", (snapshot) => {
         let database = snapshot.val();
-        setCurrentDatabase(database);
+        console.log("DATABASW SNAP SHOT", database);
+        database !== null && setCurrentDatabase(database);
       });
     }
     fetchData();
@@ -79,20 +80,6 @@ const MyTreesDetailScreen = (props) => {
         >
           <Text style={styles.detailsButtonText}>Back to Tree List</Text>
         </TouchableOpacity>
-        {/* <TouchableOpacity
-          style={styles.detailsButtonWrapper}
-          onPress={() => {
-            navigation.navigate("Edit My Tree", {
-              cardType: cardType,
-              cardDescription: cardDescription,
-              cardLocation: cardLocation,
-              cardKey: cardKey,
-              firebaseUniqueKey: firebaseUniqueKey,
-            });
-          }}
-        >
-          <Text style={styles.detailsButtonText}>Edit Your Tree</Text>
-        </TouchableOpacity> */}
       </View>
 
       <AntDesign
