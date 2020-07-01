@@ -32,16 +32,8 @@ const MyTreesDetailScreen = (props) => {
     fetchData();
   }, []);
 
-  if (!currentDatabase) {
-    console.log("I DONT EXIST");
-  }
-  if (currentDatabase) {
-    console.log("I EXIST");
-    Object.values(currentDatabase).forEach((value) => {
-      // console.log("Value", value.userID);
-    });
-  }
-
+  !currentDatabase && console.log("I DONT EXIST");
+  
   const deleteTree = (firebaseUniqueKey) => {
     console.log("KEY NUMBER in DELTE FUNCTION?", firebaseUniqueKey);
     firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
@@ -58,13 +50,26 @@ const MyTreesDetailScreen = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.top}>
-        <Text style={styles.titleText}>{cardType}</Text>
-        <Text>{cardLocation}</Text>
-        <Text style={styles.distanceText}>65 Meters away</Text>
+        <TouchableOpacity style={styles.editStateButton}>
+          <Text style={styles.titleText}>{cardType}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.editStateButton}>
+          <Text style={styles.subheaderText}>{cardLocation}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.editStateButton}>
+          <Text style={styles.subheaderText}>65 Meters away</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.middle}>
-        <Text style={styles.descriptionText}>{cardDescription}</Text>
+        <TouchableOpacity style={styles.descriptionEditStateButton}>
+          <Text style={styles.titleText}> Tree Description:</Text>
+          <Text style={styles.descriptionSubheaderText}>
+          {cardDescription}
+          </Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.bottom}>
@@ -74,20 +79,20 @@ const MyTreesDetailScreen = (props) => {
         >
           <Text style={styles.detailsButtonText}>Back to Tree List</Text>
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.detailsButtonWrapper}
-          onPress={() => { navigation.navigate("Edit My Tree",
-          {
-            cardType: cardType,
-            cardDescription: cardDescription,
-            cardLocation: cardLocation,
-            cardKey: cardKey,
-            firebaseUniqueKey: firebaseUniqueKey,
-          }
-          )}}
+          onPress={() => {
+            navigation.navigate("Edit My Tree", {
+              cardType: cardType,
+              cardDescription: cardDescription,
+              cardLocation: cardLocation,
+              cardKey: cardKey,
+              firebaseUniqueKey: firebaseUniqueKey,
+            });
+          }}
         >
           <Text style={styles.detailsButtonText}>Edit Your Tree</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       <AntDesign
@@ -108,7 +113,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "90%",
     height: 170,
-    marginTop: 12,
+    marginTop: 32,
     padding: 10,
     borderRadius: 8,
     color: "red",
@@ -140,10 +145,30 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: 22,
   },
-  distanceText: {
+  subheaderText: {
     alignSelf: "center",
     fontSize: 15,
   },
+  editStateButton: {
+    padding: 2,
+    borderRadius: 3,
+    borderWidth: 1,
+    marginTop: 20,
+    textAlign: "center",
+    justifyContent: "center",
+  },
+  descriptionEditStateButton: {
+    padding: 2,
+    borderRadius: 3,
+    borderWidth: 1,
+    marginTop: 20,
+    textAlign: "center",
+    justifyContent: "center",
+  },
+  descriptionSubheaderText: {
+    textAlign: "center"
+
+  }
 });
 
 export default MyTreesDetailScreen;

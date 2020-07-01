@@ -17,8 +17,6 @@ import firebase, { database } from "firebase";
 
 const MapScreen = ({navigation}) => {
 
-  const trees = TREES.markers;
-
   const [region, setRegion] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [currentDatabase, setCurrentDatabase] = useState([]);
@@ -26,28 +24,21 @@ const MapScreen = ({navigation}) => {
   useEffect(() => {
     _getUserLocactionAsync();
 
-        // Pulling down database
       let result = firebase.database().
       ref("/tree")
       // .limitToFirst(20);
       result.on("value", (snapshot) => {
-        console.log("snapshot val", snapshot.val());
         let database = snapshot.val();
         setCurrentDatabase(database);
       });
   }, []);
 
-    if (!currentDatabase) {
-      console.log("I DONT EXIST");
-    }
-    if (currentDatabase) {
-      console.log("I EXIST");
-      Object.values(currentDatabase).forEach((value) => {
-        console.log("Value", value.type);
-      });
-    }
+  !currentDatabase && console.log("I Don't exist");
+  currentDatabase &&
+    Object.values(currentDatabase).forEach((value) => {
+      console.log("Value", value);
+    });
 
-    console.log("CURRENT DATABASE", currentDatabase);
 
   const _getUserLocactionAsync = async () => {
     try {
@@ -85,6 +76,7 @@ const MapScreen = ({navigation}) => {
     }
   };
 
+    // THIS APPARENTLY WORKS FOR CLASS COMPONENTS
   // const centerMap = () => {
   //   const { latitude, longitude, latitudeDelta, longitudeDelta } = region;
   //   this.map.animateToRegion({
@@ -109,8 +101,8 @@ const MapScreen = ({navigation}) => {
       />
       <MapView
         loadingEnabled
-        title="Flatiron School Atlanta"
-        description="This is where the magic happens!"
+        title="Not sure what this does"
+        description="Not sure what this does either"
         showsUserLocation
         initialRegion={region}
         style={styles.map}
@@ -122,7 +114,7 @@ const MapScreen = ({navigation}) => {
         rotateEnabled={false}
       >
 
-        {Object.values(currentDatabase).map((tree, index) => {
+        {currentDatabase && Object.values(currentDatabase).map((tree, index) => {
           let latitude = tree.treeCoordinates[0];
           let longitude = tree.treeCoordinates[1];
             return (

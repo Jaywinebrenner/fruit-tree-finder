@@ -43,15 +43,12 @@ const MyTreesMapScreen = ({ navigation }) => {
   }, []);
 
 
-  if (!currentDatabase) {
-    console.log("I DONT EXIST");
-  }
-  if (currentDatabase) {
-    console.log("I EXIST");
+  !currentDatabase && console.log("I Don't exist");
+  currentDatabase &&
     Object.values(currentDatabase).forEach((value) => {
-      console.log("Value", value.type);
+      console.log("Value", value);
     });
-  }
+
 
   console.log("CURRENT DATABASE", currentDatabase);
 

@@ -1,0 +1,38 @@
+Figure out how get the Center Map Button to work on both MapScreen and MyTreesMapScreen
+
+Complete update functionality
+
+Display how far away user is from a Tree on MyTrees, MyTreeDetailScreen, ListScreen, ListItemDetailScreen. Wire up new state. 
+
+Ensure the geolocator tracks location- i THINK it simply finds initial location.
+
+Add error handling for Tree Location input. Primarily, ensure the inputted Tree is within a certain radius from user location. This is to ensure the Google Maps API didn't put the tree in some insanse spot as it's prone to do sometimes...
+
+Make Tree Database display the trees closest to the users proximity on both the ListScreen and MapScreen.  I don't think this is necessary for the MyTrees / MyTreesMapScreen Perhaps limit to 50?
+
+Upload picture functionality to be inputted on the AddATreeScreen and to be displayed on the ListItemDetailScreen / MyTreeDetailScreen. If no custom pic is provided, write function to display default pic based on the users "Type" input. If pear is in type user input, default pic to pear tree etc. 
+
+Write comprehensive list of possible fruit trees. 
+
+Customize pins - possibly 2 different kinds
+
+Customize map
+
+Think about adding profiles for users? 
+
+If Profiles are added, think about the abiltiy to add comments to be displayed on ListItemDetailScreen???
+
+Likely rebrand the whole thing. 
+- Fruit Tree Finder
+- Free Fruit Finder (FFF)
+- Take Your Pick
+- Gleaning the Hood
+- Fruit for All
+
+Once decided, make logo
+
+Fix status bar in accordance white / black according to a given screen's css
+
+CSS the shit out of it
+
+add maximum character input on Type and location modals

@@ -37,34 +37,42 @@ const MyTrees = ({ navigation }) => {
 
   useEffect( () => {
     // Pulling down database
-    async function fetchData() {
-      let result = await firebase.database().ref("/tree");
-      await result.on("value", (snapshot) => {
-        // console.log("snapshot val", snapshot.val());
-        let database = snapshot.val();
-        setCurrentDatabase(database);
-      });
-    }
 
-    const doesTheUserHaveTrees = () => {
-      Object.values(currentDatabase).map((value, index) => {
-        if (value.userID !== currentUserID) {
-          console.log("User Has Tree", hasTreeData);
-          setHasTreeData(false);
+
+    async function fetchData() {
+
+      try {
+        let result = await firebase.database().ref("/tree");
+        await result.on("value", (snapshot) => {
+          // console.log("snapshot val", snapshot.val());
+          let database = snapshot.val();
+          setCurrentDatabase(database);
+        });
+      } catch (error) {
+        alert(error.toString())
+        return;
+      }
+
+      }
+    // const doesTheUserHaveTrees = () => {
+    //   Object.values(currentDatabase).map((value, index) => {
+    //     if (value.userID !== currentUserID) {
+    //       console.log("User Has Tree", hasTreeData);
+    //       setHasTreeData(false);
       
-        } else {
-          setHasTreeData(true)
-           console.log("User DOESNT HAVE TREE DATA",hasTreeData);
-        }
-      });
-    };
+    //     } else {
+    //       setHasTreeData(true)
+    //        console.log("User DOESNT HAVE TREE DATA",hasTreeData);
+    //     }
+    //   });
+    // };
  
-    doesTheUserHaveTrees();
+    // doesTheUserHaveTrees();
     fetchData();
   }, []);
 
 
-  console.log("FIND THE UNIQUE FIREBASE KEY", Object.keys(currentDatabase));
+  currentDatabase && console.log("FIND THE UNIQUE FIREBASE KEY", Object.keys(currentDatabase));
   
 
 
