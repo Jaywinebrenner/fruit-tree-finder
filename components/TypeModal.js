@@ -12,8 +12,6 @@ import {
 import Modal from "react-native-modal";
 
 const TypeModal = ({    
-    cameFromUpdateScreen,
-    setCameFromUpdateScreen,
     firebaseUniqueKey,
     type,
     setType,
@@ -40,7 +38,7 @@ const TypeModal = ({
 
             <TouchableOpacity
               style={styles.submitTreeButton}
-              onPress={() => submitType(firebaseUniqueKey)}
+              onPress={() => submitType()}
             >
               <Text style={styles.submitTreeText}>Enter</Text>
             </TouchableOpacity>

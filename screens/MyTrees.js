@@ -5,18 +5,10 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  FlatList,
-  Image,
-  ImageBackground,
   ScrollView,
 } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import logo from "../media/logo.png";
-import apples from "../media/apples.jpg";
+
 import ViewMyMapButton from "../components/ViewMyMapButton";
-import ListItemDetailScreen from "./ListItemDetailScreen";
-import { TREES } from "../constants/Markers";
 import firebase from "firebase";
 
 const MyTrees = ({ navigation }) => {

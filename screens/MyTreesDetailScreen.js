@@ -4,7 +4,7 @@ import { Navigation } from "react-native-navigation";
 import firebase from "firebase";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
-import TypeModal from '../components/TypeModal'
+import EditTypeModal from '../components/editModals/EditTypeModal'
 
 const MyTreesDetailScreen = (props) => {
   const [currentDatabase, setCurrentDatabase] = useState([]);
@@ -42,34 +42,30 @@ const MyTreesDetailScreen = (props) => {
   !currentDatabase && console.log("I DONT EXIST");
 
   //MODALS
-  const [cameFromUpdateScreen, setCameFromUpdateScreen] = useState(false);
   const [isTypeModalVisible, setIsTypeModalVisible] = useState(false);
   const [type, setType] = useState(null);
   const toggleTypeModal = () => {
     setIsTypeModalVisible(!isTypeModalVisible);
-    setCameFromUpdateScreen(true)
   };
 
-  console.log("did it come from update screen?", cameFromUpdateScreen);
-  
-
-  async function submitType(firebaseUniqueKey) {
+  async function submitEditType(firebaseUniqueKey) {
+  // console.log("UNIQUE KEY", firebaseUniqueKey);
+  // console.log("TYPE", type);
     if (type === null) {
       Alert.alert("Please fill in the type of tree");
       return;
     } else {
-      //  firebase.database().ref(`/tree/${firebaseUniqueKey}`).update(type);
-       setCameFromUpdateScreen(false);
-      toggleTypeModal();
+      console.log("TYPE", type);
+      toggleTypeModal()
+       await firebase.database().ref(`/tree/${firebaseUniqueKey}`).update({type});
+  
     }
   };
  
   const closeTypeModal = () => {
-  
     toggleTypeModal()
     setType(null)
   }
-
 
   const areYouSure = () => {
         Alert.alert(
@@ -141,11 +137,9 @@ const MyTreesDetailScreen = (props) => {
         onPress={() => areYouSure()}
       />
 
-      <TypeModal
-        cameFromUpdateScreen={cameFromUpdateScreen}
-        setCameFromUpdateScreen={setCameFromUpdateScreen}
+      <EditTypeModal
         firebaseUniqueKey={firebaseUniqueKey}
-        submitType={submitType}
+        submitEditType={submitEditType}
         isTypeModalVisible={isTypeModalVisible}
         setIsModalVisible={setIsTypeModalVisible}
         type={type}
