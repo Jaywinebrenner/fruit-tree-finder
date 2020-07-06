@@ -164,6 +164,10 @@ const MapScreen = ({navigation}) => {
             <Text style={styles.welcomeText}>
               Welcome to The Fruit Tree Finder{" "}
             </Text>
+            <Text style={styles.welcomeSubheader}>
+              Promote food justice. Prevent food waste. Strengthen our
+              community.
+            </Text>
           </ImageBackground>
         </View>
 
@@ -182,7 +186,6 @@ const MapScreen = ({navigation}) => {
               color="#a40000"
             />
           </View>
-
         </View>
       </View>
     </View>
@@ -212,13 +215,33 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "white",
   },
+  welcomeTextWrapper: {
+    marginTop: 0,
+    width: "100%"
+  },
+  applesImage: {
+    padding: 10,
+    height: 110,
+    resizeMode: "cover",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
+  },
   welcomeText: {
     textAlign: "center",
     fontSize: 22,
     marginTop: 10,
     marginBottom: 10,
     color: "white",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    textShadowColor: "black",
+    textShadowOffset: { width: 5, height: 5 },
+    textShadowRadius: 10,
+  },
+  welcomeSubheader: {
+    color: "white",
+    textAlign: "center",
+
   },
   subHeader: {
     textAlign: "center",
@@ -238,17 +261,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 8,
     left: 4,
-  },
-  welcomeTextWrapper: {
-    marginTop: 0,
-    width: "100%",
-    backgroundColor: "red",
-  },
-  applesImage: {
-    height: 100,
-    resizeMode: "cover",
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
 

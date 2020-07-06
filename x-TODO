@@ -1,5 +1,9 @@
 Figure out how get the Center Map Button to work on both MapScreen and MyTreesMapScreen
 
+Add Key to distinguish between User added Trees, Database Trees and Verfified Trees.
+
+Likely look into this optimising custom marker stuff if trees bog down the app.
+
 Complete update functionality
 
 If the user has not made any trees- make a rendered <View> saying "There are no trees" or something along those lines on MyTrees
@@ -26,7 +30,6 @@ Need to render loading screen logic in places... too lazy to check which ones ri
 
 Think about adding profiles for users? 
 
-If Profiles are added, think about the abiltiy to add comments to be displayed on ListItemDetailScreen???
 
 Likely rebrand the whole thing. 
 - Fruit Tree Finder
