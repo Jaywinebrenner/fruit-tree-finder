@@ -14,7 +14,7 @@ Geocoder.init(API_KEY);
 import { TREES } from "../constants/Markers";
 import ViewListButton from "../components/ViewListButton"
 import firebase, { database } from "firebase";
-
+import { Entypo } from '@expo/vector-icons';
 const MapScreen = ({navigation}) => {
 
   const [region, setRegion] = useState(null);
@@ -126,7 +126,9 @@ const MapScreen = ({navigation}) => {
                 }}
                 title= {tree.type}
                 description={tree.description}
-              ></Marker>
+              >
+                <Entypo name="tree" size={30} color="green" />
+              </Marker>
             );
         })}
 
