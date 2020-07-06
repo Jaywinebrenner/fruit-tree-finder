@@ -25,16 +25,15 @@ const BottomTabNavigator = () => {
         showLabel: true,
       }}
     >
-      <Tabs.Screen
-        name="Home"
-        labelStyle={{ color: "white" }}
-        component={AboutScreen}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <FontAwesome name="home" size={24} color={color} />
-          ),
-        }}
-      />
+    <Tabs.Screen
+      name="Home"
+      component={ListMapNavigator}
+      options={{
+        tabBarIcon: ({ color }) => (
+          <FontAwesome name="home" size={24} color={color} />
+        ),
+      }}
+    />
       <Tabs.Screen
         name="Add a tree"
         component={AddTreeScreen}
@@ -55,8 +54,9 @@ const BottomTabNavigator = () => {
         }}
       />
       <Tabs.Screen
-        name="Map"
-        component={ListMapNavigator}
+        name="About"
+        labelStyle={{ color: "white" }}
+        component={AboutScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <Entypo name="hand" size={24} color={color} />

@@ -1,9 +1,8 @@
 import React from "react";
 import { Button } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-// import MapScreen from '../screens/MapScreen'
 import LoginScreen from "../screens/LoginScreen";
-import {ListMapNavigator} from "../navigation/ListMapNavigator";
+import { ListMapNavigator } from "../navigation/ListMapNavigator";
 
 const HomeStack = createStackNavigator();
 

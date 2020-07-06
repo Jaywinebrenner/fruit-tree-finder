@@ -21,14 +21,14 @@ import LoadingScreen from "./LoadingScreen";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function LoginScreen({ navigation }) {
-  
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loadingActive, setLoadingActive] = useState(false);
 
   // console.log("email", email);
   // console.log("password", password);
-  
+
    async function signUp(email, password) {
      setLoadingActive(true);
      try {
@@ -71,7 +71,10 @@ function LoginScreen({ navigation }) {
 
 const renderLoginScreen = () => {
   return (
- <KeyboardAwareScrollView style={styles.container}>
+ <KeyboardAwareScrollView
+    style={styles.container}
+    keyboardShouldPersistTaps='handled'
+  >
       <View style={styles.top}>
         {/* <ImageBackground source={apples} style={styles.applesImage}>
         </ImageBackground> */}
