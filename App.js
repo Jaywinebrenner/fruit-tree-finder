@@ -26,16 +26,20 @@ function App() {
   const auth = firebase.auth();
 
   console.log("CURRENT USER APP", auth.currentUser);
-  
-    let [loggedIn, setLoggedIn] = useState("loading");
+
+    let [loading, setLoading] = useState(true);
+
+    let [loggedIn, setLoggedIn] = useState(false);
     console.log("LOGGED IN?", loggedIn);
-    
+
 
     auth.onAuthStateChanged((user) => {
       if (user) {
-        setLoggedIn("true");
+        setLoggedIn(true);
+        setLoading(false);
       } else {
-        setLoggedIn("false");
+        setLoggedIn(false);
+        setLoading(false);
       }
     });
 
@@ -48,17 +52,20 @@ function App() {
       {isIOS && <StatusBar backgroundColor="white" barStyle="light-content" />}
       <NavigationContainer>
         <AuthStack.Navigator headerMode="none">
-          {loggedIn === "loading" && (
+          {loading ? (
             <AuthStack.Screen name="Loading" component={LoadingScreen} />
-          )}
-          {loggedIn === "false" && (
-            <AuthStack.Screen name="SignIn" component={LoginScreen} />
-          )}
-          {loggedIn === "true" && (
-            <AuthStack.Screen
-              name="Home"
-              component={BottomTabNavigator}
-            />
+          ) : (
+            loggedIn ? (
+              <AuthStack.Screen
+                name="SignedIn"
+                component={BottomTabNavigator}
+              />
+            ) : (
+              <AuthStack.Screen
+                name="Home"
+                component={LoginScreen}
+              />
+            )
           )}
         </AuthStack.Navigator>
       </NavigationContainer>

@@ -4,7 +4,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import MapScreen from '../screens/MapScreen'
-import HomeScreen from "../screens/HomeScreen";
+import AboutScreen from "../screens/AboutScreen";
 import AddTreeScreen from "../screens/AddTreeScreen";
 import MyTrees from "../screens/MyTrees";
 import {ListMapNavigator} from "../navigation/ListMapNavigator";
@@ -28,7 +28,7 @@ const BottomTabNavigator = () => {
       <Tabs.Screen
         name="Home"
         labelStyle={{ color: "white" }}
-        component={HomeScreen}
+        component={AboutScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <FontAwesome name="home" size={24} color={color} />

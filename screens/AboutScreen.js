@@ -8,7 +8,7 @@ import firebase, { database } from "firebase";
 import { LongPressGestureHandler } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 
-const HomeScreen = ({ setHasTreeData }) => {
+const AboutScreen = ({ setHasTreeData }) => {
 
   console.log("set Tree Data??", setHasTreeData);
   
@@ -153,4 +153,4 @@ const HomeScreen = ({ setHasTreeData }) => {
    },
  });
 
-export default HomeScreen
+export default AboutScreen
