@@ -7,19 +7,20 @@ import apples from "../media/apples.jpg";
 import firebase, { database } from "firebase";
 import { LongPressGestureHandler } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+import { signOut } from "../actions/sessions";
 
 const AboutScreen = ({ setHasTreeData }) => {
 
   console.log("set Tree Data??", setHasTreeData);
-  
-  const fakeSignOut = () => {
-    try {
-      firebase.auth().signOut();
-    } catch (error) {
-      Alert.alert(error.toString());
-    }
-    return null;
-  };
+
+  // const fakeSignOut = () => {
+  //   try {
+  //     firebase.auth().signOut();
+  //   } catch (error) {
+  //     Alert.alert(error.toString());
+  //   }
+  //   return null;
+  // };
 
   return (
     <View style={styles.container}>
@@ -55,7 +56,7 @@ const AboutScreen = ({ setHasTreeData }) => {
         </Text>
       </View>
       <TouchableOpacity style={styles.signOut}>
-        <Text style={styles.signOutButtonText} onPress={() => fakeSignOut()}>
+        <Text style={styles.signOutButtonText} onPress={() => signOut()}>
           SIGN OUT
         </Text>
       </TouchableOpacity>

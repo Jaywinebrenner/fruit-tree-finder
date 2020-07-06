@@ -8,19 +8,10 @@ const HomeStack = createStackNavigator();
 
 const HomeStackNavigator = ({navigation}) => {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator headerMode={"none"} >
       <HomeStack.Screen
         name="Home"
         component={ListMapNavigator}
-        options={{
-          headerRight: () => (
-            <Button
-              onPress={() => navigation.navigate("Login")}
-              title="sign in"
-              color="maroon"
-            />
-          ),
-        }}
       />
       <HomeStack.Screen
         name="Login"
