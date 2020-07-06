@@ -8,7 +8,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {BottomTabNavigator} from "./navigation/BottomTabNavigator";
-import LoginScreen from './screens/LoginScreen'
+import HomeStackNavigator from './navigation/HomeStackNavigator';
 import LoadingScreen from './screens/LoadingScreen'
 import { StatusBar, Platform } from "react-native";
 
@@ -63,7 +63,7 @@ function App() {
             ) : (
               <AuthStack.Screen
                 name="Home"
-                component={LoginScreen}
+                component={HomeStackNavigator}
               />
             )
           )}
