@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Alert } from "react-native";
+import { StyleSheet, Text, View, Alert,ImageBackground, TextInput } from "react-native";
 import { useState, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
@@ -15,6 +15,11 @@ import { TREES } from "../constants/Markers";
 import ViewListButton from "../components/ViewListButton"
 import firebase, { database } from "firebase";
 import { Entypo } from '@expo/vector-icons';
+import apples from "../media/apples.jpg";
+import { Foundation } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
+
 const MapScreen = ({navigation}) => {
 
   const [region, setRegion] = useState(null);
@@ -91,6 +96,25 @@ const MapScreen = ({navigation}) => {
     navigation.navigate("ListScreen")
   }
 
+
+  //LEEEE, here's a basic text component if you want it for the header
+  // <View>
+  //   <TextInput
+  //     placeholder="Search for a specific variety of tree"
+  //     style={styles.textInput}
+  //     onChangeText={() => console.log("hi there")}
+  //     value={null}
+  //   />
+  //   <EvilIcons
+  //     style={styles.searchIcon}
+  //     name="search"
+  //     size={24}
+  //     color="darkgray"
+  //   />
+  // </View>;
+
+
+
   return (
     <View style={styles.container}>
       <ViewListButton toggleToListView={toggleToListView} />
@@ -99,6 +123,7 @@ const MapScreen = ({navigation}) => {
           centerMap();
         }}
       />
+
       <MapView
         loadingEnabled
         title="Not sure what this does"
@@ -113,10 +138,10 @@ const MapScreen = ({navigation}) => {
         // }}
         rotateEnabled={false}
       >
-
-        {currentDatabase && Object.values(currentDatabase).map((tree, index) => {
-          let latitude = tree.treeCoordinates[0];
-          let longitude = tree.treeCoordinates[1];
+        {currentDatabase &&
+          Object.values(currentDatabase).map((tree, index) => {
+            let latitude = tree.treeCoordinates[0];
+            let longitude = tree.treeCoordinates[1];
             return (
               <Marker
                 key={index}
@@ -124,15 +149,42 @@ const MapScreen = ({navigation}) => {
                   latitude: latitude,
                   longitude: longitude,
                 }}
-                title= {tree.type}
+                title={tree.type}
                 description={tree.description}
               >
                 <Entypo name="tree" size={30} color="green" />
               </Marker>
             );
-        })}
-
+          })}
       </MapView>
+
+      <View style={styles.bottomWrapper}>
+        <View style={styles.welcomeTextWrapper}>
+          <ImageBackground source={apples} style={styles.applesImage}>
+            <Text style={styles.welcomeText}>
+              Welcome to The Fruit Tree Finder{" "}
+            </Text>
+          </ImageBackground>
+        </View>
+
+        <View>
+          <Text style={styles.subHeader}>
+            Here is a map of the various fruit trees in your area.{" "}
+          </Text>
+
+          <Text style={styles.subHeader}>Happy Hunting!</Text>
+
+          <View style={styles.iconWrapper}>
+            <Foundation name="trees" size={24} color="#228B22" />
+            <MaterialCommunityIcons
+              name="food-apple"
+              size={24}
+              color="#a40000"
+            />
+          </View>
+
+        </View>
+      </View>
     </View>
   );
 }
@@ -141,18 +193,63 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: '#fff',
-    alignItems: "center",
-    justifyContent: "center",
+    // alignItems: "center",
+    // justifyContent: "center",
   },
   map: {
+    flex: 2,
     width: "100%",
-    height: "100%",
+    height: "60%",
   },
-  testText:{
+  testText: {
     paddingTop: 50,
-    fontSize: 50
-  }
+    fontSize: 50,
+  },
+  bottomWrapper: {
+    // justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    width: "100%",
+    backgroundColor: "white",
+  },
+  welcomeText: {
+    textAlign: "center",
+    fontSize: 22,
+    marginTop: 10,
+    marginBottom: 10,
+    color: "white",
+    fontWeight: "bold"
+  },
+  subHeader: {
+    textAlign: "center",
+  },
+  iconWrapper: {
+    alignSelf: "center",
+    flexDirection: "row",
+  },
+  textInput: {
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    paddingLeft: 28,
+    borderRadius: 3,
+  },
+  searchIcon: {
+    position: "absolute",
+    bottom: 8,
+    left: 4,
+  },
+  welcomeTextWrapper: {
+    marginTop: 0,
+    width: "100%",
+    backgroundColor: "red",
+  },
+  applesImage: {
+    height: 100,
+    resizeMode: "cover",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
-
 
 export default MapScreen

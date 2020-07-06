@@ -26,7 +26,6 @@ const MyTrees = ({ navigation }) => {
       currentUserID = firebase.auth().currentUser.uid;
   }
 
-
   useEffect( () => {
     async function fetchData() {
         let result = await firebase.database().ref("/tree");
