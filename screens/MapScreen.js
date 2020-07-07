@@ -19,6 +19,7 @@ import apples from "../media/apples.jpg";
 import { Foundation } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
+import DrawerHomeSwipe from "../components/DrawerHomeSwipe";
 
 const MapScreen = ({navigation}) => {
 
@@ -158,7 +159,7 @@ const MapScreen = ({navigation}) => {
           })}
       </MapView>
 
-      <View style={styles.bottomWrapper}>
+      {/* <View style={styles.bottomWrapper}>
         <View style={styles.welcomeTextWrapper}>
           <ImageBackground source={apples} style={styles.applesImage}>
             <Text style={styles.welcomeText}>
@@ -187,7 +188,10 @@ const MapScreen = ({navigation}) => {
             />
           </View>
         </View>
-      </View>
+      </View> */}
+
+
+      <DrawerHomeSwipe/>
     </View>
   );
 }
@@ -195,9 +199,6 @@ const MapScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
-    // alignItems: "center",
-    // justifyContent: "center",
   },
   map: {
     flex: 2,
@@ -209,7 +210,6 @@ const styles = StyleSheet.create({
     fontSize: 50,
   },
   bottomWrapper: {
-    // justifyContent: "center",
     alignItems: "center",
     flex: 1,
     width: "100%",
