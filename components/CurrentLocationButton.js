@@ -14,7 +14,7 @@ const HEIGHT = Dimensions.get("window").width;
 
 export const CurrentLocationButton = (props) => {
     const cb = props.cb ? props.cb : () => console.log("callback function not passed to CurrentLocationButton")
-    const bottom = props.bottom ? props.bottom : 45
+    const bottom = props.bottom ? props.bottom : -150
 
     
 

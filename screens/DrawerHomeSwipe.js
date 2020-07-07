@@ -31,12 +31,24 @@ const DrawerHomeSwipe = () => {
       <React.Fragment>
         <View style={styles.welcomeTextWrapper}>
           <ImageBackground source={apples} style={styles.applesImage}>
-            <Ionicons
+            <View
+              style={{
+                paddingTop: 0,
+                borderBottomColor: "white",
+                borderBottomWidth: 3,
+                width: 50,
+                borderRadius: 9,
+                padding: 0,
+                margin: 0
+              }}
+            />
+
+            {/* <Ionicons
               style={styles.arrow}
               name="ios-arrow-up"
               size={21}
               color="white"
-            />
+            /> */}
             <Text style={styles.welcomeText}>
               Welcome to The Fruit Tree Finder{" "}
             </Text>
@@ -75,7 +87,7 @@ const DrawerHomeSwipe = () => {
 
     return (
       <BottomSheet
-        snapPoints={[450, 100, 33]}
+        snapPoints={[450, 105, 30]}
         renderHeader={renderHeader}
         renderContent={renderContent}
         initialSnap={1}
@@ -89,7 +101,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   applesImage: {
-    padding: 10,
+    // padding: 10,
     height: 115,
     resizeMode: "cover",
     justifyContent: "center",
@@ -99,7 +111,7 @@ const styles = StyleSheet.create({
   welcomeText: {
     textAlign: "center",
     fontSize: 22,
-    marginTop: 3,
+    marginTop: 15,
     marginBottom: 3,
     color: "white",
     fontWeight: "bold",

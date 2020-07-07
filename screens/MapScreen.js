@@ -19,7 +19,7 @@ import apples from "../media/apples.jpg";
 import { Foundation } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
-import DrawerHomeSwipe from "../components/DrawerHomeSwipe";
+import DrawerHomeSwipe from "./DrawerHomeSwipe";
 
 const MapScreen = ({navigation}) => {
 
@@ -159,38 +159,6 @@ const MapScreen = ({navigation}) => {
           })}
       </MapView>
 
-      {/* <View style={styles.bottomWrapper}>
-        <View style={styles.welcomeTextWrapper}>
-          <ImageBackground source={apples} style={styles.applesImage}>
-            <Text style={styles.welcomeText}>
-              Welcome to The Fruit Tree Finder{" "}
-            </Text>
-            <Text style={styles.welcomeSubheader}>
-              Promote food justice. Prevent food waste. Strengthen our
-              community.
-            </Text>
-          </ImageBackground>
-        </View>
-
-        <View>
-          <Text style={styles.subHeader}>
-            Here is a map of the various fruit trees in your area.{" "}
-          </Text>
-
-          <Text style={styles.subHeader}>Happy Hunting!</Text>
-
-          <View style={styles.iconWrapper}>
-            <Foundation name="trees" size={24} color="#228B22" />
-            <MaterialCommunityIcons
-              name="food-apple"
-              size={24}
-              color="#a40000"
-            />
-          </View>
-        </View>
-      </View> */}
-
-
       <DrawerHomeSwipe/>
     </View>
   );
@@ -204,51 +172,6 @@ const styles = StyleSheet.create({
     flex: 2,
     width: "100%",
     height: "60%",
-  },
-  testText: {
-    paddingTop: 50,
-    fontSize: 50,
-  },
-  bottomWrapper: {
-    alignItems: "center",
-    flex: 1,
-    width: "100%",
-    backgroundColor: "white",
-  },
-  welcomeTextWrapper: {
-    marginTop: 0,
-    width: "100%"
-  },
-  applesImage: {
-    padding: 10,
-    height: 110,
-    resizeMode: "cover",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  welcomeText: {
-    textAlign: "center",
-    fontSize: 22,
-    marginTop: 10,
-    marginBottom: 10,
-    color: "white",
-    fontWeight: "bold",
-    textShadowColor: "black",
-    textShadowOffset: { width: 5, height: 5 },
-    textShadowRadius: 10,
-  },
-  welcomeSubheader: {
-    color: "white",
-    textAlign: "center",
-
-  },
-  subHeader: {
-    textAlign: "center",
-  },
-  iconWrapper: {
-    alignSelf: "center",
-    flexDirection: "row",
   },
   textInput: {
     height: 40,
