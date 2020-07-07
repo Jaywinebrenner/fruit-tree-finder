@@ -15,6 +15,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomSheet from "reanimated-bottom-sheet";
 import { Ionicons } from "@expo/vector-icons";
 import logo from "../media/logo.png";
+import applePainting from "../media/apple-painting.png"
+
 
 // const TAB_BAR_HEIGHT = 30;
 
@@ -39,16 +41,9 @@ const DrawerHomeSwipe = () => {
                 width: 50,
                 borderRadius: 9,
                 padding: 0,
-                margin: 0
+                margin: 0,
               }}
             />
-
-            {/* <Ionicons
-              style={styles.arrow}
-              name="ios-arrow-up"
-              size={21}
-              color="white"
-            /> */}
             <Text style={styles.welcomeText}>
               Welcome to The Fruit Tree Finder{" "}
             </Text>
@@ -60,26 +55,29 @@ const DrawerHomeSwipe = () => {
         </View>
 
         <View style={styles.bottomOfDrawerWrapper}>
-          <Text style={styles.subHeader}>
-            Here is a map of the various fruit trees in your area.{" "}
+          <Text style={styles.pickDeliciousSubheader}>
+            {" "}
+            Pick delicious food from the thriving bounties growing in your very
+            neighborhood.
+          </Text>
+          <Text style={styles.subheader}>
+            {" "}
+            Explore our map of the various fruit trees in your area.{" "}
           </Text>
 
-          <Text style={styles.subHeader}>Happy Hunting!</Text>
+          <Text style={styles.subheader}>Happy Hunting!</Text>
 
           <View style={styles.iconWrapper}>
-            <Foundation name="trees" size={24} color="#228B22" />
-            <MaterialCommunityIcons
-              name="food-apple"
-              size={24}
-              color="#a40000"
-            />
-          </View>
+            <Image style={styles.applePainting} source={applePainting} />
 
-          <Text style={styles.subHeader}>
-            Maybe: If you would like to learn more about the Portland Fruit Tree
-            Project, please visit us on the web:
-          </Text>
-          <Image source={logo} style={styles.deepLinkImage} />
+          </View>
+          <View style={styles.linkWrapper}>
+            <Text style={styles.linkSubheader}>
+              If you would like to learn more about the Portland Fruit Tree
+              Project, please visit us on the web:
+            </Text>
+            <Image source={logo} style={styles.deepLinkImage} />
+          </View>
         </View>
       </React.Fragment>
     );
@@ -101,7 +99,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   applesImage: {
-    // padding: 10,
+    padding: 10,
     height: 115,
     resizeMode: "cover",
     justifyContent: "center",
@@ -122,8 +120,19 @@ const styles = StyleSheet.create({
   welcomeSubheader: {
     color: "white",
     textAlign: "center",
+    fontSize: 15,
+    textShadowColor: "black",
+    textShadowOffset: { width: 5, height: 5 },
+    textShadowRadius: 10,
   },
-  subHeader: {
+  pickDeliciousSubheader: {
+    textAlign: "center",
+    fontSize: 25,
+    color: "black",
+    marginBottom: 20,
+    lineHeight: 25
+  },
+  subheader: {
     textAlign: "center",
   },
   iconWrapper: {
@@ -152,9 +161,27 @@ const styles = StyleSheet.create({
   },
   deepLinkImage: {
     marginTop: 10,
-    width:80,
+    width: 80,
     height: 30,
-    alignSelf: "center"
+    alignSelf: "center",
+  },
+  linkWrapper: {
+    marginTop: 0,
+    paddingLeft: 50,
+    paddingRight: 50,
+  },
+  subheader: {
+    textAlign: "center",
+  },
+  linkSubheader: {
+    fontSize: 10,
+    textAlign: "center",
+  },
+  applePainting: {
+    height: 80,
+    width: 90,
+    marginBottom: 15,
+    marginTop: 5
   }
 });
 
