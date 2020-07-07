@@ -48,19 +48,19 @@ const MyTreesDetailScreen = (props) => {
     setIsTypeModalVisible(!isTypeModalVisible);
   };
 
-  async function submitEditType(firebaseUniqueKey) {
-  // console.log("UNIQUE KEY", firebaseUniqueKey);
-  // console.log("TYPE", type);
-    if (type === null) {
-      Alert.alert("Please fill in the type of tree");
-      return;
-    } else {
-      console.log("TYPE", type);
-      toggleTypeModal()
-       await firebase.database().ref(`/tree/${firebaseUniqueKey}`).update({type});
+  // async function submitEditType(firebaseUniqueKey) {
+  // // console.log("UNIQUE KEY", firebaseUniqueKey);
+  // // console.log("TYPE", type);
+  //   if (type === null) {
+  //     Alert.alert("Please fill in the type of tree");
+  //     return;
+  //   } else {
+  //     console.log("TYPE", type);
+  //     toggleTypeModal()
+  //      await firebase.database().ref(`/tree/${firebaseUniqueKey}`).update({type});
   
-    }
-  };
+  //   }
+  // };
  
   const closeTypeModal = () => {
     toggleTypeModal()
@@ -139,7 +139,7 @@ const MyTreesDetailScreen = (props) => {
 
       <EditTypeModal
         firebaseUniqueKey={firebaseUniqueKey}
-        submitEditType={submitEditType}
+        // submitEditType={submitEditType}
         isTypeModalVisible={isTypeModalVisible}
         setIsModalVisible={setIsTypeModalVisible}
         type={type}

@@ -11,7 +11,6 @@ import { API_KEY } from "../geocoder";
 import Geocoder from "react-native-geocoding";
 import Modal from "react-native-modal";
 Geocoder.init(API_KEY);
-import { TREES } from "../constants/Markers";
 import ViewListButton from "../components/ViewListButton"
 import firebase, { database } from "firebase";
 import { Entypo } from '@expo/vector-icons';
@@ -23,6 +22,7 @@ import { EvilIcons } from "@expo/vector-icons";
 import Search from "../components/Search";
 
 import DrawerHomeSwipe from "./DrawerHomeSwipe";
+import FilterDropDown from "../components/FilterDropDown";
 
 
 const MapScreen = ({navigation}) => {
@@ -30,6 +30,7 @@ const MapScreen = ({navigation}) => {
   const [region, setRegion] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [currentDatabase, setCurrentDatabase] = useState([]);
+  const [filter, setFilter] = useState("All Trees");
 
   useEffect(() => {
     _getUserLocactionAsync();
@@ -101,29 +102,14 @@ const MapScreen = ({navigation}) => {
     navigation.navigate("ListScreen")
   }
 
-
-  //LEEEE, here's a basic text component if you want it for the header
-  // <View>
-  //   <TextInput
-  //     placeholder="Search for a specific variety of tree"
-  //     style={styles.textInput}
-  //     onChangeText={() => console.log("hi there")}
-  //     value={null}
-  //   />
-  //   <EvilIcons
-  //     style={styles.searchIcon}
-  //     name="search"
-  //     size={24}
-  //     color="darkgray"
-  //   />
-  // </View>;
-
-
-
   return (
     <View style={styles.container}>
       <Search navigation={navigation}/>
       { /* <ViewListButton toggleToListView={toggleToListView} /> */ }
+      <FilterDropDown
+        filter={filter}
+        setFilter={setFilter}
+      />
       <CurrentLocationButton
         cb={() => {
           centerMap();
