@@ -21,6 +21,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 import Search from "../components/Search";
 
@@ -168,10 +169,13 @@ const MapScreen = ({navigation}) => {
       </MapView>
       <View style={styles.buttons}>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("AddTreeScreen")}>
-        <MaterialCommunityIcons name="tree" size={25} color="darkgreen" />
+        <Entypo name="plus" size={18} color="black" />
         <Text style={styles.buttonText}>Add a tree</Text>
-      </TouchableOpacity>
+        </TouchableOpacity>
       </View>
+      <TouchableOpacity style={styles.toggle} onPress={() => navigation.navigate("ListScreen")}>
+      <Ionicons name="ios-arrow-forward" size={60} color="maroon" />
+      </TouchableOpacity>
 
       <DrawerHomeSwipe/>
     </View>
@@ -229,13 +233,16 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
   buttonText: {
-    fontWeight: "bold",
     color: "black",
-    fontSize: 17,
+    fontSize: 15,
     textShadowColor: "white",
     textShadowRadius: 10,
     margin: "2%"
-
+  },
+  toggle: {
+    position: "absolute",
+    top: "50%",
+    right: "3%"
   }
 });
 
