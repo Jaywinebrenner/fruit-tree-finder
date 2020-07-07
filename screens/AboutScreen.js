@@ -7,10 +7,12 @@ import apples from "../media/apples.jpg";
 import firebase, { database } from "firebase";
 import { LongPressGestureHandler } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+import { signOut } from "../actions/sessions";
 
 const AboutScreen = ({ setHasTreeData }) => {
 
   console.log("set Tree Data??", setHasTreeData);
+
   
   const signOut = () => {
     try {
@@ -20,6 +22,7 @@ const AboutScreen = ({ setHasTreeData }) => {
     }
     return null;
   };
+
 
   return (
     <View style={styles.container}>

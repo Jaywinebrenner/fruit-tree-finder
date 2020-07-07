@@ -19,7 +19,11 @@ import apples from "../media/apples.jpg";
 import { Foundation } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
+
+import Search from "../components/Search";
+
 import DrawerHomeSwipe from "./DrawerHomeSwipe";
+
 
 const MapScreen = ({navigation}) => {
 
@@ -118,7 +122,8 @@ const MapScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <ViewListButton toggleToListView={toggleToListView} />
+      <Search navigation={navigation}/>
+      { /* <ViewListButton toggleToListView={toggleToListView} /> */ }
       <CurrentLocationButton
         cb={() => {
           centerMap();
@@ -153,7 +158,7 @@ const MapScreen = ({navigation}) => {
                 title={tree.type}
                 description={tree.description}
               >
-                <Entypo name="tree" size={30} color="green" />
+                { /* <Entypo name="tree" size={30} color="green" /> */ }
               </Marker>
             );
           })}
