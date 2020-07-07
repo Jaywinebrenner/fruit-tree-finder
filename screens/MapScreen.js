@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Alert,ImageBackground, TextInput } from "react-native";
+import { StyleSheet, Text, View, Alert, ImageBackground, TextInput, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
@@ -19,6 +19,8 @@ import apples from "../media/apples.jpg";
 import { Foundation } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
+import { FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import Search from "../components/Search";
 
@@ -124,11 +126,12 @@ const MapScreen = ({navigation}) => {
     <View style={styles.container}>
       <Search navigation={navigation}/>
       { /* <ViewListButton toggleToListView={toggleToListView} /> */ }
-      <CurrentLocationButton
+      { /* <CurrentLocationButton
         cb={() => {
           centerMap();
         }}
       />
+    */}
 
       <MapView
         loadingEnabled
@@ -163,6 +166,12 @@ const MapScreen = ({navigation}) => {
             );
           })}
       </MapView>
+      <View style={styles.buttons}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("AddTreeScreen")}>
+        <MaterialCommunityIcons name="tree" size={25} color="darkgreen" />
+        <Text style={styles.buttonText}>Add a tree</Text>
+      </TouchableOpacity>
+      </View>
 
       <DrawerHomeSwipe/>
     </View>
@@ -190,6 +199,44 @@ const styles = StyleSheet.create({
     bottom: 8,
     left: 4,
   },
+  buttons: {
+    position: "absolute",
+    right: "1%",
+    zIndex: 0,
+  },
+  button: {
+    top: 80,
+    flexDirection: "row",
+    backgroundColor: "white",
+    borderColor: "grey",
+    borderWidth: .5,
+    borderRadius: 25,
+    height: 35,
+    marginLeft: "3%",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "black",
+    shadowRadius: 2,
+    shadowOffset: {
+      width: 10,
+      height: 10
+    }
+  },
+  plusTree: {
+    position: "absolute",
+    left: 29,
+    top: 20,
+    zIndex: 1
+  },
+  buttonText: {
+    fontWeight: "bold",
+    color: "black",
+    fontSize: 17,
+    textShadowColor: "white",
+    textShadowRadius: 10,
+    margin: "2%"
+
+  }
 });
 
 export default MapScreen

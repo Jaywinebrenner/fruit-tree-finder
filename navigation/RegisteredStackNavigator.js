@@ -18,7 +18,7 @@ const RegisteredStackNavigator = () => {
         component={ListMapNavigator}
       />
       <RegisteredStack.Screen
-        name="Add a tree"
+        name="AddTreeScreen"
         component={AddTreeScreen}
       />
     </RegisteredStack.Navigator>
