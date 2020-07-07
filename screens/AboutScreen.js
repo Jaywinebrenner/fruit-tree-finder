@@ -13,14 +13,16 @@ const AboutScreen = ({ setHasTreeData }) => {
 
   console.log("set Tree Data??", setHasTreeData);
 
-  // const fakeSignOut = () => {
-  //   try {
-  //     firebase.auth().signOut();
-  //   } catch (error) {
-  //     Alert.alert(error.toString());
-  //   }
-  //   return null;
-  // };
+  
+  const signOut = () => {
+    try {
+      firebase.auth().signOut();
+    } catch (error) {
+      Alert.alert(error.toString());
+    }
+    return null;
+  };
+
 
   return (
     <View style={styles.container}>
@@ -33,7 +35,7 @@ const AboutScreen = ({ setHasTreeData }) => {
           <TouchableOpacity style={styles.signOut}>
             <Text
               style={styles.signOutButtonText}
-              onPress={() => fakeSignOut()}
+              onPress={() => signOut()}
             >
               SIGN OUT
             </Text>

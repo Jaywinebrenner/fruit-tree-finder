@@ -19,7 +19,11 @@ import apples from "../media/apples.jpg";
 import { Foundation } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
+
 import Search from "../components/Search";
+
+import DrawerHomeSwipe from "./DrawerHomeSwipe";
+
 
 const MapScreen = ({navigation}) => {
 
@@ -160,33 +164,7 @@ const MapScreen = ({navigation}) => {
           })}
       </MapView>
 
-      <View style={styles.bottomWrapper}>
-        <View style={styles.welcomeTextWrapper}>
-          <ImageBackground source={apples} style={styles.applesImage}>
-            <Text style={styles.welcomeText}>
-              Welcome to The Fruit Tree Finder{" "}
-            </Text>
-          </ImageBackground>
-        </View>
-
-        <View>
-          <Text style={styles.subHeader}>
-            Here is a map of the various fruit trees in your area.{" "}
-          </Text>
-
-          <Text style={styles.subHeader}>Happy Hunting!</Text>
-
-          <View style={styles.iconWrapper}>
-            <Foundation name="trees" size={24} color="#228B22" />
-            <MaterialCommunityIcons
-              name="food-apple"
-              size={24}
-              color="#a40000"
-            />
-          </View>
-
-        </View>
-      </View>
+      <DrawerHomeSwipe/>
     </View>
   );
 }
@@ -194,40 +172,11 @@ const MapScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
-    // alignItems: "center",
-    // justifyContent: "center",
   },
   map: {
     flex: 2,
     width: "100%",
     height: "60%",
-  },
-  testText: {
-    paddingTop: 50,
-    fontSize: 50,
-  },
-  bottomWrapper: {
-    // justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-    width: "100%",
-    backgroundColor: "white",
-  },
-  welcomeText: {
-    textAlign: "center",
-    fontSize: 22,
-    marginTop: 10,
-    marginBottom: 10,
-    color: "white",
-    fontWeight: "bold"
-  },
-  subHeader: {
-    textAlign: "center",
-  },
-  iconWrapper: {
-    alignSelf: "center",
-    flexDirection: "row",
   },
   textInput: {
     height: 40,
@@ -240,17 +189,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 8,
     left: 4,
-  },
-  welcomeTextWrapper: {
-    marginTop: 0,
-    width: "100%",
-    backgroundColor: "red",
-  },
-  applesImage: {
-    height: 100,
-    resizeMode: "cover",
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
 
