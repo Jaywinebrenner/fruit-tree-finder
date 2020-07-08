@@ -30,6 +30,8 @@ Need to render loading screen logic in places... too lazy to check which ones ri
 
 Think about adding profiles for users? 
 
+Getting that "User is already signed in if you accidently hit login button twice". Way to eliminate
+
 
 Likely rebrand the whole thing. 
 - Fruit Tree Finder
@@ -45,3 +47,15 @@ Fix status bar in accordance white / black according to a given screen's css
 CSS the shit out of it
 
 add maximum character input on Type and location modals
+
+
+
+COPY IDEAS//
+
+//Layman explanation..
+The Fruit Finder is a mobile application for Android and iOS which connects people to the pleniful fruit tree bounties in their neighborhood. The goal of The Fruit Finder is to document all fruit trees in the Portland area to provide fresh, delicious fruit to those in want and to prevent needless, unnec food waste.
+
+
+The Fruit Tree Finder is a mobile application for both iOS and Android which connects users to the thriving bounties of food growing in their very neightborhood. Upon spinning up the app, the user will be shown a map populated by the fruit trees in their immediate area. The app will let users know where and exactly how far the tree is from their current location, as well as relevant information about the tree - what kind of fruit does the tree bear for example.
+
+
