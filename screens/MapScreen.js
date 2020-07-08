@@ -174,7 +174,7 @@ const MapScreen = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <TouchableOpacity style={styles.toggle} onPress={() => navigation.navigate("ListScreen")}>
-      <Ionicons name="ios-arrow-forward" size={60} color="maroon" />
+        <Ionicons name="ios-arrow-forward" size={60} color="white" />
       </TouchableOpacity>
 
       <DrawerHomeSwipe/>
@@ -242,7 +242,15 @@ const styles = StyleSheet.create({
   toggle: {
     position: "absolute",
     top: "50%",
-    right: "3%"
+    right: "0%",
+    paddingVertical: 4,
+    paddingLeft: 15,
+    paddingRight: 7,
+    backgroundColor: "rgba(105, 105, 105, .2)",
+    justifyContent: "center",
+    alignItems: "center",
+    borderBottomLeftRadius: 15,
+    borderTopLeftRadius: 15
   }
 });
 
