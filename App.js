@@ -7,7 +7,7 @@ import { SplashScreen } from "expo";
 import { View, Text, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import {BottomTabNavigator} from "./navigation/BottomTabNavigator";
+import {RegisteredStackNavigator} from "./navigation/RegisteredStackNavigator";
 import HomeStackNavigator from './navigation/HomeStackNavigator';
 import LoadingScreen from './screens/LoadingScreen'
 import { StatusBar, Platform } from "react-native";
@@ -58,7 +58,7 @@ function App() {
             loggedIn ? (
               <AuthStack.Screen
                 name="SignedIn"
-                component={BottomTabNavigator}
+                component={RegisteredStackNavigator}
               />
             ) : (
               <AuthStack.Screen
