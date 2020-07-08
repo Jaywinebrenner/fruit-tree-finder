@@ -146,7 +146,7 @@ const MapScreen = ({navigation}) => {
                 title={tree.type}
                 description={tree.description}
               >
-                { /* <Entypo name="tree" size={30} color="green" /> */ }
+                <Entypo name="tree" size={30} color="green" />
               </Marker>
             );
           })}
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   },
   toggle: {
     position: "absolute",
-    top: "50%",
+    top: "45%",
     right: "0%",
     paddingVertical: 4,
     paddingLeft: 15,
