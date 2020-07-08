@@ -18,17 +18,16 @@ import ViewMapButton from "../components/ViewMapButton"
 import ListItemDetailScreen from "./ListItemDetailScreen";
 import { TREES } from "../constants/Markers";
 import firebase from "firebase";
+import { Ionicons } from "@expo/vector-icons";
 
 
-const ListScreen = (  { navigation }) => {
-  
-
+const ListScreen = ({ navigation: { goBack } }) => {
   const toggleToMapView = () => {
     navigation.navigate("Map");
   };
 
   const [currentDatabase, setCurrentDatabase] = useState(null);
-  const [formattedDatabase, setFormattedDatabase] = useState([])
+  const [formattedDatabase, setFormattedDatabase] = useState([]);
 
   useEffect(() => {
     // Pulling down database
@@ -40,97 +39,100 @@ const ListScreen = (  { navigation }) => {
     });
   }, []);
 
-    if (!currentDatabase) {
-      console.log("I DONT EXIST");
-    }
-    if (currentDatabase) {
-      console.log("I EXIST");
-      Object.values(currentDatabase).forEach((value) => {
-        console.log("Value LIST", value.type);
-      });
-    }
+  if (!currentDatabase) {
+    console.log("I DONT EXIST");
+  }
+  if (currentDatabase) {
+    console.log("I EXIST");
+    Object.values(currentDatabase).forEach((value) => {
+      console.log("Value LIST", value.type);
+    });
+  }
 
   console.log("CURRENT DATABASE", currentDatabase);
 
+  // const formattedDatabase = [];
+  // Object.keys(currentDatabase).map((key, index) => {
+  //   // console.log("KEY", key);
+  //   // console.log("||");
+  //   // console.log("INDEX", index);
+  //   formattedDatabase.push(currentDatabase);
+  //   setFormattedDatabase(formattedDatabase);
+  //   // console.log("FORMATED DB", formattedDatabase);
+  // });
 
-    // const formattedDatabase = [];
-    // Object.keys(currentDatabase).map((key, index) => {
-    //   // console.log("KEY", key);
-    //   // console.log("||");
-    //   // console.log("INDEX", index);
-    //   formattedDatabase.push(currentDatabase);
-    //   setFormattedDatabase(formattedDatabase);
-    //   // console.log("FORMATED DB", formattedDatabase);
-    // });
+  const TreeCard = () => {
+    return (
+      <View style={styles.cardContainer}>
+        <View style={styles.cardTop}>
+          <Text style={styles.cardTitleText}>tutke</Text>
+          <Text style={styles.cardDistanceText}>65 Meters away</Text>
+        </View>
 
+        <View style={styles.cardMiddle}>
+          <Text style={styles.cardDescriptionText}>description</Text>
+        </View>
 
-const TreeCard = () => {
+        <View style={styles.bottom}>
+          <TouchableOpacity
+            style={styles.cardDetailsButtonWrapper}
+            onPress={(() => navigation.navigate("ListItemDetailScreen"), {})}
+          >
+            <Text style={styles.cardDetailsButtonText}>Details</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
+
   return (
-    <View style={styles.cardContainer}>
-      <View style={styles.cardTop}>
-        <Text style={styles.cardTitleText}>tutke</Text>
-        <Text style={styles.cardDistanceText}>65 Meters away</Text>
+    <React.Fragment>
+      <View style={styles.top}>
+        <Text style={styles.headerText}>Fruit Trees in your area </Text>
       </View>
 
-      <View style={styles.cardMiddle}>
-        <Text style={styles.cardDescriptionText}>description</Text>
-      </View>
+      <TouchableOpacity
+        style={styles.toggle}
+        onPress={() => navigation.navigate("Map")}
+      >
+        <Ionicons name="ios-arrow-back" size={60} color="white" />
+      </TouchableOpacity>
 
-      <View style={styles.bottom}>
-        <TouchableOpacity
-          style={styles.cardDetailsButtonWrapper}
-          onPress={() => navigation.navigate("ListItemDetailScreen"), {}}
-        >
-          <Text style={styles.cardDetailsButtonText}>Details</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+      <ViewMapButton toggleToMapView={toggleToMapView} />
+      <ScrollView style={styles.container}>
+        {currentDatabase &&
+          Object.values(currentDatabase).map((value, index) => {
+            return (
+              <View style={styles.cardContainer} key={index}>
+                <View style={styles.cardTop}>
+                  <Text style={styles.cardTitleText}>{value.type}</Text>
+                  <Text style={styles.cardDistanceText}>65 Meters away</Text>
+                </View>
+
+                <View style={styles.cardMiddle}>
+                  <Text style={styles.cardDescriptionText}>
+                    {value.description}
+                  </Text>
+                </View>
+
+                <View style={styles.bottom}>
+                  <TouchableOpacity
+                    style={styles.cardDetailsButtonWrapper}
+                    onPress={() =>
+                      navigation.navigate("ListItemDetailScreen", { ...value })
+                    }
+                  >
+                    <Text style={styles.cardDetailsButtonText}>Details</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            );
+          })}
+      </ScrollView>
+    </React.Fragment>
   );
-};
 
-return (
-  <React.Fragment>
-    <View style={styles.top}>
-      <Text style={styles.headerText}>Fruit Trees in your area </Text>
-    </View>
-    <ViewMapButton toggleToMapView={toggleToMapView} />
-    <ScrollView style={styles.container}>
-
-      {currentDatabase &&
-        Object.values(currentDatabase).map((value, index) => {
-          return (
-            <View style={styles.cardContainer} key={index}>
-              <View style={styles.cardTop}>
-                <Text style={styles.cardTitleText}>{value.type}</Text>
-                <Text style={styles.cardDistanceText}>65 Meters away</Text>
-              </View>
-
-              <View style={styles.cardMiddle}>
-                <Text style={styles.cardDescriptionText}>
-                  {value.description}
-                </Text>
-              </View>
-
-              <View style={styles.bottom}>
-                <TouchableOpacity
-                  style={styles.cardDetailsButtonWrapper}
-                  onPress={() => navigation.navigate("ListItemDetailScreen", {...value})}
-                >
-                  <Text style={styles.cardDetailsButtonText}>Details</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          );
-        })}
-
-    </ScrollView>
-  </React.Fragment>
-);
-
-
-// return <React.Fragment>{currentDatabase ? renderList() : <Text style={styles.noDataText}>There is no data</Text>}</React.Fragment>;
-
-
+  // return <React.Fragment>{currentDatabase ? renderList() : <Text style={styles.noDataText}>There is no data</Text>}</React.Fragment>;
 };
 
 const styles = StyleSheet.create({
@@ -208,10 +210,23 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: 22,
   },
-  noDataText:{
+  noDataText: {
     fontSize: 60,
-    color: "red"
-  }
+    color: "red",
+  },
+  toggle: {
+    position: "absolute",
+    top: "45%",
+    left: "0%",
+    paddingVertical: 4,
+    paddingLeft: 7,
+    paddingRight: 15,
+    backgroundColor: "rgba(105, 105, 105, .2)",
+    justifyContent: "center",
+    alignItems: "center",
+    borderBottomRightRadius: 15,
+    borderTopRightRadius: 15,
+  },
 });
 
 export default ListScreen;

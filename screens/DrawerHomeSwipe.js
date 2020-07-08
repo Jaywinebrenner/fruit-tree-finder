@@ -31,12 +31,13 @@ const DrawerHomeSwipe = () => {
   const renderContent = () => {
     return (
       <React.Fragment>
+
         <View style={styles.welcomeTextWrapper}>
-          <ImageBackground source={apples} style={styles.applesImage}>
+        <View style={styles.topStrip}>
             <View
               style={{
                 paddingTop: 0,
-                borderBottomColor: "white",
+                borderBottomColor: "black",
                 borderBottomWidth: 3,
                 width: 50,
                 borderRadius: 9,
@@ -44,6 +45,10 @@ const DrawerHomeSwipe = () => {
                 margin: 0,
               }}
             />
+
+
+        </View>
+          <ImageBackground source={apples} style={styles.applesImage}>
             <Text style={styles.welcomeText}>
               Welcome to The Fruit Tree Finder{" "}
             </Text>
@@ -85,7 +90,7 @@ const DrawerHomeSwipe = () => {
 
   return (
     <BottomSheet
-      snapPoints={[450, 105, 30]}
+      snapPoints={[470, 130, 30]}
       renderHeader={renderHeader}
       renderContent={renderContent}
       initialSnap={1}
@@ -109,7 +114,6 @@ const styles = StyleSheet.create({
   welcomeText: {
     textAlign: "center",
     fontSize: 22,
-    marginTop: 15,
     marginBottom: 3,
     color: "white",
     fontWeight: "bold",
@@ -130,7 +134,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: "black",
     marginBottom: 20,
-    lineHeight: 25
+    lineHeight: 25,
   },
   subheader: {
     textAlign: "center",
@@ -181,8 +185,14 @@ const styles = StyleSheet.create({
     height: 80,
     width: 90,
     marginBottom: 15,
-    marginTop: 5
-  }
+    marginTop: 5,
+  },
+  topStrip: {
+    height: 30,
+  backgroundColor: "rgba(255, 255, 255, .7)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export default DrawerHomeSwipe

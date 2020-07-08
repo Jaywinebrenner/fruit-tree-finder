@@ -14,6 +14,8 @@ Change color of text button after state is set on AddATreeScreen
 
 Ensure the geolocator tracks location- i THINK it simply finds initial location.
 
+Bottom About Drawer scrolls too far up. 
+
 Add error handling for Tree Location input. Primarily, ensure the inputted Tree is within a certain radius from user location. This is to ensure the Google Maps API didn't put the tree in some insanse spot as it's prone to do sometimes...
 
 Make Tree Database display the trees closest to the users proximity on both the ListScreen and MapScreen.  I don't think this is necessary for the MyTrees / MyTreesMapScreen Perhaps limit to 50?

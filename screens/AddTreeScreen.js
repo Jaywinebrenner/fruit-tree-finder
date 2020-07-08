@@ -14,6 +14,8 @@ import { API_KEY } from "../geocoder";
 import Geocoder from "react-native-geocoding";
 import { useNavigation } from "@react-navigation/native";
 import LoadingScreen from './LoadingScreen';
+// import { navigate } from "@react-navigation/routers/lib/typescript/src/CommonActions";
+
 
 const AddTreeScreen = () => {
 
@@ -167,71 +169,72 @@ const AddTreeScreen = () => {
 
   const renderAddTreeScreen = () => {
     return (
-    <View style={styles.container}>
-      <View style={styles.top}>
-        <ImageBackground source={pears} style={styles.pearsImage}>
-          <Text style={styles.headerText}>Add a fruit tree</Text>
-        </ImageBackground>
+      <View style={styles.container}>
+        <View style={styles.top}>
+          <ImageBackground source={pears} style={styles.pearsImage}>
+            <Text style={styles.headerText}>Add a fruit tree</Text>
+          </ImageBackground>
+        </View>
+
+        <View style={styles.middle}>
+          <TouchableOpacity
+            style={styles.inputButton}
+            onPress={() => toggleTypeModal()}
+          >
+            <Text style={styles.inputButtonText}>
+              {type ? type : "Type of Tree"}
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.inputButton}
+            onPress={() => toggleDescriptionModal()}
+          >
+            <Text style={styles.inputButtonText}>
+              {description ? " Description Set" : "Description of Tree"}
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.inputButton}
+            onPress={() => toggleLocationModal()}
+          >
+            <Text style={styles.inputButtonText}>Location of Tree</Text>
+          </TouchableOpacity>
+        </View>
+
+        {renderSubmitButton()}
+
+        <TypeModal
+          submitType={submitType}
+          isTypeModalVisible={isTypeModalVisible}
+          setIsModalVisible={setIsTypeModalVisible}
+          type={type}
+          setType={setType}
+          toggleTypeModal={toggleTypeModal}
+          closeTypeModal={closeTypeModal}
+        />
+
+        <DescriptionModal
+          submitDescription={submitDescription}
+          description={description}
+          setDescription={setDescription}
+          toggleDescriptionModal={toggleDescriptionModal}
+          isDescriptionModalVisible={isDescriptionModalVisible}
+          closeDescriptionModal={closeDescriptionModal}
+        />
+
+        <TreeLocationModal
+          createAddressObject={createAddressObject}
+          setTreeLocation={setTreeLocation}
+          toggleLocationModal={toggleLocationModal}
+          setIsLocationModalVisible={setIsLocationModalVisible}
+          isLocationModalVisible={isLocationModalVisible}
+          closeLocationModal={closeLocationModal}
+        />
+        <Text style={styles.fakeBackButton} onPress={()=> navigation.navigate("Map")}>FAKE BACK BUTTON</Text>
       </View>
-
-      <View style={styles.middle}>
-        <TouchableOpacity
-          style={styles.inputButton}
-          onPress={() => toggleTypeModal()}
-        >
-          <Text style={styles.inputButtonText}>
-            {type ? type : "Type of Tree"}
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.inputButton}
-          onPress={() => toggleDescriptionModal()}
-        >
-          <Text style={styles.inputButtonText}>
-            {description ? " Description Set" : "Description of Tree"}
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.inputButton}
-          onPress={() => toggleLocationModal()}
-        >
-          <Text style={styles.inputButtonText}>Location of Tree</Text>
-        </TouchableOpacity>
-      </View>
-
-      {renderSubmitButton()}
-
-      <TypeModal
-        submitType={submitType}
-        isTypeModalVisible={isTypeModalVisible}
-        setIsModalVisible={setIsTypeModalVisible}
-        type={type}
-        setType={setType}
-        toggleTypeModal={toggleTypeModal}
-        closeTypeModal={closeTypeModal}
-      />
-
-      <DescriptionModal
-        submitDescription={submitDescription}
-        description={description}
-        setDescription={setDescription}
-        toggleDescriptionModal={toggleDescriptionModal}
-        isDescriptionModalVisible={isDescriptionModalVisible}
-        closeDescriptionModal={closeDescriptionModal}
-      />
-
-      <TreeLocationModal
-        createAddressObject={createAddressObject}
-        setTreeLocation={setTreeLocation}
-        toggleLocationModal={toggleLocationModal}
-        setIsLocationModalVisible={setIsLocationModalVisible}
-        isLocationModalVisible={isLocationModalVisible}
-        closeLocationModal={closeLocationModal}
-      />
-    </View>
-    )
+    );
   }
   
   return (
@@ -348,7 +351,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     justifyContent: "center",
     marginTop: 30,
-    paddingRight: 30
+    paddingRight: 30,
   },
   // submitButtonWrapper: {
   //   flex: 1,
@@ -362,7 +365,7 @@ const styles = StyleSheet.create({
   submitButtonTreeIconWrapper: {
     flex: 0.25,
   },
-    loadingBody: {
+  loadingBody: {
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
@@ -370,8 +373,13 @@ const styles = StyleSheet.create({
   loadingImage: {
     width: 300,
     height: 110,
-    marginBottom: 30
+    marginBottom: 30,
   },
+  fakeBackButton: {
+    fontSize: 30,
+    color: "black",
+    alignSelf: "center"
+  }
 });
 
 export default AddTreeScreen;

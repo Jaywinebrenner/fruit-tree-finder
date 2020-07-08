@@ -35,13 +35,16 @@ const MapScreen = ({navigation}) => {
   const [currentDatabase, setCurrentDatabase] = useState([]);
   const [filter, setFilter] = useState("All Trees");
 
+
+  let user = firebase.auth().currentUser
+
   useEffect(() => {
     _getUserLocactionAsync();
-
-      let result = firebase.database().
-      ref("/tree")
-      // .limitToFirst(20);
-      result.on("value", (snapshot) => {
+    
+    let result = firebase.database().
+    ref("/tree")
+    // .limitToFirst(20);
+    result.on("value", (snapshot) => {
         let database = snapshot.val();
         setCurrentDatabase(database);
       });
@@ -105,6 +108,20 @@ const MapScreen = ({navigation}) => {
     navigation.navigate("ListScreen")
   }
 
+  const renderAddATreeButton = () => {
+    return (
+          <View style={styles.buttons}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate("AddTreeScreen")}
+            >
+              <Entypo name="plus" size={18} color="black" />
+              <Text style={styles.buttonText}>Add a tree</Text>
+            </TouchableOpacity>
+          </View>
+    )
+  }
+
   return (
     <View style={styles.container}>
       <Search navigation={navigation}/>
@@ -151,12 +168,17 @@ const MapScreen = ({navigation}) => {
             );
           })}
       </MapView>
+
+
+      {user ? renderAddATreeButton() : <React.Fragment></React.Fragment>}
+{/* 
       <View style={styles.buttons}>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("AddTreeScreen")}>
         <Entypo name="plus" size={18} color="black" />
         <Text style={styles.buttonText}>Add a tree</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
+
       <TouchableOpacity style={styles.toggle} onPress={() => navigation.navigate("ListScreen")}>
         <Ionicons name="ios-arrow-forward" size={60} color="white" />
       </TouchableOpacity>

@@ -36,20 +36,6 @@ const MyTrees = ({ navigation }) => {
         });
 
       }
-    // const doesTheUserHaveTrees = () => {
-    //   Object.values(currentDatabase).map((value, index) => {
-    //     if (value.userID !== currentUserID) {
-    //       console.log("User Has Tree", hasTreeData);
-    //       setHasTreeData(false);
-      
-    //     } else {
-    //       setHasTreeData(true)
-    //        console.log("User DOESNT HAVE TREE DATA",hasTreeData);
-    //     }
-    //   });
-    // };
- 
-    // doesTheUserHaveTrees();
     fetchData();
   }, []);
 
@@ -124,13 +110,6 @@ const MyTrees = ({ navigation }) => {
 
     {TreeCard}
         
-
-
-    {/* {hasTreeData ? (
-      TreeCard
-    ) : (
-      NoDataCard
-    )}  */}
 
       </ScrollView>
     </React.Fragment>
