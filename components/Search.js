@@ -46,31 +46,37 @@ function Search(props) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    position: "absolute",
+    zIndex: 1,
+    flexDirection: "row",
+    paddingTop: 25,
+    paddingHorizontal: "2%",
+  },
   textInput: {
-    height: 35,
+    height: 40,
     borderColor: "gray",
     fontSize: 16,
     borderWidth: 1,
     paddingLeft: 32,
-    borderRadius: 25,
+    borderRadius: 15,
     width: "100%",
-    flex: 1
-  },
-  container: {
-    backgroundColor: "white",
-    flexDirection: "row",
-    paddingTop: 25,
-    paddingLeft: "3%",
-    paddingRight: "3%",
-    paddingBottom: "1%",
+    flex: 1,
+    backgroundColor: "rgba(255, 255, 255, .7)"
   },
   button: {
-    backgroundColor: "maroon",
+    backgroundColor: "rgba(125, 19, 19, .6)",
     borderColor: "grey",
+    borderWidth: 1,
     borderRadius: 25,
-    height: 35,
+    height: 30,
+    // position: "absolute",
     width: "18%",
+    // right: "4%",
     marginLeft: "3%",
+    marginTop: 5,
+
+    // top: 30,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -80,12 +86,14 @@ const styles = StyleSheet.create({
   },
   searchBox: {
     flexDirection: "row",
-    width: "80%",
+    width: "100%",
     flex: 1
   },
   searchIcon: {
     position: "absolute",
-    margin: "3%"
+    top: 10,
+    left: 10,
+    zIndex: 2
   }
 });
 

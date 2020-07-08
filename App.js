@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import * as firebase from "firebase";
 import {firebaseConfig} from "./firebase"
@@ -31,7 +30,6 @@ function App() {
 
     let [loggedIn, setLoggedIn] = useState(false);
     console.log("LOGGED IN?", loggedIn);
-
 
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -72,7 +70,5 @@ function App() {
     </React.Fragment>
   );
 }
-
-
 
 export default App;

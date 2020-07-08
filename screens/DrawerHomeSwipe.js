@@ -83,15 +83,15 @@ const DrawerHomeSwipe = () => {
     );
   };
 
-    return (
-      <BottomSheet
-        snapPoints={[450, 105, 30]}
-        renderHeader={renderHeader}
-        renderContent={renderContent}
-        initialSnap={1}
-      ></BottomSheet>
-    );
-    }
+  return (
+    <BottomSheet
+      snapPoints={[450, 105, 30]}
+      renderHeader={renderHeader}
+      renderContent={renderContent}
+      initialSnap={1}
+    />
+  );
+}
 
 
 const styles = StyleSheet.create({
