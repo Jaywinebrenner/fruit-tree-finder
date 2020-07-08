@@ -40,7 +40,7 @@ const MapScreen = ({navigation}) => {
 
   useEffect(() => {
     _getUserLocactionAsync();
-    
+
     let result = firebase.database().
     ref("/tree")
     // .limitToFirst(20);
@@ -110,15 +110,10 @@ const MapScreen = ({navigation}) => {
 
   const renderAddATreeButton = () => {
     return (
-          <View style={styles.buttons}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate("AddTreeScreen")}
-            >
-              <Entypo name="plus" size={18} color="black" />
-              <Text style={styles.buttonText}>Add a tree</Text>
-            </TouchableOpacity>
-          </View>
+      <TouchableOpacity style={styles.addTreeButton} onPress={() => navigation.navigate("AddTreeScreen")}>
+        <Entypo name="plus" size={18} color="black" />
+        <Text style={styles.buttonText}>Add a tree</Text>
+      </TouchableOpacity>
     )
   }
 
@@ -163,21 +158,13 @@ const MapScreen = ({navigation}) => {
                 title={tree.type}
                 description={tree.description}
               >
-                <Entypo name="tree" size={30} color="green" />
+                { /* <Entypo name="tree" size={30} color="green" /> */ }
               </Marker>
             );
           })}
       </MapView>
 
-
-      {user ? renderAddATreeButton() : <React.Fragment></React.Fragment>}
-{/* 
-      <View style={styles.buttons}>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("AddTreeScreen")}>
-        <Entypo name="plus" size={18} color="black" />
-        <Text style={styles.buttonText}>Add a tree</Text>
-        </TouchableOpacity>
-      </View> */}
+      {user && renderAddATreeButton()}
 
       <TouchableOpacity style={styles.toggle} onPress={() => navigation.navigate("ListScreen")}>
         <Ionicons name="ios-arrow-forward" size={60} color="white" />
@@ -214,7 +201,11 @@ const styles = StyleSheet.create({
     right: "1%",
     zIndex: 0,
   },
-  button: {
+  addTreeButton: {
+    position: "absolute",
+    right: "1%",
+    zIndex: 2,
+    flex: 1,
     top: 80,
     flexDirection: "row",
     backgroundColor: "white",
@@ -225,19 +216,7 @@ const styles = StyleSheet.create({
     marginLeft: "3%",
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "black",
-    shadowRadius: 2,
-    shadowOffset: {
-      width: 10,
-      height: 10
-    }
-  },
-  plusTree: {
-    position: "absolute",
-    left: 29,
-    top: 20,
-    zIndex: 1
-  },
+    zIndex: 3,  },
   buttonText: {
     color: "black",
     fontSize: 15,
@@ -259,5 +238,4 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 15
   }
 });
-
 export default MapScreen

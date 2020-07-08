@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput, A
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import pears from "../media/pears.jpg";
+import greenGradient3 from "../assets/greenGradient3.png";
 import Modal from "react-native-modal";
 import firebase from "firebase";
 import TypeModal from "../components/TypeModal";
@@ -14,6 +15,8 @@ import { API_KEY } from "../geocoder";
 import Geocoder from "react-native-geocoding";
 import { useNavigation } from "@react-navigation/native";
 import LoadingScreen from './LoadingScreen';
+import { AntDesign } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 // import { navigate } from "@react-navigation/routers/lib/typescript/src/CommonActions";
 
 
@@ -27,89 +30,11 @@ const AddTreeScreen = () => {
   }
 
   const [loadingActive, setLoadingActive] = useState(false);
-  const [isTypeModalVisible, setIsTypeModalVisible] = useState(false)
-  const [isDescriptionModalVisible, setIsDescriptionModalVisible] = useState(
-    false,
-  );
-  const [isLocationModalVisible, setIsLocationModalVisible] = useState(false);
 
   const [type, setType] = useState(null);
   const [description, setDescription] = useState(null);
   const [treeLocationTest, setTreeLocation] = useState(null)
   const [treeCoordinates, setTreeCoordinates] = useState(null);
-
-  const toggleTypeModal = () => {
-    setIsTypeModalVisible(!isTypeModalVisible);
-  };
-
-  const toggleDescriptionModal = () => {
-    setIsDescriptionModalVisible(!isDescriptionModalVisible);
-  };
-
-  const toggleLocationModal = () => {
-    setIsLocationModalVisible(!isLocationModalVisible);
-  };
-  
-
-  const submitType = () => {
-      if (type === null) {
-        Alert.alert("Please fill in the type of tree");
-        return
-      } else {
-        toggleTypeModal()
-      }
-  }
-
-  const closeTypeModal = () => {
-    toggleTypeModal()
-    setType(null)
-  }
-
-  const submitDescription = () => {
-    if (description === null) {
-      Alert.alert("Please fill in the description of the tree");
-      return;
-    } else {
-      toggleDescriptionModal();
-    }
-  };
-
-  const closeDescriptionModal = () => {
-    toggleDescriptionModal();
-    setDescription(null);
-  };
-
-
-  const closeLocationModal = () => {
-    toggleLocationModal();
-    setTreeLocation(null);
-  };
-
-  const renderSubmitButton = () => {
-    if (type && description && treeLocationTest) {
-      return (
-      
-        <TouchableOpacity
-          style={styles.submitButton}
-          onPress={() => submit()}
-        >
-          <View style={styles.submitButtonTextWrapper}>
-            <Text style={styles.submitButtonText}>Submit Tree</Text>
-          </View>
-
-          <View style={styles.submitButtonTreeIconWrapper}>
-            <FontAwesome5
-              style={styles.treeIcon}
-              name="tree"
-              size={32}
-              color="white"
-            />
-          </View>
-
-        </TouchableOpacity>
-      );
-    }
-  }
 
   async function submit() {
     setLoadingActive(true);
@@ -131,7 +56,7 @@ const AddTreeScreen = () => {
     } catch (error) {
       Alert.alert("This Location didn't work for some reason. Please give it another shot.");
       setLoadingActive(false);
-      return 
+      return
     }
   };
 
@@ -162,7 +87,7 @@ const AddTreeScreen = () => {
       " " +
       location.zipCode;
     console.log("PROPERLY FORMATED ADDRESS", properlyFormatedAddress);
-    
+
     setTreeLocation(properlyFormatedAddress)
     setIsLocationModalVisible(false)
   }
@@ -170,73 +95,54 @@ const AddTreeScreen = () => {
   const renderAddTreeScreen = () => {
     return (
       <View style={styles.container}>
-        <View style={styles.top}>
-          <ImageBackground source={pears} style={styles.pearsImage}>
-            <Text style={styles.headerText}>Add a fruit tree</Text>
-          </ImageBackground>
-        </View>
+        <ImageBackground source={greenGradient3} style={styles.gradientImage}>
+          <Entypo name="tree" size={500} color="#82d60d" style={styles.bigTree}/>
+          <View style={styles.top}>
+            <TouchableOpacity onPress={()=> navigation.navigate("Map")}>
+              <AntDesign name="arrowleft" size={35} color="#e1eddf" style={styles.backArrow} />
+            </TouchableOpacity>
+            <Text style={styles.backText}>Add a fruit tree</Text>
+          </View>
+          <View style={styles.form}>
+            <Text style={styles.detailsHeader}>Type</Text>
+            <TextInput
+              placeholder={"Enter the type of tree!"}
+              style={styles.input}
+              value={type}
+              onChangeText={setType}
+              returnKeyType={"next"}
+              autoFocus={true}
+              underlineColorAndroid={"#e1eddf"}
+            />
+            <Text style={styles.detailsHeader}>Description</Text>
+            <TextInput
+              placeholder={"Enter a short description"}
+              style={styles.input}
+              value={description}
+              onChangeText={setDescription}
+              returnKeyType={"next"}
+              underlineColorAndroid={"#e1eddf"}
+            />
+            <Text style={styles.detailsHeader}>Location</Text>
+            <TextInput
+              placeholder={"Enter the location of the tree"}
+              style={styles.input}
+              value={treeLocationTest}
+              onChangeText={setTreeLocation}
+              returnKeyType={"next"}
+              underlineColorAndroid={"#e1eddf"}
+            />
+          </View>
 
-        <View style={styles.middle}>
-          <TouchableOpacity
-            style={styles.inputButton}
-            onPress={() => toggleTypeModal()}
-          >
-            <Text style={styles.inputButtonText}>
-              {type ? type : "Type of Tree"}
-            </Text>
+          <TouchableOpacity style={styles.submitButton} onPress={() => submit()}>
+            <Text style={styles.submitText}>Submit</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.inputButton}
-            onPress={() => toggleDescriptionModal()}
-          >
-            <Text style={styles.inputButtonText}>
-              {description ? " Description Set" : "Description of Tree"}
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.inputButton}
-            onPress={() => toggleLocationModal()}
-          >
-            <Text style={styles.inputButtonText}>Location of Tree</Text>
-          </TouchableOpacity>
-        </View>
-
-        {renderSubmitButton()}
-
-        <TypeModal
-          submitType={submitType}
-          isTypeModalVisible={isTypeModalVisible}
-          setIsModalVisible={setIsTypeModalVisible}
-          type={type}
-          setType={setType}
-          toggleTypeModal={toggleTypeModal}
-          closeTypeModal={closeTypeModal}
-        />
-
-        <DescriptionModal
-          submitDescription={submitDescription}
-          description={description}
-          setDescription={setDescription}
-          toggleDescriptionModal={toggleDescriptionModal}
-          isDescriptionModalVisible={isDescriptionModalVisible}
-          closeDescriptionModal={closeDescriptionModal}
-        />
-
-        <TreeLocationModal
-          createAddressObject={createAddressObject}
-          setTreeLocation={setTreeLocation}
-          toggleLocationModal={toggleLocationModal}
-          setIsLocationModalVisible={setIsLocationModalVisible}
-          isLocationModalVisible={isLocationModalVisible}
-          closeLocationModal={closeLocationModal}
-        />
-        <Text style={styles.fakeBackButton} onPress={()=> navigation.navigate("Map")}>FAKE BACK BUTTON</Text>
+        </ImageBackground>
       </View>
     );
   }
-  
+
   return (
     <React.Fragment>
       {loadingActive ? <LoadingScreen /> : renderAddTreeScreen()}
@@ -247,123 +153,40 @@ const AddTreeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
-    backgroundColor: "#f9fcfb",
   },
   top: {
-    position: "absolute",
-    top: 0,
-    height: 550,
-    textAlign: "center",
+    paddingTop: 25,
+    paddingBottom:10,
+    flexDirection: "row",
+    backgroundColor: "rgba(236, 250, 217, .2)"
   },
-  pearsImage: {
-    height: "40%",
-    width: "125%",
-    resizeMode: "cover",
-    justifyContent: "center",
+  gradientImage: {
+    height: "100%",
+    width: "100%",
+    zIndex: 0
   },
-  headerText: {
-    fontSize: 44,
-    fontWeight: "bold",
-    color: "white",
-    marginBottom: 120,
-    alignSelf: "center",
-    marginRight: 80,
-    color: "#FFFFFF",
-    paddingLeft: 20,
-    paddingRight: 30,
-    textShadowColor: "black",
-    textShadowOffset: { width: 5, height: 5 },
-    textShadowRadius: 10,
-  },
-  modalButton: {
-    width: 100,
-    height: 50,
-    backgroundColor: "#184d47",
-    borderRadius: 5,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 10,
-    marginBottom: 30,
-    color: "white",
-    shadowColor: "black",
-    elevation: 2,
-    shadowRadius: 5,
-    shadowOpacity: 0.6,
-  },
-  inputText: {
-    color: "white",
-  },
-  insideModalContainer: {
-    flex: 1,
-    backgroundColor: "lightgray",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  middle: {
-    flex: 1,
-    marginTop: 70,
-  },
-  inputButton: {
-    alignSelf: "center",
-    justifyContent: "center",
-    backgroundColor: "#802941",
-    height: 60,
-    width: 250,
-    shadowColor: "black",
-    elevation: 2,
-    shadowRadius: 5,
-    shadowOpacity: 0.6,
-    padding: 5,
-    borderRadius: 3,
-    marginTop: 50,
-  },
-  inputButtonText: {
-    alignSelf: "center",
-    color: "white",
-    fontSize: 20,
+  form: {
+    margin: "10%",
+    zIndex: 1
   },
   submitButton: {
-    flex: 1,
-    flexDirection: "row",
+    zIndex: 1,
+    backgroundColor: "green",
+    width: "40%",
+    paddingVertical: 3,
+    borderRadius: 5,
     alignSelf: "center",
-    justifyContent: "center",
-    backgroundColor: "#184d47",
-    // height: 20,
-    width: 250,
-    shadowColor: "black",
-    elevation: 2,
-    shadowRadius: 5,
-    shadowOpacity: 0.6,
-    padding: 5,
-    borderRadius: 3,
-    marginTop: 290,
-    marginBottom: 50,
   },
-  submitButtonText: {
+  submitText: {
     alignSelf: "center",
-    color: "white",
-    fontSize: 30,
+    color: "#e1eddf",
+    fontSize: 18,
   },
   treeIcon: {
     textAlign: "center",
     justifyContent: "center",
     marginTop: 30,
     paddingRight: 30,
-  },
-  // submitButtonWrapper: {
-  //   flex: 1,
-  //   flexDirection: "row"
-  // },
-  submitButtonTextWrapper: {
-    flex: 1,
-    textAlign: "center",
-    justifyContent: "center",
-  },
-  submitButtonTreeIconWrapper: {
-    flex: 0.25,
   },
   loadingBody: {
     alignItems: "center",
@@ -375,11 +198,34 @@ const styles = StyleSheet.create({
     height: 110,
     marginBottom: 30,
   },
-  fakeBackButton: {
-    fontSize: 30,
-    color: "black",
-    alignSelf: "center"
-  }
+  bigTree: {
+    position: "absolute",
+    top: 300,
+    left: 80,
+    zIndex: 1
+  },
+  backText: {
+    color: "#e1eddf",
+    fontSize: 25,
+  },
+  backArrow: {
+    marginLeft: "10%"
+  },
+  detailsHeader: {
+    marginBottom: 10,
+    marginTop: 15,
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#DDE2E4"
+  },
+  input: {
+    height: 40,
+    paddingLeft: 5,
+    paddingBottom: 15,
+    marginBottom: 10,
+    color: "#e1eddf",
+    fontSize: 17,
+  },
 });
 
 export default AddTreeScreen;
