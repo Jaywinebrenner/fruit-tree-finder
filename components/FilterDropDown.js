@@ -18,6 +18,7 @@ const FilterDropDown = ({filter, setFilter}) => {
 
   let user = firebase.auth().currentUser
 
+
   const renderDropDownSignedOut = () => {
     return (
       <DropDownPicker

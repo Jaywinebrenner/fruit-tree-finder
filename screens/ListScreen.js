@@ -17,6 +17,9 @@ import { useNavigation } from "@react-navigation/native";
 import maroonGradient from "../assets/maroonGradient.png";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import FilterDropDownList from "../components/FilterDropDownList";
+
+
 
 
 const ListScreen = () => {
@@ -26,12 +29,10 @@ const ListScreen = () => {
   const toggleToMapView = () => {
     navigation.navigate("Map");
   };
-
+  const [onListScreen, setOnListScreen] = useState(false);
   const [currentDatabase, setCurrentDatabase] = useState(null);
-  const [isListDetailModalVisible, setIsListDetailModalVisible] = useState(
-    false,
-  );
-
+  const [filter, setFilter] = useState("All Trees");
+    
 
   useEffect(() => {
     // Pulling down database
@@ -73,7 +74,7 @@ const ListScreen = () => {
           </TouchableOpacity>
           <Text style={styles.headerText}>All Trees</Text>
         </View>
-
+        <FilterDropDownList filter={filter} setFilter={setFilter} />
         <TouchableOpacity
           style={styles.toggle}
           onPress={() => navigation.navigate("Map")}

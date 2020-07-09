@@ -123,14 +123,14 @@ const AddTreeScreen = () => {
                   color="#e1eddf"
                 />
                 <TextInput
-                  // multiline={true}
+                  multiline={true}
                   placeholder={"Enter the type of tree"}
                   style={styles.input}
                   value={type}
                   onChangeText={setType}
-                  returnKeyType={"next"}
+                  // returnKeyType={"next"}
                   placeholderTextColor="rgba(236, 250, 217, .3)"
-                  maxLength={80}
+                  maxLength={70}
                   // autoFocus={true}
                 />
               </View>
