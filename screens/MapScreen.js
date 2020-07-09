@@ -167,7 +167,6 @@ const MapScreen = ({navigation}) => {
         loadingEnabled
         title="Not sure what this does"
         description="Not sure what this does either"
-        showsUserLocation
         initialRegion={region}
         style={styles.map}
         showUserLocation={true}
