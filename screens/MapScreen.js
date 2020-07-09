@@ -21,12 +21,12 @@ import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { mapStyle } from "../constants/mapStyle";
 
 import Search from "../components/Search";
 
 import DrawerHomeSwipe from "./DrawerHomeSwipe";
 import FilterDropDown from "../components/FilterDropDown";
-
 
 const MapScreen = ({navigation}) => {
 
@@ -42,7 +42,7 @@ const MapScreen = ({navigation}) => {
     }
 
     console.log("current USER ID Map Screen", currentUserID);
-    
+
 
   let user = firebase.auth().currentUser
 
@@ -131,7 +131,7 @@ const MapScreen = ({navigation}) => {
         </Marker>
       );
     });
-    
+
 
   const MyTreesMapMarkers =
     currentDatabase &&
@@ -172,6 +172,7 @@ const MapScreen = ({navigation}) => {
         style={styles.map}
         showUserLocation={true}
         showsCompass={true}
+        customMapStyle={mapStyle}
         // ref={(map) => {
         //   this.map = map;
         // }}
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingLeft: 15,
     paddingRight: 7,
-    backgroundColor: "rgba(105, 105, 105, .2)",
+    backgroundColor: "rgba(158, 128, 128, .4)",
     justifyContent: "center",
     alignItems: "center",
     borderBottomLeftRadius: 15,
