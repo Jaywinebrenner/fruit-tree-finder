@@ -16,6 +16,7 @@ import BottomSheet from "reanimated-bottom-sheet";
 import { Ionicons } from "@expo/vector-icons";
 import logo from "../media/logo.png";
 import applePainting from "../media/apple-painting.png"
+import maroonGradient from "../assets/maroonGradient.png";
 
 
 // const TAB_BAR_HEIGHT = 30;
@@ -31,23 +32,25 @@ const DrawerHomeSwipe = () => {
   const renderContent = () => {
     return (
       <React.Fragment>
-
         <View style={styles.welcomeTextWrapper}>
-        <View style={styles.topStrip}>
-            <View
-              style={{
-                paddingTop: 0,
-                borderBottomColor: "black",
-                borderBottomWidth: 3,
-                width: 50,
-                borderRadius: 9,
-                padding: 0,
-                margin: 0,
-              }}
-            />
-
-
-        </View>
+          <View style={styles.topStrip}>
+            <ImageBackground
+              source={maroonGradient}
+              style={styles.gradientImageTopStrip}
+            >
+              <View
+                style={{
+                  paddingTop: 0,
+                  borderBottomColor: "black",
+                  borderBottomWidth: 3,
+                  width: 50,
+                  borderRadius: 9,
+                  padding: 0,
+                  margin: 0,
+                }}
+              />
+          </ImageBackground>
+            </View>
           <ImageBackground source={apples} style={styles.applesImage}>
             <Text style={styles.welcomeText}>
               Welcome to The Fruit Tree Finder{" "}
@@ -60,29 +63,30 @@ const DrawerHomeSwipe = () => {
         </View>
 
         <View style={styles.bottomOfDrawerWrapper}>
-          <Text style={styles.pickDeliciousSubheader}>
-            {" "}
-            Pick delicious food from the thriving bounties growing in your very
-            neighborhood.
-          </Text>
-          <Text style={styles.subheader}>
-            {" "}
-            Explore our map of the various fruit trees in your area.{" "}
-          </Text>
-
-          <Text style={styles.subheader}>Happy Hunting!</Text>
-
-          <View style={styles.iconWrapper}>
-            <Image style={styles.applePainting} source={applePainting} />
-
-          </View>
-          <View style={styles.linkWrapper}>
-            <Text style={styles.linkSubheader}>
-              If you would like to learn more about the Portland Fruit Tree
-              Project, please visit us on the web:
+          <ImageBackground source={maroonGradient} style={styles.gradientImage}>
+            <Text style={styles.pickDeliciousSubheader}>
+              {" "}
+              Pick delicious food from the thriving bounties growing in your
+              very neighborhood.
             </Text>
-            <Image source={logo} style={styles.deepLinkImage} />
-          </View>
+            <Text style={styles.subheader}>
+              {" "}
+              Explore our map of the various fruit trees in your area.{" "}
+            </Text>
+
+            <Text style={styles.subheader}>Happy Hunting!</Text>
+
+            {/* <View style={styles.iconWrapper}>
+              <Image style={styles.applePainting} source={applePainting} />
+            </View> */}
+            <View style={styles.linkWrapper}>
+              <Text style={styles.linkSubheader}>
+                If you would like to learn more about the Portland Fruit Tree
+                Project, please visit us on the web:
+              </Text>
+              <Image source={logo} style={styles.deepLinkImage} />
+            </View>
+          </ImageBackground>
         </View>
       </React.Fragment>
     );
@@ -90,7 +94,7 @@ const DrawerHomeSwipe = () => {
 
   return (
     <BottomSheet
-      snapPoints={[470, 130, 30]}
+      snapPoints={[370, 130, 30]}
       renderHeader={renderHeader}
       renderContent={renderContent}
       initialSnap={2}
@@ -131,13 +135,11 @@ const styles = StyleSheet.create({
   },
   pickDeliciousSubheader: {
     textAlign: "center",
-    fontSize: 25,
-    color: "black",
-    marginBottom: 20,
-    lineHeight: 25,
-  },
-  subheader: {
-    textAlign: "center",
+    fontSize: 20,
+    color: "white",
+    marginBottom: 10,
+    lineHeight: 22,
+    paddingTop: 20,
   },
   iconWrapper: {
     alignSelf: "center",
@@ -159,7 +161,7 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
   },
   bottomOfDrawerWrapper: {
-    paddingTop: 20,
+    // paddingTop: 20,
     backgroundColor: "white",
     height: 400,
   },
@@ -173,13 +175,16 @@ const styles = StyleSheet.create({
     marginTop: 0,
     paddingLeft: 50,
     paddingRight: 50,
+    paddingTop: 10,
   },
   subheader: {
     textAlign: "center",
+    color: "white",
   },
   linkSubheader: {
     fontSize: 10,
     textAlign: "center",
+    color: "white"
   },
   applePainting: {
     height: 80,
@@ -189,7 +194,19 @@ const styles = StyleSheet.create({
   },
   topStrip: {
     height: 30,
-  backgroundColor: "rgba(255, 255, 255, .7)",
+    backgroundColor: "rgba(255, 255, 255, .7)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  gradientImage: {
+    height: "100%",
+    width: "100%",
+    zIndex: 0,
+  },
+  gradientImageTopStrip: {
+    height: "100%",
+    width: "100%",
+    zIndex: 0,
     justifyContent: "center",
     alignItems: "center",
   },
