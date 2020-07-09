@@ -30,12 +30,6 @@ const ListMapNavigator = () => {
         component={ListItemDetailScreen}
         options={{ tabBarVisible: false }}
       />
-      {/* MAYBE? */}
-      <ListMapTab.Screen
-        name="My Trees Map"
-        component={MyTreesMapScreen}
-        options={{ tabBarVisible: false }}
-      />
     </ListMapTab.Navigator>
   );
 };
