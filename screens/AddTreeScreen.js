@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput, Alert } from "react-native";
-import greenGradient3 from "../assets/greenGradient3.png";
+import maroonGradient from "../assets/maroonGradient.png";
 import Modal from "react-native-modal";
 import firebase from "firebase";
 // import { FontAwesome5 } from "@expo/vector-icons";
@@ -90,8 +90,8 @@ const AddTreeScreen = () => {
   const renderAddTreeScreen = () => {
     return (
       <View style={styles.container}>
-        <ImageBackground source={greenGradient3} style={styles.gradientImage}>
-          <Entypo name="tree" size={500} color="#89d61c" style={styles.bigTree}/>
+        <ImageBackground source={maroonGradient} style={styles.gradientImage}>
+          <Entypo name="tree" size={500} color="rgba(163, 119, 125, 0.5)" style={styles.bigTree}/>
           <View style={styles.top}>
             <TouchableOpacity onPress={()=> navigation.navigate("Map")}>
               <AntDesign name="arrowleft" size={30} color="#e1eddf" style={styles.backArrow} />
@@ -176,8 +176,8 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     zIndex: 1,
-    backgroundColor: "green",
-    width: "40%",
+    backgroundColor: "#63020d",
+    width: "50%",
     paddingVertical: 3,
     borderRadius: 5,
     alignSelf: "center",
