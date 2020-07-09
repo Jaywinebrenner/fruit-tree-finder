@@ -1,21 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Alert, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  TouchableOpacity,
+  ImageBackground,
+  TextInput,
+} from "react-native";
 import { TREES } from "../constants/Markers";
 import { Navigation } from "react-native-navigation";
 import firebase from "firebase";
 import { useNavigation } from "@react-navigation/native";
+import maroonGradient from "../assets/maroonGradient.png";
+import { AntDesign } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+
 
 const ListItemDetailScreen = (props) => {
   const [currentDatabase, setCurrentDatabase] = useState([]);
   const [isListDetailModalVisible, setIsListDetailModalVisible] = useState(false)
   const navigation = useNavigation();
-  console.log("TYPE"); 
-  
+const [type, setType] = useState(null)
+  let cardKey = props.route.params.key;
+  console.log("card key", cardKey);
+   let user = firebase.auth().currentUser;
   let cardType = props.route.params.type;
   let cardDescription = props.route.params.description
-  // let cardLocation = props.route.params.treeLocationTest.replace("null", "");
-
-  console.log("PARAM TEST", props.route.params);
+  let cardLocation = props.route.params.treeLocationTest.replace("null", "");
 
   let authUserID = null
   if (firebase.auth().currentUser) {
@@ -23,15 +37,19 @@ const ListItemDetailScreen = (props) => {
   }
 
   useEffect(() => {
-    // Pulling down database
     async function fetchData() {
       let result = await firebase.database().ref("/tree");
       await result.on("value", (snapshot) => {
-        // console.log("snapshot val", snapshot.val());
         let database = snapshot.val();
-        setCurrentDatabase(database);
+        console.log("DATABASW SNAP SHOT", database);
+        database !== null && setCurrentDatabase(database);
       });
     }
+    const setInitialState = () => {
+      setType(cardType)
+    }
+
+    setInitialState()
     fetchData();
   }, []);
 
@@ -46,75 +64,230 @@ const ListItemDetailScreen = (props) => {
     });
   }
 
+    const areYouSure = () => {
+      Alert.alert("Warning!", "Are you sure you want to delete this tree???", [
+        {
+          text: "NO",
+          onPress: () => console.warn("NO Pressed"),
+          style: "cancel",
+        },
+        { text: "YES", onPress: () => deleteTree(firebaseUniqueKey) },
+      ]);
+    }; 
+
+      const deleteTree = (firebaseUniqueKey) => {
+        alert("touched")
+        console.log("KEY NUMBER in DELTE FUNCTION?", firebaseUniqueKey);
+        firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
+        navigation.navigate("ListScreen");
+      };
+
+      let firebaseUniqueKey = null;
+      const findFirebaseUniqueKeyToDelete = (cardKeyNumber) => {
+        firebaseUniqueKey = Object.keys(currentDatabase)[cardKeyNumber];
+      };
+      findFirebaseUniqueKeyToDelete(cardKey);
+
   return (
     <View style={styles.container}>
-      <View style={styles.top}>
-        <Text style={styles.titleText}>{cardType}</Text>
-        {/* <Text>{cardLocation}</Text> */}
-        <Text style={styles.distanceText}>65 Meters away</Text>
-      </View>
+      <ImageBackground source={maroonGradient} style={styles.gradientImage}>
+        <Entypo
+          name="tree"
+          size={500}
+          color="rgba(163, 119, 125, 0.5)"
+          style={styles.bigTree}
+        />
+        <View style={styles.top}>
+          <TouchableOpacity onPress={() => navigation.navigate("ListScreen")}>
+            <AntDesign
+              name="arrowleft"
+              size={30}
+              color="#e1eddf"
+              style={styles.backArrow}
+            />
+          </TouchableOpacity>
+          <Text style={styles.backText}>Tree Details</Text>
+        </View>
+        <View style={styles.form}>
+          <Text style={styles.detailsHeader}>Type</Text>
+          <View style={styles.iconFlex}>
+            <MaterialCommunityIcons
+              name="leaf"
+              size={20}
+              style={styles.icon}
+              color="#e1eddf"
+            />
+            <Text style={styles.state}>{cardType}</Text>
+          </View>
+          <View style={styles.line} />
+          <Text style={styles.detailsHeader}>Description</Text>
+          <View style={styles.iconFlex}>
+            <MaterialCommunityIcons
+              name="pencil"
+              size={20}
+              style={styles.icon}
+              color="#e1eddf"
+            />
+            <Text style={styles.descriptionState}>{cardDescription}</Text>
+          </View>
+          <View style={styles.line} />
+          <Text style={styles.detailsHeader}>Location</Text>
+          <View style={styles.iconFlex}>
+            <MaterialIcons
+              name="map"
+              size={20}
+              style={styles.icon}
+              color="#e1eddf"
+            />
 
-      <View style={styles.middle}>
-        <Text style={styles.descriptionText}>{cardDescription}</Text>
-      </View>
-
-      <View style={styles.bottom}>
-        <TouchableOpacity
-          style={styles.detailsButtonWrapper}
-          // onPress={() => navigation.navigate("ListScreen")}
-          onPress={() => navigation.navigate("ListScreen")}
-        >
-          <Text style={styles.detailsButtonText}>Back to Tree List</Text>
-        </TouchableOpacity>
-      </View>
+            <Text style={styles.locationState}>{cardLocation}</Text>
+          </View>
+          <View style={styles.line} />
+        </View>
+        <View style={styles.iconWrapper}>
+          {user ? (
+            <Text onPress={() => areYouSure()}>DELLLLEEETTTTTEEE</Text>
+          ) : (
+            // <View onPress={() => areYouSure()}>
+            //   <AntDesign
+            //     style={styles.deleteIcon}
+            //     name="delete"
+            //     size={30}
+            //     color="white"
+            //     onPress={() => areYouSure()}
+            //   />
+            // </View>
+            <React.Fragment></React.Fragment>
+          )}
+        </View>
+      </ImageBackground>
     </View>
+
+    // <View style={styles.container}>
+    //   <View style={styles.top}>
+    //     <Text style={styles.titleText}>{cardType}</Text>
+    //     {/* <Text>{cardLocation}</Text> */}
+    //     <Text style={styles.distanceText}>65 Meters away</Text>
+    //   </View>
+
+    //   <View style={styles.middle}>
+    //     <Text style={styles.descriptionText}>{cardDescription}</Text>
+    //   </View>
+
+    //   <View style={styles.bottom}>
+    //     <TouchableOpacity
+    //       style={styles.detailsButtonWrapper}
+    //       // onPress={() => navigation.navigate("ListScreen")}
+    //       onPress={() => navigation.navigate("ListScreen")}
+    //     >
+    //       <Text style={styles.detailsButtonText}>Back to Tree List</Text>
+    //     </TouchableOpacity>
+    //   </View>
+    // </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    alignSelf: "center",
-    justifyContent: "center",
-    width: "90%",
-    height: 170,
-    marginTop: 12,
-    padding: 10,
-    borderRadius: 8,
-    color: "red",
-    // backgroundColor: "#eaeaea",
-    borderWidth: 1,
-    borderRadius: 20,
-    // shadowColor: "black",
-    // elevation: 5,
-    // shadowRadius: 2,
-    // shadowOpacity: 0.6,
   },
   top: {
-    flex: 0.25,
+    paddingTop: 25,
+    paddingBottom: 10,
+    flexDirection: "row",
+    backgroundColor: "rgba(236, 250, 217, .2)",
   },
-  middle: {
+  gradientImage: {
+    height: "100%",
+    width: "100%",
+    zIndex: 0,
+  },
+  form: {
+    margin: "10%",
+    zIndex: 1,
+  },
+  submitButton: {
+    zIndex: 1,
+    backgroundColor: "#63020d",
+    width: "50%",
+    paddingVertical: 3,
+    borderRadius: 5,
+    alignSelf: "center",
+  },
+  submitText: {
+    alignSelf: "center",
+    color: "#e1eddf",
+    fontSize: 18,
+  },
+  loadingBody: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+  },
+  loadingImage: {
+    width: 300,
+    height: 110,
+    marginBottom: 30,
+  },
+  bigTree: {
+    position: "absolute",
+    bottom: -50,
+    top: 300,
+    right: -60,
+    zIndex: 1,
+  },
+  backText: {
+    color: "#e1eddf",
+    fontSize: 25,
+  },
+  backArrow: {
+    marginLeft: "10%",
+  },
+  detailsHeader: {
+    marginBottom: 10,
+    marginTop: 15,
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#DDE2E4",
+  },
+  input: {
+    height: 40,
+    paddingLeft: 5,
+    color: "#e1eddf",
+    fontSize: 17,
+  },
+  iconFlex: {
+    flexDirection: "row",
+  },
+  line: {
+    borderBottomColor: "#e1eddf",
+    borderBottomWidth: 1,
+  },
+  icon: {
     marginTop: 10,
-    flex: 0.5,
   },
-  bottom: {
-    flex: 0.25,
-  },
-  detailsButtonWrapper: {
-    marginTop: 4,
-    borderWidth: 1,
-    borderRadius: 2,
-    padding: 4,
-  },
-  titleText: {
-    alignSelf: "center",
+  state: {
+    color: "white",
     fontSize: 22,
+    paddingLeft: 12,
   },
-  distanceText: {
-    alignSelf: "center",
-    fontSize: 15,
+  descriptionState: {
+    color: "white",
+    fontSize: 16,
+    paddingLeft: 12,
+    paddingBottom: 3,
   },
+  locationState: {
+    color: "white",
+    fontSize: 16,
+    paddingLeft: 12,
+    marginBottom: 0,
+  },
+  iconWrapper: {},
+  deleteIcon: {
+    marginTop: 200,
+    alignSelf: "center"
+  }
 });
 
 export default ListItemDetailScreen;
