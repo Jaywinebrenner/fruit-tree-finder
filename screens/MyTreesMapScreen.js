@@ -14,6 +14,7 @@ Geocoder.init(API_KEY);
 import { TREES } from "../constants/Markers";
 import ViewMyListButton from "../components/ViewMyListButton";
 import firebase from "firebase";
+import FilterDropDown from "../components/FilterDropDown";
 
 const MyTreesMapScreen = ({ navigation }) => {
   
@@ -49,8 +50,6 @@ const MyTreesMapScreen = ({ navigation }) => {
       console.log("Value", value);
     });
 
-
-  console.log("CURRENT DATABASE", currentDatabase);
 
   const _getUserLocactionAsync = async () => {
     try {
@@ -88,15 +87,7 @@ const MyTreesMapScreen = ({ navigation }) => {
     }
   };
 
-  // const centerMap = () => {
-  //   const { latitude, longitude, latitudeDelta, longitudeDelta } = region;
-  //   region.map.animateToRegion({
-  //     latitude,
-  //     longitude,
-  //     longitudeDelta,
-  //     latitudeDelta,
-  //   });
-  // };
+
 
   const MapMarker =
     currentDatabase &&
@@ -124,12 +115,13 @@ const MyTreesMapScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ViewMyListButton toggleToListView={toggleToListView} />
+      {/* <ViewMyListButton toggleToListView={toggleToListView} /> */}
       <CurrentLocationButton
         cb={() => {
           centerMap();
         }}
       />
+  
       <MapView
         loadingEnabled
         title="Flatiron School Atlanta"
@@ -145,7 +137,6 @@ const MyTreesMapScreen = ({ navigation }) => {
         rotateEnabled={false}
       >
         {MapMarker}
-
       </MapView>
     </View>
   );

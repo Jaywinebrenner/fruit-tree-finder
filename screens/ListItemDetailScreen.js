@@ -146,44 +146,22 @@ const [type, setType] = useState(null)
         </View>
         <View style={styles.iconWrapper}>
           {user ? (
-            <Text onPress={() => areYouSure()}>DELLLLEEETTTTTEEE</Text>
+            <View onPress={() => areYouSure()}>
+              <AntDesign
+                style={styles.deleteIcon}
+                name="delete"
+                size={30}
+                color="white"
+                onPress={() => areYouSure()}
+              />
+            </View>
+           
           ) : (
-            // <View onPress={() => areYouSure()}>
-            //   <AntDesign
-            //     style={styles.deleteIcon}
-            //     name="delete"
-            //     size={30}
-            //     color="white"
-            //     onPress={() => areYouSure()}
-            //   />
-            // </View>
             <React.Fragment></React.Fragment>
           )}
         </View>
       </ImageBackground>
     </View>
-
-    // <View style={styles.container}>
-    //   <View style={styles.top}>
-    //     <Text style={styles.titleText}>{cardType}</Text>
-    //     {/* <Text>{cardLocation}</Text> */}
-    //     <Text style={styles.distanceText}>65 Meters away</Text>
-    //   </View>
-
-    //   <View style={styles.middle}>
-    //     <Text style={styles.descriptionText}>{cardDescription}</Text>
-    //   </View>
-
-    //   <View style={styles.bottom}>
-    //     <TouchableOpacity
-    //       style={styles.detailsButtonWrapper}
-    //       // onPress={() => navigation.navigate("ListScreen")}
-    //       onPress={() => navigation.navigate("ListScreen")}
-    //     >
-    //       <Text style={styles.detailsButtonText}>Back to Tree List</Text>
-    //     </TouchableOpacity>
-    //   </View>
-    // </View>
   );
 };
 
@@ -192,10 +170,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   top: {
+    justifyContent: "center",
+    alignItems: "center",
     paddingTop: 25,
     paddingBottom: 10,
     flexDirection: "row",
     backgroundColor: "rgba(236, 250, 217, .2)",
+  },
+  backText: {
+    color: "#e1eddf",
+    fontSize: 25,
   },
   gradientImage: {
     height: "100%",
@@ -234,14 +218,13 @@ const styles = StyleSheet.create({
     bottom: -50,
     top: 300,
     right: -60,
-    zIndex: 1,
-  },
-  backText: {
-    color: "#e1eddf",
-    fontSize: 25,
+    // zIndex: 1,
   },
   backArrow: {
-    marginLeft: "10%",
+    position: "absolute",
+    right: 85,
+    top: -15
+    // marginLeft: "10%",
   },
   detailsHeader: {
     marginBottom: 10,
@@ -286,8 +269,8 @@ const styles = StyleSheet.create({
   iconWrapper: {},
   deleteIcon: {
     marginTop: 200,
-    alignSelf: "center"
-  }
+    alignSelf: "center",
+  },
 });
 
 export default ListItemDetailScreen;
