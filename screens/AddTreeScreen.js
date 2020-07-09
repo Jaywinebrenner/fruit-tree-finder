@@ -1,15 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput, Alert } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import pears from "../media/pears.jpg";
 import greenGradient3 from "../assets/greenGradient3.png";
 import Modal from "react-native-modal";
 import firebase from "firebase";
-import TypeModal from "../components/TypeModal";
-import DescriptionModal from "../components/DescriptionModal";
-import TreeLocationModal from "../components/TreeLocationModal";
-import { FontAwesome5 } from "@expo/vector-icons";
+// import { FontAwesome5 } from "@expo/vector-icons";
 Geocoder.init(API_KEY);
 import { API_KEY } from "../geocoder";
 import Geocoder from "react-native-geocoding";
@@ -17,8 +11,8 @@ import { useNavigation } from "@react-navigation/native";
 import LoadingScreen from './LoadingScreen';
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
-// import { navigate } from "@react-navigation/routers/lib/typescript/src/CommonActions";
-
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const AddTreeScreen = () => {
 
@@ -53,6 +47,7 @@ const AddTreeScreen = () => {
       setTreeLocation(null);
       setLoadingActive(false);
       Alert.alert("Tree Added Successfully!");
+      navigation.navigate("Map");
     } catch (error) {
       Alert.alert("This Location didn't work for some reason. Please give it another shot.");
       setLoadingActive(false);
@@ -96,42 +91,52 @@ const AddTreeScreen = () => {
     return (
       <View style={styles.container}>
         <ImageBackground source={greenGradient3} style={styles.gradientImage}>
-          <Entypo name="tree" size={500} color="#82d60d" style={styles.bigTree}/>
+          <Entypo name="tree" size={500} color="#89d61c" style={styles.bigTree}/>
           <View style={styles.top}>
             <TouchableOpacity onPress={()=> navigation.navigate("Map")}>
-              <AntDesign name="arrowleft" size={35} color="#e1eddf" style={styles.backArrow} />
+              <AntDesign name="arrowleft" size={30} color="#e1eddf" style={styles.backArrow} />
             </TouchableOpacity>
             <Text style={styles.backText}>Add a fruit tree</Text>
           </View>
           <View style={styles.form}>
             <Text style={styles.detailsHeader}>Type</Text>
-            <TextInput
-              placeholder={"Enter the type of tree!"}
-              style={styles.input}
-              value={type}
-              onChangeText={setType}
-              returnKeyType={"next"}
-              autoFocus={true}
-              underlineColorAndroid={"#e1eddf"}
-            />
+            <View style={styles.iconFlex}>
+              <MaterialCommunityIcons name="leaf" size={20} style={styles.icon} color="#e1eddf" />
+              <TextInput
+                placeholder={"Enter the type of tree"}
+                style={styles.input}
+                value={type}
+                onChangeText={setType}
+                returnKeyType={"next"}
+                // autoFocus={true}
+              />
+            </View>
+            <View style={styles.line} />
             <Text style={styles.detailsHeader}>Description</Text>
-            <TextInput
-              placeholder={"Enter a short description"}
-              style={styles.input}
-              value={description}
-              onChangeText={setDescription}
-              returnKeyType={"next"}
-              underlineColorAndroid={"#e1eddf"}
-            />
+            <View style={styles.iconFlex}>
+              <MaterialCommunityIcons name="pencil" size={20} style={styles.icon} color="#e1eddf" />
+              <TextInput
+                placeholder={"Enter a short description"}
+                style={styles.input}
+                value={description}
+                onChangeText={setDescription}
+                returnKeyType={"next"}
+              />
+            </View>
+            <View style={styles.line} />
             <Text style={styles.detailsHeader}>Location</Text>
-            <TextInput
-              placeholder={"Enter the location of the tree"}
-              style={styles.input}
-              value={treeLocationTest}
-              onChangeText={setTreeLocation}
-              returnKeyType={"next"}
-              underlineColorAndroid={"#e1eddf"}
-            />
+            <View style={styles.iconFlex}>
+              <MaterialIcons name="map" size={20} style={styles.icon} color="#e1eddf" />
+              <TextInput
+                placeholder={"Enter the location of the tree"}
+                style={styles.input}
+                value={treeLocationTest}
+                onChangeText={setTreeLocation}
+                returnKeyType={"next"}
+                // underlineColorAndroid={"#e1eddf"}
+              />
+            </View>
+            <View style={styles.line} />
           </View>
 
           <TouchableOpacity style={styles.submitButton} onPress={() => submit()}>
@@ -156,7 +161,7 @@ const styles = StyleSheet.create({
   },
   top: {
     paddingTop: 25,
-    paddingBottom:10,
+    paddingBottom: 10,
     flexDirection: "row",
     backgroundColor: "rgba(236, 250, 217, .2)"
   },
@@ -182,12 +187,6 @@ const styles = StyleSheet.create({
     color: "#e1eddf",
     fontSize: 18,
   },
-  treeIcon: {
-    textAlign: "center",
-    justifyContent: "center",
-    marginTop: 30,
-    paddingRight: 30,
-  },
   loadingBody: {
     alignItems: "center",
     justifyContent: "center",
@@ -200,8 +199,9 @@ const styles = StyleSheet.create({
   },
   bigTree: {
     position: "absolute",
+    bottom: -50,
     top: 300,
-    left: 80,
+    right: -60,
     zIndex: 1
   },
   backText: {
@@ -221,11 +221,19 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     paddingLeft: 5,
-    paddingBottom: 15,
-    marginBottom: 10,
     color: "#e1eddf",
     fontSize: 17,
   },
+  iconFlex: {
+    flexDirection: "row"
+  },
+  line: {
+    borderBottomColor: "#e1eddf",
+    borderBottomWidth: 1,
+  },
+  icon: {
+    marginTop: 10
+  }
 });
 
 export default AddTreeScreen;
