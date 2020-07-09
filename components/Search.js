@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 40,
-    borderColor: "gray",
+    borderColor: "#9e8080",
     fontSize: 16,
     borderWidth: 1,
     paddingLeft: 32,
@@ -65,9 +65,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, .8)"
   },
   button: {
-    backgroundColor: "rgba(125, 19, 19, .6)",
-    // borderColor: "grey",
-    // borderWidth: 1,
+    backgroundColor: "rgb(125, 19, 19)",
     borderRadius: 25,
     height: 30,
     // position: "absolute",
@@ -75,7 +73,6 @@ const styles = StyleSheet.create({
     // right: "4%",
     marginLeft: "3%",
     marginTop: 5,
-
     // top: 30,
     justifyContent: "center",
     alignItems: "center",

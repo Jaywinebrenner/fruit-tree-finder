@@ -153,7 +153,7 @@ export const mapStyle = [
   "elementType": "geometry",
   "stylers": [
     {
-      "color": "#6b1f1f"
+      "color": "#a16363"
     },
     {
       "weight": 1.5
@@ -165,7 +165,7 @@ export const mapStyle = [
   "elementType": "geometry.stroke",
   "stylers": [
     {
-      "color": "#a16363"
+      "color": "#6b1f1f"
     }
   ]
 },
@@ -174,7 +174,7 @@ export const mapStyle = [
   "elementType": "geometry",
   "stylers": [
     {
-      "color": "#e98d58"
+      "color": "#a3848f"
     }
   ]
 },
@@ -183,7 +183,7 @@ export const mapStyle = [
   "elementType": "geometry.stroke",
   "stylers": [
     {
-      "color": "#db8555"
+      "color": "#6b4250"
     }
   ]
 },
