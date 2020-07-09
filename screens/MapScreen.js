@@ -35,28 +35,37 @@ const MapScreen = ({navigation}) => {
   const [currentDatabase, setCurrentDatabase] = useState([]);
   const [filter, setFilter] = useState("All Trees");
 
+    let currentUserID = null;
+
+    if (firebase.auth().currentUser) {
+      currentUserID = firebase.auth().currentUser.uid;
+    }
+
+    console.log("current USER ID Map Screen", currentUserID);
+    
 
   let user = firebase.auth().currentUser
 
   useEffect(() => {
     _getUserLocactionAsync();
 
-    let result = firebase.database().
-    ref("/tree")
-    // .limitToFirst(20);
-    result.on("value", (snapshot) => {
+    async function fetchData() {
+      let result = await firebase.database().ref("/tree");
+      await result.on("value", (snapshot) => {
+        // console.log("snapshot val", snapshot.val());
         let database = snapshot.val();
         setCurrentDatabase(database);
       });
+    }
+    fetchData();
   }, []);
+
 
   !currentDatabase && console.log("I Don't exist");
   currentDatabase &&
     Object.values(currentDatabase).forEach((value) => {
-      console.log("Value", value);
+      console.log("Value USER ID", value.userID);
     });
-
-
   const _getUserLocactionAsync = async () => {
     try {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -93,20 +102,6 @@ const MapScreen = ({navigation}) => {
     }
   };
 
-    // THIS APPARENTLY WORKS FOR CLASS COMPONENTS
-  // const centerMap = () => {
-  //   const { latitude, longitude, latitudeDelta, longitudeDelta } = region;
-  //   this.map.animateToRegion({
-  //     latitude,
-  //     longitude,
-  //     longitudeDelta,
-  //     latitudeDelta,
-  //   });
-  // };
-
-  const toggleToListView = () => {
-    navigation.navigate("ListScreen")
-  }
 
   const renderAddATreeButton = () => {
     return (
@@ -117,14 +112,52 @@ const MapScreen = ({navigation}) => {
     )
   }
 
+  const AllTreesMapMarkers =
+    currentDatabase &&
+    Object.values(currentDatabase).map((tree, index) => {
+      let latitude = tree.treeCoordinates[0];
+      let longitude = tree.treeCoordinates[1];
+      return (
+        <Marker
+          key={index}
+          coordinate={{
+            latitude: latitude,
+            longitude: longitude,
+          }}
+          title={tree.type}
+          description={tree.description}
+        >
+          {/* <Entypo name="tree" size={30} color="green" /> */}
+        </Marker>
+      );
+    });
+    
+
+  const MyTreesMapMarkers =
+    currentDatabase &&
+    Object.values(currentDatabase).map((value, index) => {
+      let latitude = value.treeCoordinates[0];
+      let longitude = value.treeCoordinates[1];
+      if (value.userID === currentUserID) {
+        return (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: latitude,
+              longitude: longitude,
+            }}
+            title={value.type}
+            description={value.description}
+          ></Marker>
+        );
+      }
+    });
+
   return (
     <View style={styles.container}>
-      <Search navigation={navigation}/>
-      { /* <ViewListButton toggleToListView={toggleToListView} /> */ }
-      <FilterDropDown
-        filter={filter}
-        setFilter={setFilter}
-      />
+      <Search navigation={navigation} />
+      {/* <ViewListButton toggleToListView={toggleToListView} /> */}
+      <FilterDropDown filter={filter} setFilter={setFilter} />
       <CurrentLocationButton
         cb={() => {
           centerMap();
@@ -144,33 +177,21 @@ const MapScreen = ({navigation}) => {
         // }}
         rotateEnabled={false}
       >
-        {currentDatabase &&
-          Object.values(currentDatabase).map((tree, index) => {
-            let latitude = tree.treeCoordinates[0];
-            let longitude = tree.treeCoordinates[1];
-            return (
-              <Marker
-                key={index}
-                coordinate={{
-                  latitude: latitude,
-                  longitude: longitude,
-                }}
-                title={tree.type}
-                description={tree.description}
-              >
-                { /* <Entypo name="tree" size={30} color="green" /> */ }
-              </Marker>
-            );
-          })}
+        {filter === "All Trees" && AllTreesMapMarkers }
+        {filter === "My Trees" && MyTreesMapMarkers}
       </MapView>
+
 
       {user && renderAddATreeButton()}
 
-      <TouchableOpacity style={styles.toggle} onPress={() => navigation.navigate("ListScreen")}>
+      <TouchableOpacity
+        style={styles.toggle}
+        onPress={() => navigation.navigate("ListScreen")}
+      >
         <Ionicons name="ios-arrow-forward" size={60} color="white" />
       </TouchableOpacity>
 
-      <DrawerHomeSwipe/>
+      <DrawerHomeSwipe />
     </View>
   );
 }

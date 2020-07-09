@@ -22,7 +22,6 @@ const MyTreesDetailScreen = (props) => {
   }
 
   useEffect(() => {
-
     async function fetchData() {
       let result = await firebase.database().ref("/tree");
       await result.on("value", (snapshot) => {

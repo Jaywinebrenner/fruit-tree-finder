@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput, Alert } from "react-native";
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput, Alert, TouchableWithoutFeedback, Keyboard } from "react-native";
 import maroonGradient from "../assets/maroonGradient.png";
 import Modal from "react-native-modal";
 import firebase from "firebase";
@@ -32,15 +32,17 @@ const AddTreeScreen = () => {
   const [treeLocationTest, setTreeLocation] = useState(null)
   const [treeCoordinates, setTreeCoordinates] = useState(null);
 
+  let locationWithPortlandDefaulted = null
   async function submit() {
     setLoadingActive(true);
+    locationWithPortlandDefaulted = treeLocationTest + " Portland, Oregon"
     try {
       let treeCoordinates = await convertLocation(treeLocationTest);
       setTreeCoordinates(treeCoordinates)
       await firebase.database().ref("/tree").push({
         type,
         description,
-        treeLocationTest,
+        locationWithPortlandDefaulted,
         treeCoordinates,
         userID,
       });
@@ -93,58 +95,96 @@ const AddTreeScreen = () => {
     return (
       <View style={styles.container}>
         <ImageBackground source={maroonGradient} style={styles.gradientImage}>
-          <Entypo name="tree" size={500} color="rgba(163, 119, 125, 0.5)" style={styles.bigTree}/>
+          <Entypo
+            name="tree"
+            size={500}
+            color="rgba(163, 119, 125, 0.5)"
+            style={styles.bigTree}
+          />
           <View style={styles.top}>
-            <TouchableOpacity onPress={()=> navigation.navigate("Map")}>
-              <AntDesign name="arrowleft" size={30} color="#e1eddf" style={styles.backArrow} />
+            <TouchableOpacity onPress={() => navigation.navigate("Map")}>
+              <AntDesign
+                name="arrowleft"
+                size={30}
+                color="#e1eddf"
+                style={styles.backArrow}
+              />
             </TouchableOpacity>
             <Text style={styles.backText}>Add a fruit tree</Text>
           </View>
           <View style={styles.form}>
             <Text style={styles.detailsHeader}>Type</Text>
-            <View style={styles.iconFlex}>
-              <MaterialCommunityIcons name="leaf" size={20} style={styles.icon} color="#e1eddf" />
-              <TextInput
-                placeholder={"Enter the type of tree"}
-                style={styles.input}
-                value={type}
-                onChangeText={setType}
-                returnKeyType={"next"}
-                // autoFocus={true}
-              />
-            </View>
+      
+              <View style={styles.iconFlex}>
+                <MaterialCommunityIcons
+                  name="leaf"
+                  size={20}
+                  style={styles.icon}
+                  color="#e1eddf"
+                />
+                <TextInput
+                  // multiline={true}
+                  placeholder={"Enter the type of tree"}
+                  style={styles.input}
+                  value={type}
+                  onChangeText={setType}
+                  returnKeyType={"next"}
+                  placeholderTextColor="rgba(236, 250, 217, .3)"
+                  maxLength={80}
+                  // autoFocus={true}
+                />
+              </View>
+        
             <View style={styles.line} />
             <Text style={styles.detailsHeader}>Description</Text>
             <View style={styles.iconFlex}>
-              <MaterialCommunityIcons name="pencil" size={20} style={styles.icon} color="#e1eddf" />
+              <MaterialCommunityIcons
+                name="pencil"
+                size={20}
+                style={styles.icon}
+                color="#e1eddf"
+              />
               <TextInput
+                multiline={true}
                 placeholder={"Enter a short description"}
                 style={styles.input}
                 value={description}
                 onChangeText={setDescription}
-                returnKeyType={"next"}
+                // returnKeyType={"next"}
+                placeholderTextColor="rgba(236, 250, 217, .3)"
+                maxLength={180}
               />
             </View>
             <View style={styles.line} />
             <Text style={styles.detailsHeader}>Location</Text>
             <View style={styles.iconFlex}>
-              <MaterialIcons name="map" size={20} style={styles.icon} color="#e1eddf" />
+              <MaterialIcons
+                name="map"
+                size={20}
+                style={styles.icon}
+                color="#e1eddf"
+              />
               <TextInput
-                placeholder={"Enter the location of the tree"}
+            
+                placeholder={"Address / Cross Street"}
                 style={styles.input}
                 value={treeLocationTest}
                 onChangeText={setTreeLocation}
-                returnKeyType={"next"}
+                // returnKeyType={"next"}
+                placeholderTextColor="rgba(236, 250, 217, .3)"
+                maxLength={100}
                 // underlineColorAndroid={"#e1eddf"}
               />
             </View>
             <View style={styles.line} />
           </View>
 
-          <TouchableOpacity style={styles.submitButton} onPress={() => submit()}>
+          <TouchableOpacity
+            style={styles.submitButton}
+            onPress={() => submit()}
+          >
             <Text style={styles.submitText}>Submit</Text>
           </TouchableOpacity>
-
         </ImageBackground>
       </View>
     );
@@ -221,20 +261,25 @@ const styles = StyleSheet.create({
     color: "#DDE2E4"
   },
   input: {
+    // marginLeft: 22,
     height: 40,
-    paddingLeft: 5,
+    paddingLeft: 15,
     color: "#e1eddf",
     fontSize: 17,
   },
   iconFlex: {
-    flexDirection: "row"
+    flexDirection: "row",
+    marginLeft: 20
   },
   line: {
     borderBottomColor: "#e1eddf",
     borderBottomWidth: 1,
   },
   icon: {
-    marginTop: 10
+    left: -20,
+    position: "absolute",
+    marginTop: 10,
+    // paddingRight: 10
   }
 });
 

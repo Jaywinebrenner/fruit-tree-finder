@@ -5,19 +5,19 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  FlatList,
-  Image,
   ImageBackground,
   ScrollView,
 } from "react-native";
 
 import ViewMapButton from "../components/ViewMapButton"
-import ListItemDetailScreen from "./ListItemDetailScreen";
-import { TREES } from "../constants/Markers";
+
 import firebase from "firebase";
 import { Ionicons, createIconSetFromFontello } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-// import ListDetailModal from './ListDetailModal'
+import maroonGradient from "../assets/maroonGradient.png";
+import { AntDesign } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+
 
 const ListScreen = () => {
 
@@ -28,9 +28,9 @@ const ListScreen = () => {
   };
 
   const [currentDatabase, setCurrentDatabase] = useState(null);
-  // const [isListDetailModalVisible, setIsListDetailModalVisible] = useState(
-  //   false,
-  // );
+  const [isListDetailModalVisible, setIsListDetailModalVisible] = useState(
+    false,
+  );
 
 
   useEffect(() => {
@@ -53,77 +53,67 @@ const ListScreen = () => {
   //   });
   // }
 
-
- // In case we try the modal approach again
-  // const toggleListDetailModal = () => {
-  //   setIsListDetailModalVisible(!isListDetailModalVisible);
-  // };
-
   return (
     <React.Fragment>
-      <View style={styles.top}>
-        <Text style={styles.headerText}>Fruit Trees in your area </Text>
-      </View>
-
-      <TouchableOpacity
-        style={styles.toggle}
-        onPress={() => navigation.navigate(alert("huh?"))}
-      >
-        <Ionicons name="ios-arrow-forward" size={60} color="white" />
-      </TouchableOpacity>
-
-      {/* <TouchableOpacity style={styles.toggle}>
-        <Ionicons
-          onPress={() => alert("fart")}
-          name="ios-arrow-back"
-          size={60}
-          color="white"
+      <ImageBackground source={maroonGradient} style={styles.gradientImage}>
+        <Entypo
+          name="tree"
+          size={500}
+          color="rgba(163, 119, 125, 0.5)"
+          style={styles.bigTree}
         />
-      </TouchableOpacity> */}
+        <View style={styles.top}>
+          <TouchableOpacity onPress={() => navigation.navigate("Map")}>
+            {/* <AntDesign
+              name="arrowleft"
+              size={30}
+              color="#e1eddf"
+              style={styles.backArrow}
+            /> */}
+          </TouchableOpacity>
+          <Text style={styles.headerText}>All Trees</Text>
+        </View>
 
-      <ViewMapButton toggleToMapView={toggleToMapView} />
-      <ScrollView style={styles.container}>
-        {currentDatabase &&
-          Object.values(currentDatabase).map((value, index) => {
-            return (
-              <View style={styles.cardContainer} key={index}>
-                <View style={styles.cardTop}>
-                  <Text style={styles.cardTitleText}>{value.type}</Text>
-                  <Text style={styles.cardDistanceText}>65 Meters away</Text>
+        <TouchableOpacity
+          style={styles.toggle}
+          onPress={() => navigation.navigate("Map")}
+        >
+          <Ionicons name="ios-arrow-back" size={60} color="white" />
+        </TouchableOpacity>
+
+        <ScrollView style={styles.container}>
+          {currentDatabase &&
+            Object.values(currentDatabase).map((value, index) => {
+              return (
+                <View style={styles.cardContainer} key={index}>
+                  <View style={styles.cardTop}>
+                    <Text style={styles.cardTitleText}>{value.type}</Text>
+                    <Text style={styles.cardDistanceText}>65 Meters away</Text>
+                  </View>
+
+                  <View style={styles.cardMiddle}>
+                    <Text style={styles.cardDescriptionText}>
+                      {value.description}
+                    </Text>
+                  </View>
+
+                  <View style={styles.bottom}>
+                    <TouchableOpacity
+                      style={styles.cardDetailsButtonWrapper}
+                      onPress={() =>
+                        navigation.navigate("ListItemDetailScreen", {
+                          ...value,
+                        })
+                      }
+                    >
+                      <Text style={styles.cardDetailsButtonText}>Details</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-
-                <View style={styles.cardMiddle}>
-                  <Text style={styles.cardDescriptionText}>
-                    {value.description}
-                  </Text>
-                </View>
-
-                <View style={styles.bottom}>
-                  <TouchableOpacity
-                    style={styles.cardDetailsButtonWrapper}
-                    onPress={() =>
-                      navigation.navigate("ListItemDetailScreen", { ...value })
-                    }
-                    // onPress={() => 
-                    //   toggleListDetailModal()
-                    // }
-                  >
-                    <Text style={styles.cardDetailsButtonText}>Details</Text>
-                  </TouchableOpacity>
-              
-                {/* <ListDetailModal
-                  toggleListDetailModal={toggleListDetailModal}
-                  isListDetailModalVisible={isListDetailModalVisible}
-                  setIsListDetailModalVisible={setIsListDetailModalVisible}
-                /> */}
-                </View>
-
-              </View>
-            );
-          })}
-
-        <View style={styles.hr} />
-      </ScrollView>
+              );
+            })}
+        </ScrollView>
+      </ImageBackground>
     </React.Fragment>
   );
 
@@ -135,19 +125,26 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   top: {
-    height: 100,
-    backgroundColor: "#802941",
     justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 25,
+    paddingBottom: 10,
+    flexDirection: "row",
+    backgroundColor: "rgba(236, 250, 217, .2)",
+  },
+  headerText: {
     textAlign: "center",
+    fontSize: 25,
+    alignSelf: "center",
+    color: "white",
+  },
+  backText: {
+    color: "#e1eddf",
+    fontSize: 25,
   },
   middle: {
     flex: 15,
     backgroundColor: "white",
-  },
-  headerText: {
-    fontSize: 25,
-    paddingLeft: 10,
-    color: "white",
   },
   cardContainer: {
     alignItems: "center",
@@ -159,9 +156,10 @@ const styles = StyleSheet.create({
     padding: 10,
     // borderRadius: 8,
     color: "red",
-    // backgroundColor: "#eaeaea",
-    // borderWidth: 1,
-    // borderRadius: 20,
+    backgroundColor: "rgba(255, 255, 255, .05)",
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, .5)",
+    borderRadius: 8,
     // shadowColor: "black",
     // elevation: 5,
     // shadowRadius: 2,
@@ -177,60 +175,72 @@ const styles = StyleSheet.create({
   cardBottom: {
     flex: 0.25,
   },
-  cardDescriptionText: {
-    alignSelf: "center",
-  },
   cardDetailsButtonWrapper: {
     marginTop: 4,
     borderWidth: 1,
     borderRadius: 2,
     padding: 4,
+    borderColor: "white",
   },
-  cardTitleText: {
-    alignSelf: "center",
-    fontSize: 22,
+  cardDetailsButtonText: {
+    color: "white",
   },
   cardDistanceText: {
     alignSelf: "center",
     fontSize: 15,
+    color: "white",
   },
   cardTitleText: {
     alignSelf: "center",
     fontSize: 22,
+    color: "white",
   },
-  noDataText: {
-    fontSize: 60,
-    color: "red",
+  cardDescriptionText: {
+    alignSelf: "center",
+    color: "rgba(255, 255, 255, .5)",
+  },
+  toggle: {
+    position: "absolute",
+    top: "45%",
+    left: "0%",
+    paddingVertical: 4,
+    paddingLeft: 7,
+    paddingRight: 15,
+    backgroundColor: "rgba(255, 255, 255, .15)",
+    justifyContent: "center",
+    alignItems: "center",
+    borderBottomRightRadius: 15,
+    borderTopRightRadius: 15,
+    zIndex: 1,
   },
   // toggle: {
   //   position: "absolute",
   //   top: "45%",
-  //   left: "0%",
+  //   right: "0%",
   //   paddingVertical: 4,
-  //   paddingLeft: 7,
-  //   paddingRight: 15,
+  //   paddingLeft: 15,
+  //   paddingRight: 7,
   //   backgroundColor: "rgba(105, 105, 105, .2)",
   //   justifyContent: "center",
   //   alignItems: "center",
-  //   borderBottomRightRadius: 15,
-  //   borderTopRightRadius: 15,
+  //   borderBottomLeftRadius: 15,
+  //   borderTopLeftRadius: 15,
   // },
-  toggle: {
-    position: "absolute",
-    top: "45%",
-    right: "0%",
-    paddingVertical: 4,
-    paddingLeft: 15,
-    paddingRight: 7,
-    backgroundColor: "rgba(105, 105, 105, .2)",
-    justifyContent: "center",
-    alignItems: "center",
-    borderBottomLeftRadius: 15,
-    borderTopLeftRadius: 15,
-  },
   hr: {
     borderBottomColor: "black",
     borderBottomWidth: 1,
+  },
+  gradientImage: {
+    height: "100%",
+    width: "100%",
+    // zIndex: 0,
+  },
+  bigTree: {
+    position: "absolute",
+    bottom: -50,
+    top: 300,
+    right: -60,
+    // zIndex: 1,
   },
 });
 
