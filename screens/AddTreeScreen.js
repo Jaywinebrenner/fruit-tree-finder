@@ -14,7 +14,6 @@ import { API_KEY } from "../geocoder";
 import Geocoder from "react-native-geocoding";
 import { useNavigation } from "@react-navigation/native";
 import LoadingScreen from './LoadingScreen';
-// import { navigate } from "@react-navigation/routers/lib/typescript/src/CommonActions";
 
 
 const AddTreeScreen = () => {

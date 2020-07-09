@@ -90,15 +90,8 @@ const MyTrees = ({ navigation }) => {
         }
       })
     )
-    const NoDataCard = 
-      <View>
-        <Text style={styles.noTreesText}>
-          You have not added any trees. Toggle to the Add a Tree icon on the
-          bottom tab add a tree.
-        </Text>
-      </View>
-    
-      
+
+   
   return (
     <React.Fragment>
       <View style={styles.top}>
