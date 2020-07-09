@@ -7,7 +7,9 @@ import { useNavigation } from "@react-navigation/native";
 
 const ListItemDetailScreen = (props) => {
   const [currentDatabase, setCurrentDatabase] = useState([]);
+  const [isListDetailModalVisible, setIsListDetailModalVisible] = useState(false)
   const navigation = useNavigation();
+  console.log("TYPE"); 
   
   let cardType = props.route.params.type;
   let cardDescription = props.route.params.description
@@ -40,15 +42,15 @@ const ListItemDetailScreen = (props) => {
   if (currentDatabase) {
     console.log("I EXIST");
     Object.values(currentDatabase).forEach((value) => {
-      // console.log("Value", value.userID);
+      // console.log("Value USER ID", value.userID);
     });
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.top}>
-  <Text style={styles.titleText}>{cardType}</Text>
-  {/* <Text>{cardLocation}</Text> */}
+        <Text style={styles.titleText}>{cardType}</Text>
+        {/* <Text>{cardLocation}</Text> */}
         <Text style={styles.distanceText}>65 Meters away</Text>
       </View>
 
@@ -59,6 +61,7 @@ const ListItemDetailScreen = (props) => {
       <View style={styles.bottom}>
         <TouchableOpacity
           style={styles.detailsButtonWrapper}
+          // onPress={() => navigation.navigate("ListScreen")}
           onPress={() => navigation.navigate("ListScreen")}
         >
           <Text style={styles.detailsButtonText}>Back to Tree List</Text>

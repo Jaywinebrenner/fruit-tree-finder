@@ -13,12 +13,22 @@ const ListMapTab = createBottomTabNavigator();
 
 const ListMapNavigator = () => {
   return (
-    <ListMapTab.Navigator
-      initialRouteName="Map"
-      swipeEnabled="true"
-      >
-      <ListMapTab.Screen name="Map" component={MapScreen} options={{tabBarVisible: false}}/>
-      <ListMapTab.Screen name="ListScreen" component={ListScreen} options={{tabBarVisible: false}}/>
+    <ListMapTab.Navigator initialRouteName="Map" swipeEnabled="true">
+      <ListMapTab.Screen
+        name="Map"
+        component={MapScreen}
+        options={{ tabBarVisible: false }}
+      />
+      <ListMapTab.Screen
+        name="ListScreen"
+        component={ListScreen}
+        options={{ tabBarVisible: false }}
+      />
+      <ListMapTab.Screen
+        name="ListItemDetailScreen"
+        component={ListItemDetailScreen}
+        options={{ tabBarVisible: false }}
+      />
     </ListMapTab.Navigator>
   );
 };

@@ -9,10 +9,12 @@ import { API_KEY } from "../geocoder";
 import Geocoder from "react-native-geocoding";
 import { useNavigation } from "@react-navigation/native";
 import LoadingScreen from './LoadingScreen';
+
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+
 
 const AddTreeScreen = () => {
 
