@@ -29,7 +29,7 @@ const ListDetailModal = (
 
   // let cardType = props.route.params.type;
   // let cardDescription = props.route.params.description;
-  // let cardLocation = props.route.params.treeLocationTest.replace("null", "");
+  // let cardLocation = props.route.params.treeLocation.replace("null", "");
 
   // console.log("PARAM TEST", props.route.params);
 
@@ -73,7 +73,7 @@ const ListDetailModal = (
         <Text style={styles.header}>Tree Details</Text>
         <View style={styles.top}>
           <Text style={styles.titleText}>{value.type}</Text>
-        <Text>{value.treeLocationTest}</Text>
+        <Text>{value.treeLocation}</Text>
           <Text style={styles.distanceText}>65 Meters away</Text>
         </View>
 

@@ -29,15 +29,15 @@ const AddTreeScreen = () => {
 
   const [type, setType] = useState(null);
   const [description, setDescription] = useState(null);
-  const [treeLocationTest, setTreeLocation] = useState(null)
+  const [treeLocation, setTreeLocation] = useState(null)
   const [treeCoordinates, setTreeCoordinates] = useState(null);
 
   let locationWithPortlandDefaulted = null
   async function submit() {
     setLoadingActive(true);
-    locationWithPortlandDefaulted = treeLocationTest + " Portland, Oregon"
+    locationWithPortlandDefaulted = treeLocation + " Portland, Oregon"
     try {
-      let treeCoordinates = await convertLocation(treeLocationTest);
+      let treeCoordinates = await convertLocation(treeLocation);
       setTreeCoordinates(treeCoordinates)
       await firebase.database().ref("/tree").push({
         type,
@@ -69,7 +69,7 @@ const AddTreeScreen = () => {
       .catch((error) => {
         Alert.alert("We couldn't find your location, likely because the developer is using a simulator.")
         console.log(error.toString());
-        navigation.navigate("Add a tree")
+        navigation.navigate("Map")
         return;
       });
     return treeCoordinates;
@@ -114,27 +114,27 @@ const AddTreeScreen = () => {
           </View>
           <View style={styles.form}>
             <Text style={styles.detailsHeader}>Type</Text>
-      
-              <View style={styles.iconFlex}>
-                <MaterialCommunityIcons
-                  name="leaf"
-                  size={20}
-                  style={styles.icon}
-                  color="#e1eddf"
-                />
-                <TextInput
-                  multiline={true}
-                  placeholder={"Enter the type of tree"}
-                  style={styles.input}
-                  value={type}
-                  onChangeText={setType}
-                  // returnKeyType={"next"}
-                  placeholderTextColor="rgba(236, 250, 217, .3)"
-                  maxLength={70}
-                  // autoFocus={true}
-                />
-              </View>
-        
+
+            <View style={styles.iconFlex}>
+              <MaterialCommunityIcons
+                name="leaf"
+                size={20}
+                style={styles.icon}
+                color="#e1eddf"
+              />
+              <TextInput
+                multiline={true}
+                placeholder={"Enter the type of tree"}
+                style={styles.input}
+                value={type}
+                onChangeText={setType}
+                // returnKeyType={"next"}
+                placeholderTextColor="rgba(236, 250, 217, .3)"
+                maxLength={70}
+                // autoFocus={true}
+              />
+            </View>
+
             <View style={styles.line} />
             <Text style={styles.detailsHeader}>Description</Text>
             <View style={styles.iconFlex}>
@@ -165,10 +165,10 @@ const AddTreeScreen = () => {
                 color="#e1eddf"
               />
               <TextInput
-            
+                autoCorrect={false}
                 placeholder={"Address / Cross Street"}
                 style={styles.input}
-                value={treeLocationTest}
+                value={treeLocation}
                 onChangeText={setTreeLocation}
                 // returnKeyType={"next"}
                 placeholderTextColor="rgba(236, 250, 217, .3)"
