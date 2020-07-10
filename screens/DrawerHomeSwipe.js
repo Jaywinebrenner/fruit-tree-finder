@@ -34,10 +34,10 @@ const DrawerHomeSwipe = () => {
       <React.Fragment>
         <View style={styles.welcomeTextWrapper}>
           <View style={styles.topStrip}>
-            <ImageBackground
+            {/* <ImageBackground
               source={maroonGradient}
               style={styles.gradientImageTopStrip}
-            >
+            > */}
               <View
                 style={{
                   paddingTop: 0,
@@ -49,7 +49,7 @@ const DrawerHomeSwipe = () => {
                   margin: 0,
                 }}
               />
-          </ImageBackground>
+   
             </View>
           <ImageBackground source={apples} style={styles.applesImage}>
             <Text style={styles.welcomeText}>

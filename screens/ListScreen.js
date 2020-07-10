@@ -32,7 +32,7 @@ const ListScreen = () => {
   const [onListScreen, setOnListScreen] = useState(false);
   const [currentDatabase, setCurrentDatabase] = useState(null);
   const [filter, setFilter] = useState("All Trees");
-    
+
 
   useEffect(() => {
     // Pulling down database

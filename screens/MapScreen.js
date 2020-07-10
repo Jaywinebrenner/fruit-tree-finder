@@ -45,6 +45,7 @@ const MapScreen = ({navigation}) => {
 
 
   let user = firebase.auth().currentUser
+  
 
   useEffect(() => {
     _getUserLocactionAsync();

@@ -1,6 +1,6 @@
 Figure out how get the Center Map Button to work on both MapScreen and MyTreesMapScreen
 
-Add Key to distinguish between User added Trees, Database Trees and Verfified Trees.
+Add Key to distinguish between User added Trees, Databsase Trees and Verfified Trees.
 
 Likely look into this optimising custom marker stuff if trees bog down the app.
 
@@ -10,11 +10,7 @@ If the user has not made any trees- make a rendered <View> saying "There are no 
 
 Display how far away the tree is from the user on MyTrees, MyTreeDetailScreen, ListScreen, ListItemDetailScreen. Wire up new state. 
 
-Change color of text button after state is set on AddATreeScreen
-
 Ensure the geolocator tracks location- i THINK it simply finds initial location.
-
-Bottom About Drawer scrolls too far up. 
 
 Add error handling for Tree Location input. Primarily, ensure the inputted Tree is within a certain radius from user location. This is to ensure the Google Maps API didn't put the tree in some insanse spot as it's prone to do sometimes...
 
@@ -36,7 +32,7 @@ Getting that "User is already signed in if you accidently hit login button twice
 
 
 Likely rebrand the whole thing. 
-- Fruit Tree Finder
+- PDX Fruit Tree Finder
 - Free Fruit Finder (FFF)
 - Take Your Pick
 - Gleaning the Hood
