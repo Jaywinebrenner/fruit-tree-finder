@@ -66,6 +66,7 @@ const MapScreen = ({navigation}) => {
     Object.values(currentDatabase).forEach((value) => {
       console.log("Value USER ID", value.userID);
     });
+
   const _getUserLocactionAsync = async () => {
     try {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);

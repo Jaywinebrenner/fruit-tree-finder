@@ -8,9 +8,7 @@ import {
   ImageBackground,
   ScrollView,
 } from "react-native";
-
 import ViewMapButton from "../components/ViewMapButton"
-
 import firebase from "firebase";
 import { Ionicons, createIconSetFromFontello } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -18,41 +16,70 @@ import maroonGradient from "../assets/maroonGradient.png";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import FilterDropDownList from "../components/FilterDropDownList";
-
-
-
+import { getDistance } from 'geolib';
+import * as Location from "expo-location";
+import * as Permissions from "expo-permissions";
 
 const ListScreen = () => {
 
-
   const navigation = useNavigation();
-  const toggleToMapView = () => {
-    navigation.navigate("Map");
-  };
+
+  const [userCoords, setUserCoords] = useState(null);
   const [onListScreen, setOnListScreen] = useState(false);
-  const [currentDatabase, setCurrentDatabase] = useState(null);
+  const [treeList, setTreeList] = useState(null);
+  const [treeArray, setTreeArray] = useState(null);
   const [filter, setFilter] = useState("All Trees");
-    
 
   useEffect(() => {
+    _getUserLocactionAsync();
     // Pulling down database
     let result = firebase.database().ref("/tree");
     result.on("value", (snapshot) => {
       console.log("snapshot val", snapshot.val());
-      let database = snapshot.val();
-      setCurrentDatabase(database);
+      let allTrees = snapshot.val();
+      setTreeList(allTrees);
     });
   }, []);
 
-  if (!currentDatabase) {
-    console.log("I DONT EXIST");
+  const _getUserLocactionAsync = async () => {
+    try {
+      let { status } = await Permissions.askAsync(Permissions.LOCATION);
+      if (status !== "granted") {
+        setErrorMessage("Permissions to access location was denied");
+      }
+      let userLocation = await Location.getCurrentPositionAsync({
+        enabledHighAccuracy: true,
+      });
+      let coords = [userLocation.coords.latitude, userLocation.coords.longitude];
+      setUserCoords(coords);
+      console.log("location", coords);
+    } catch (error) {
+      let status = Location.getProviderStatusAsync();
+      if (!status.locationServicesEnabled) {
+        Alert.alert(error);
+      }
+    }
+  };
+
+  if (treeList && userCoords) {
+    console.log("REACHED IT");
+    Object.values(treeList).forEach((tree) => {
+      let treeLat = tree.treeCoordinates[0];
+      let treeLong = tree.treeCoordinates[1];
+      tree.distance = getDistance(
+        { latitude: treeLat, longitude: treeLong },
+        { latitude: userCoords[0], longitude: userCoords[1] }
+      );
+    });
+    if (!treeArray) {
+      setTreeArray(Object.values(treeList).sort((a, b) => (a.distance > b.distance) ? 1 : -1));
+      console.log("TREEARRAY", treeArray);
+    }
   }
-  // if (currentDatabase) {
-  //   console.log("I EXIST");
-  //   Object.values(currentDatabase).forEach((value) => {
-  //     console.log("Value LIST", value.type);
-  //   });
-  // }
+
+  const toggleToMapView = () => {
+    navigation.navigate("Map");
+  };
 
   return (
     <React.Fragment>
@@ -64,14 +91,6 @@ const ListScreen = () => {
           style={styles.bigTree}
         />
         <View style={styles.top}>
-          <TouchableOpacity onPress={() => navigation.navigate("Map")}>
-            {/* <AntDesign
-              name="arrowleft"
-              size={30}
-              color="#e1eddf"
-              style={styles.backArrow}
-            /> */}
-          </TouchableOpacity>
           <Text style={styles.headerText}>All Trees</Text>
         </View>
         <FilterDropDownList filter={filter} setFilter={setFilter} />
@@ -83,13 +102,13 @@ const ListScreen = () => {
         </TouchableOpacity>
 
         <ScrollView style={styles.container}>
-          {currentDatabase &&
-            Object.values(currentDatabase).map((value, index) => {
+          {treeArray &&
+            treeArray.map((value, index) => {
               return (
                 <View style={styles.cardContainer} key={index}>
                   <View style={styles.cardTop}>
                     <Text style={styles.cardTitleText}>{value.type}</Text>
-                    <Text style={styles.cardDistanceText}>65 Meters away</Text>
+                    <Text style={styles.cardDistanceText}>{value.distance} meters away</Text>
                   </View>
 
                   <View style={styles.cardMiddle}>
