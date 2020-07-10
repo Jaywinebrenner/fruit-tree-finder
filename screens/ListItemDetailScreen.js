@@ -8,8 +8,6 @@ import {
   ImageBackground,
   TextInput,
 } from "react-native";
-import { TREES } from "../constants/Markers";
-import { Navigation } from "react-native-navigation";
 import firebase from "firebase";
 import { useNavigation } from "@react-navigation/native";
 import maroonGradient from "../assets/maroonGradient.png";
@@ -20,20 +18,28 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 
 const ListItemDetailScreen = (props) => {
+
+  console.log("Index", props.route.params.index);
+
   const [currentDatabase, setCurrentDatabase] = useState([]);
   const [isListDetailModalVisible, setIsListDetailModalVisible] = useState(false)
   const navigation = useNavigation();
-const [type, setType] = useState(null)
-  let cardKey = props.route.params.key;
-  console.log("card key", cardKey);
-   let user = firebase.auth().currentUser;
+  const [type, setType] = useState(null)
+
+  let cardKey = props.route.params.index;
+  // console.log("card key", cardKey);
+  console.log("Props on list item", props)
+
+
   let cardType = props.route.params.type;
   let cardDescription = props.route.params.description
-  let cardLocation = props.route.params.locationWithPortlandDefaulted.replace("null", "");
+  let cardLocation = props.route.params.location;
 
-  let authUserID = null
+  let currentUserID = null;
+
+
   if (firebase.auth().currentUser) {
-    authUserID = firebase.auth().currentUser.uid;
+    currentUserID = firebase.auth().currentUser.uid;
   }
 
   useEffect(() => {
@@ -41,7 +47,6 @@ const [type, setType] = useState(null)
       let result = await firebase.database().ref("/tree");
       await result.on("value", (snapshot) => {
         let database = snapshot.val();
-        console.log("DATABASW SNAP SHOT", database);
         database !== null && setCurrentDatabase(database);
       });
     }
@@ -57,37 +62,48 @@ const [type, setType] = useState(null)
   if (!currentDatabase) {
     console.log("I DONT EXIST");
   }
-  if (currentDatabase) {
-    console.log("I EXIST");
-    Object.values(currentDatabase).forEach((value) => {
-      // console.log("Value USER ID", value.userID);
-    });
-  }
+  // if (currentDatabase) {
+  //   console.log("I EXIST");
+  //   Object.values(currentDatabase).forEach((value) => {
+  //     console.log("Value USER ID on DETAILS", value.userID);
+  //   });
+  // }
 
-    const areYouSure = () => {
-      Alert.alert("Warning!", "Are you sure you want to delete this tree???", [
-        {
-          text: "NO",
-          onPress: () => console.warn("NO Pressed"),
-          style: "cancel",
-        },
-        { text: "YES", onPress: () => deleteTree(firebaseUniqueKey) },
-      ]);
-    };
+  const areYouSure = () => {
+    Alert.alert("Warning!", "Are you sure you want to delete this tree???", [
+      {
+        text: "NO",
+        onPress: () => console.warn("NO Pressed"),
+        style: "cancel",
+      },
+      { text: "YES", onPress: () => deleteTree(firebaseUniqueKey) },
+    ]);
+  }; 
+  
+  const deleteTree = (firebaseUniqueKey) => {
+    console.log("KEY NUMBER in DELTE FUNCTION?", firebaseUniqueKey);
+    firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
+    navigation.navigate("ListScreen");
+  };
 
-      const deleteTree = (firebaseUniqueKey) => {
-        alert("touched")
-        console.log("KEY NUMBER in DELTE FUNCTION?", firebaseUniqueKey);
-        firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
-        navigation.navigate("ListScreen");
-      };
+  let firebaseUniqueKey = null;
+  const findFirebaseUniqueKeyToDelete = (cardKeyNumber) => {
+    firebaseUniqueKey = Object.keys(currentDatabase)[cardKeyNumber];
+  };
+  findFirebaseUniqueKeyToDelete(cardKey);
 
-      let firebaseUniqueKey = null;
-      const findFirebaseUniqueKeyToDelete = (cardKeyNumber) => {
-        firebaseUniqueKey = Object.keys(currentDatabase)[cardKeyNumber];
-      };
-      findFirebaseUniqueKeyToDelete(cardKey);
-
+  const renderDeleteButton =
+    currentDatabase &&
+    <View onPress={() => areYouSure()}>
+      <AntDesign
+        style={styles.deleteIcon}
+        name="delete"
+        size={30}
+        color="white"
+        onPress={() => areYouSure()}
+      />
+    </View>
+  
   return (
     <View style={styles.container}>
       <ImageBackground source={maroonGradient} style={styles.gradientImage}>
@@ -145,20 +161,7 @@ const [type, setType] = useState(null)
           <View style={styles.line} />
         </View>
         <View style={styles.iconWrapper}>
-          {user ? (
-            <View onPress={() => areYouSure()}>
-              <AntDesign
-                style={styles.deleteIcon}
-                name="delete"
-                size={30}
-                color="white"
-                onPress={() => areYouSure()}
-              />
-            </View>
-
-          ) : (
-            <React.Fragment></React.Fragment>
-          )}
+          {props.route.params.userID === currentUserID && renderDeleteButton}
         </View>
       </ImageBackground>
     </View>

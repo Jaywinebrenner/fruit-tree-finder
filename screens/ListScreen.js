@@ -129,6 +129,7 @@ const ListScreen = () => {
                       style={styles.cardDetailsButtonWrapper}
                       onPress={() =>
                         navigation.navigate("ListItemDetailScreen", {
+                          index,
                           ...value,
                         })
                       }

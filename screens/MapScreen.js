@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Alert, ImageBackground, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Alert, ImageBackground, TextInput, TouchableOpacity, Image } from "react-native";
 import { useState, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
@@ -22,6 +22,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { mapStyle } from "../constants/mapStyle";
+import customTree from "../media/customTreeThree.png";
 
 import Search from "../components/Search";
 
@@ -45,6 +46,7 @@ const MapScreen = ({navigation}) => {
 
 
   let user = firebase.auth().currentUser
+  
 
   useEffect(() => {
     _getUserLocactionAsync();
@@ -128,6 +130,7 @@ const MapScreen = ({navigation}) => {
           title={tree.type}
           description={tree.description}
         >
+          <Image style={styles.customTree} source={customTree} />
           {/* <Entypo name="tree" size={30} color="green" /> */}
         </Marker>
       );
@@ -258,6 +261,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderBottomLeftRadius: 15,
     borderTopLeftRadius: 15
+  },
+  customTree: {
+    width: 30,
+    height: 40,
   }
 });
 export default MapScreen

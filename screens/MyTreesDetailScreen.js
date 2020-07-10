@@ -12,7 +12,7 @@ const MyTreesDetailScreen = (props) => {
 
   let cardType = props.route.params.type;
   let cardDescription = props.route.params.description;
-  let cardLocation = props.route.params.treeLocationTest.replace("null", "");
+  let cardLocation = props.route.params.treeLocation.replace("null", "");
   let cardKey = props.route.params.key
   console.log("card key", cardKey);
 

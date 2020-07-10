@@ -14,7 +14,7 @@ import { Foundation } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomSheet from "reanimated-bottom-sheet";
 import { Ionicons } from "@expo/vector-icons";
-import logo from "../media/logo.png";
+import logo from "../media/logoWhite.png";
 import applePainting from "../media/apple-painting.png"
 import maroonGradient from "../assets/maroonGradient.png";
 
@@ -34,10 +34,10 @@ const DrawerHomeSwipe = () => {
       <React.Fragment>
         <View style={styles.welcomeTextWrapper}>
           <View style={styles.topStrip}>
-            <ImageBackground
+            {/* <ImageBackground
               source={maroonGradient}
               style={styles.gradientImageTopStrip}
-            >
+            > */}
               <View
                 style={{
                   paddingTop: 0,
@@ -49,7 +49,7 @@ const DrawerHomeSwipe = () => {
                   margin: 0,
                 }}
               />
-          </ImageBackground>
+   
             </View>
           <ImageBackground source={apples} style={styles.applesImage}>
             <Text style={styles.welcomeText}>
@@ -166,9 +166,9 @@ const styles = StyleSheet.create({
     height: 400,
   },
   deepLinkImage: {
-    marginTop: 10,
-    width: 80,
-    height: 30,
+    marginTop: 5,
+    width: 180,
+    height: 60,
     alignSelf: "center",
   },
   linkWrapper: {
