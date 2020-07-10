@@ -62,18 +62,15 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: "100%",
     flex: 1,
-    backgroundColor: "rgba(255, 255, 255, .8)"
+    backgroundColor: "rgba(255, 255, 255, .9)"
   },
   button: {
     backgroundColor: "rgb(125, 19, 19)",
     borderRadius: 25,
     height: 30,
-    // position: "absolute",
     width: "18%",
-    // right: "4%",
     marginLeft: "3%",
     marginTop: 5,
-    // top: 30,
     justifyContent: "center",
     alignItems: "center",
   },

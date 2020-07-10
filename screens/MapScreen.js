@@ -68,6 +68,7 @@ const MapScreen = ({navigation}) => {
     Object.values(currentDatabase).forEach((value) => {
       console.log("Value USER ID", value.userID);
     });
+
   const _getUserLocactionAsync = async () => {
     try {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -170,7 +171,6 @@ const MapScreen = ({navigation}) => {
         loadingEnabled
         title="Not sure what this does"
         description="Not sure what this does either"
-        showsUserLocation
         initialRegion={region}
         style={styles.map}
         showUserLocation={true}

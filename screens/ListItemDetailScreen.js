@@ -33,13 +33,10 @@ const ListItemDetailScreen = (props) => {
 
   let cardType = props.route.params.type;
   let cardDescription = props.route.params.description
-  let cardLocation = props.route.params.locationWithPortlandDefaulted.replace(
-    "null",
-    "",
-  );
+  let cardLocation = props.route.params.location;
+
   let currentUserID = null;
 
-  console.log("cardLocation", cardLocation);
 
   if (firebase.auth().currentUser) {
     currentUserID = firebase.auth().currentUser.uid;
@@ -82,7 +79,7 @@ const ListItemDetailScreen = (props) => {
       { text: "YES", onPress: () => deleteTree(firebaseUniqueKey) },
     ]);
   }; 
-
+  
   const deleteTree = (firebaseUniqueKey) => {
     console.log("KEY NUMBER in DELTE FUNCTION?", firebaseUniqueKey);
     firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
