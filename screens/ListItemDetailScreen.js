@@ -8,8 +8,6 @@ import {
   ImageBackground,
   TextInput,
 } from "react-native";
-import { TREES } from "../constants/Markers";
-import { Navigation } from "react-native-navigation";
 import firebase from "firebase";
 import { useNavigation } from "@react-navigation/native";
 import maroonGradient from "../assets/maroonGradient.png";
