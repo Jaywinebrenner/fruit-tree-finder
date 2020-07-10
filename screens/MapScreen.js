@@ -265,7 +265,6 @@ const styles = StyleSheet.create({
   customTree: {
     width: 30,
     height: 40,
-    color: "green"
   }
 });
 export default MapScreen
