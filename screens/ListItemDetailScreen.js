@@ -29,7 +29,7 @@ const [type, setType] = useState(null)
    let user = firebase.auth().currentUser;
   let cardType = props.route.params.type;
   let cardDescription = props.route.params.description
-  let cardLocation = props.route.params.treeLocationTest.replace("null", "");
+  let cardLocation = props.route.params.locationWithPortlandDefaulted.replace("null", "");
 
   let authUserID = null
   if (firebase.auth().currentUser) {
@@ -73,7 +73,7 @@ const [type, setType] = useState(null)
         },
         { text: "YES", onPress: () => deleteTree(firebaseUniqueKey) },
       ]);
-    }; 
+    };
 
       const deleteTree = (firebaseUniqueKey) => {
         alert("touched")
@@ -155,7 +155,7 @@ const [type, setType] = useState(null)
                 onPress={() => areYouSure()}
               />
             </View>
-           
+
           ) : (
             <React.Fragment></React.Fragment>
           )}

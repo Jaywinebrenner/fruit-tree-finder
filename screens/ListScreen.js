@@ -35,7 +35,6 @@ const ListScreen = () => {
     // Pulling down database
     let result = firebase.database().ref("/tree");
     result.on("value", (snapshot) => {
-      console.log("snapshot val", snapshot.val());
       let allTrees = snapshot.val();
       setTreeList(allTrees);
     });
@@ -52,7 +51,6 @@ const ListScreen = () => {
       });
       let coords = [userLocation.coords.latitude, userLocation.coords.longitude];
       setUserCoords(coords);
-      console.log("location", coords);
     } catch (error) {
       let status = Location.getProviderStatusAsync();
       if (!status.locationServicesEnabled) {
@@ -62,7 +60,6 @@ const ListScreen = () => {
   };
 
   if (treeList && userCoords) {
-    console.log("REACHED IT");
     Object.values(treeList).forEach((tree) => {
       let treeLat = tree.treeCoordinates[0];
       let treeLong = tree.treeCoordinates[1];
@@ -73,8 +70,8 @@ const ListScreen = () => {
     });
     if (!treeArray) {
       setTreeArray(Object.values(treeList).sort((a, b) => (a.distance > b.distance) ? 1 : -1));
-      console.log("TREEARRAY", treeArray);
     }
+    console.log("TREEARRAY", treeArray);
   }
 
   function milesOrYards(distance) {
@@ -83,7 +80,6 @@ const ListScreen = () => {
       return(dist + " yards away");
     } else {
       let dist = Math.round(convertDistance(distance, "mi"));
-      console.log("DISTANCE", dist.toString());
       return (dist + " miles away");
     }
   }
