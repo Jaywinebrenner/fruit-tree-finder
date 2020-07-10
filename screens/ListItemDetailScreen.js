@@ -20,14 +20,19 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 
 const ListItemDetailScreen = (props) => {
+
+  console.log("Index", props.route.params.index);
+
   const [currentDatabase, setCurrentDatabase] = useState([]);
   const [isListDetailModalVisible, setIsListDetailModalVisible] = useState(false)
   const navigation = useNavigation();
   const [type, setType] = useState(null)
-  let cardKey = props.route.params.key;
-  // let cardKey = props.route.params
-  console.log("card key", cardKey);
-  let user = firebase.auth().currentUser;
+
+  let cardKey = props.route.params.index;
+  // console.log("card key", cardKey);
+  console.log("Props", props)
+
+
   let cardType = props.route.params.type;
   let cardDescription = props.route.params.description
   let cardLocation = props.route.params.treeLocationTest.replace("null", "");
@@ -75,47 +80,30 @@ const ListItemDetailScreen = (props) => {
     ]);
   }; 
 
-    const deleteTree = (firebaseUniqueKey) => {
-      alert("touched")
-      console.log("KEY NUMBER in DELTE FUNCTION?", firebaseUniqueKey);
-      firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
-      navigation.navigate("ListScreen");
-    };
+  const deleteTree = (firebaseUniqueKey) => {
+    console.log("KEY NUMBER in DELTE FUNCTION?", firebaseUniqueKey);
+    firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
+    navigation.navigate("ListScreen");
+  };
 
-    let firebaseUniqueKey = null;
-    const findFirebaseUniqueKeyToDelete = (cardKeyNumber) => {
-      firebaseUniqueKey = Object.keys(currentDatabase)[cardKeyNumber];
-    };
-    findFirebaseUniqueKeyToDelete(cardKey);
-
-
- console.log("CUREENTUSERID details", currentUserID);
-   if (currentDatabase) {
-    console.log("I EXIST");
-    Object.values(currentDatabase).forEach((value) => {
-      console.log("Value USER ID on DETAILS", value.userID);
-    });
-  }
-
-// props.route.params.userID === currentUserID
-console.log("PARAMS", props.route.params.userID); 
+  let firebaseUniqueKey = null;
+  const findFirebaseUniqueKeyToDelete = (cardKeyNumber) => {
+    firebaseUniqueKey = Object.keys(currentDatabase)[cardKeyNumber];
+  };
+  findFirebaseUniqueKeyToDelete(cardKey);
 
   const renderDeleteButton =
     currentDatabase &&
-          <View onPress={() => areYouSure()}>
-            <AntDesign
-              style={styles.deleteIcon}
-              name="delete"
-              size={30}
-              color="white"
-              onPress={() => areYouSure()}
-            />
-          </View>
+    <View onPress={() => areYouSure()}>
+      <AntDesign
+        style={styles.deleteIcon}
+        name="delete"
+        size={30}
+        color="white"
+        onPress={() => areYouSure()}
+      />
+    </View>
   
- 
-
-
-
   return (
     <View style={styles.container}>
       <ImageBackground source={maroonGradient} style={styles.gradientImage}>

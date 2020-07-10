@@ -34,6 +34,8 @@ const ListScreen = () => {
   const [filter, setFilter] = useState("All Trees");
 
 
+  // console.log("A TREE HOPEFULLY", currentDatabase);
+
   useEffect(() => {
     // Pulling down database
     let result = firebase.database().ref("/tree");
@@ -65,12 +67,6 @@ const ListScreen = () => {
         />
         <View style={styles.top}>
           <TouchableOpacity onPress={() => navigation.navigate("Map")}>
-            {/* <AntDesign
-              name="arrowleft"
-              size={30}
-              color="#e1eddf"
-              style={styles.backArrow}
-            /> */}
           </TouchableOpacity>
           <Text style={styles.headerText}>All Trees</Text>
         </View>
@@ -103,7 +99,8 @@ const ListScreen = () => {
                       style={styles.cardDetailsButtonWrapper}
                       onPress={() =>
                         navigation.navigate("ListItemDetailScreen", {
-                          ...value,
+                          index,
+                          ...value
                         })
                       }
                     >
