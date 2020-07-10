@@ -10,7 +10,6 @@ import {
 } from "react-native";
 
 import ViewMapButton from "../components/ViewMapButton"
-
 import firebase from "firebase";
 import { Ionicons, createIconSetFromFontello } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -19,11 +18,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import FilterDropDownList from "../components/FilterDropDownList";
 
-
-
-
 const ListScreen = () => {
-
 
   const navigation = useNavigation();
   const toggleToMapView = () => {
@@ -32,7 +27,6 @@ const ListScreen = () => {
   const [onListScreen, setOnListScreen] = useState(false);
   const [currentDatabase, setCurrentDatabase] = useState(null);
   const [filter, setFilter] = useState("All Trees");
-    
 
   useEffect(() => {
     // Pulling down database
@@ -65,12 +59,6 @@ const ListScreen = () => {
         />
         <View style={styles.top}>
           <TouchableOpacity onPress={() => navigation.navigate("Map")}>
-            {/* <AntDesign
-              name="arrowleft"
-              size={30}
-              color="#e1eddf"
-              style={styles.backArrow}
-            /> */}
           </TouchableOpacity>
           <Text style={styles.headerText}>All Trees</Text>
         </View>
@@ -103,7 +91,8 @@ const ListScreen = () => {
                       style={styles.cardDetailsButtonWrapper}
                       onPress={() =>
                         navigation.navigate("ListItemDetailScreen", {
-                          ...value,
+                          index,
+                          ...value
                         })
                       }
                     >
