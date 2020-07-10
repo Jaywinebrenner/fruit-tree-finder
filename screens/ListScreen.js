@@ -92,7 +92,7 @@ const ListScreen = () => {
                       onPress={() =>
                         navigation.navigate("ListItemDetailScreen", {
                           index,
-                          ...value
+                          ...value,
                         })
                       }
                     >

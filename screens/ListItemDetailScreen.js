@@ -28,13 +28,18 @@ const ListItemDetailScreen = (props) => {
 
   let cardKey = props.route.params.index;
   // console.log("card key", cardKey);
-  console.log("Props", props)
+  console.log("Props on list item", props)
 
 
   let cardType = props.route.params.type;
   let cardDescription = props.route.params.description
-  let cardLocation = props.route.params.treeLocationTest.replace("null", "");
+  let cardLocation = props.route.params.locationWithPortlandDefaulted.replace(
+    "null",
+    "",
+  );
   let currentUserID = null;
+
+  console.log("cardLocation", cardLocation);
 
   if (firebase.auth().currentUser) {
     currentUserID = firebase.auth().currentUser.uid;
