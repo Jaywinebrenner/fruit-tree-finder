@@ -23,9 +23,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { mapStyle } from "../constants/mapStyle";
 import customTree from "../media/customTreeThree.png";
-
 import Search from "../components/Search";
-
 import DrawerHomeSwipe from "./DrawerHomeSwipe";
 import FilterDropDown from "../components/FilterDropDown";
 

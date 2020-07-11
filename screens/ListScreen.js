@@ -20,6 +20,7 @@ import FilterDropDownList from "../components/FilterDropDownList";
 import { getDistance, convertDistance } from 'geolib';
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
+import Search from "../components/Search";
 
 const ListScreen = () => {
 
@@ -99,9 +100,9 @@ const ListScreen = () => {
           style={styles.bigTree}
         />
         <View style={styles.top}>
-          <Text style={styles.headerText}>All Trees</Text>
+          <Search navigation={navigation} />
+          { /* <FilterDropDownList filter={filter} setFilter={setFilter} /> */}
         </View>
-        <FilterDropDownList filter={filter} setFilter={setFilter} />
         <TouchableOpacity
           style={styles.toggle}
           onPress={() => navigation.navigate("Map")}
@@ -151,11 +152,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   top: {
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
     paddingTop: 25,
-    paddingBottom: 10,
-    flexDirection: "row",
+    // paddingBottom: 10,
+    height: 80,
+    // flexDirection: "row",
     backgroundColor: "rgba(236, 250, 217, .2)",
   },
   headerText: {
