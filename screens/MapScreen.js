@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Alert, ImageBackground, TextInput, TouchableOpacity, Image } from "react-native";
 import { useState, useEffect } from "react";
-import MapView, { Marker } from "react-native-maps";
+import { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import DestinationButton from "../components/DestinationButton";
@@ -23,6 +23,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { mapStyle } from "../constants/mapStyle";
 import customTree from "../media/customTreeThree.png";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import Search from "../components/Search";
 import DrawerHomeSwipe from "./DrawerHomeSwipe";
 import FilterDropDown from "../components/FilterDropDown";
@@ -134,7 +135,7 @@ const MapScreen = ({navigation}) => {
             fadeDuration={0}
             style={styles.customTree} source={customTree}
           />
-          {/*<MaterialCommunityIcons name="tree" size={40} color="#769382" />*/}
+          {/* <MaterialCommunityIcons name="tree" size={40} color="#769382" /> */}
           {/* <Entypo name="tree" size={30} color="green" /> */}
         </Marker>
       );
@@ -173,6 +174,7 @@ const MapScreen = ({navigation}) => {
         }}
       />
       <MapView
+        provider={PROVIDER_GOOGLE}
         loadingEnabled
         title="Not sure what this does"
         description="Not sure what this does either"
@@ -186,10 +188,9 @@ const MapScreen = ({navigation}) => {
         // }}
         rotateEnabled={false}
       >
-        {filter === "All Trees" && AllTreesMapMarkers }
+        {filter === "All Trees" && AllTreesMapMarkers}
         {filter === "My Trees" && MyTreesMapMarkers}
       </MapView>
-
 
       {currentUserID && renderAddATreeButton()}
 

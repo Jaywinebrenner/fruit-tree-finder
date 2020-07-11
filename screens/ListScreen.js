@@ -31,6 +31,7 @@ const ListScreen = () => {
   const [treeList, setTreeList] = useState(null);
   const [treeArray, setTreeArray] = useState(null);
   const [filter, setFilter] = useState("All Trees");
+  const [objectDatabase, setObjectDatabase ] = useState(null)
 
   useEffect(() => {
     _getUserLocactionAsync();
@@ -39,6 +40,7 @@ const ListScreen = () => {
     result.on("value", (snapshot) => {
       let allTrees = snapshot.val();
       setTreeList(allTrees);
+      setObjectDatabase(allTrees)
     });
   }, []);
 
@@ -111,7 +113,42 @@ const ListScreen = () => {
         </TouchableOpacity>
 
         <ScrollView style={styles.container}>
-          {treeArray &&
+
+          {objectDatabase &&
+            Object.values(objectDatabase).map((value, index) => {
+              return (
+                <View style={styles.cardContainer} key={index}>
+                  <View style={styles.cardTop}>
+                    <Text style={styles.cardTitleText}>{value.type}</Text>
+                    <Text style={styles.cardDistanceText}>
+                      {milesOrYards(value.distance)}
+                    </Text>
+                  </View>
+
+                  <View style={styles.cardMiddle}>
+                    <Text style={styles.cardDescriptionText}>
+                      {value.description}
+                    </Text>
+                  </View>
+
+                  <View style={styles.bottom}>
+                    <TouchableOpacity
+                      style={styles.cardDetailsButtonWrapper}
+                      onPress={() =>
+                        navigation.navigate("ListItemDetailScreen", {
+                          index,
+                          ...value,
+                        })
+                      }
+                    >
+                      <Text style={styles.cardDetailsButtonText}>Details</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              );
+            })}
+
+          {/* {treeArray &&
             treeArray.map((value, index) => {
               return (
                 <View style={styles.cardContainer} key={index}>
@@ -138,7 +175,7 @@ const ListScreen = () => {
                   </Text>
                 </View>
               );
-            })}
+            })} */}
         </ScrollView>
       </ImageBackground>
     </React.Fragment>
