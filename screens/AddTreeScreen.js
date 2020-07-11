@@ -32,17 +32,17 @@ const AddTreeScreen = () => {
   const [treeLocation, setTreeLocation] = useState(null)
   const [treeCoordinates, setTreeCoordinates] = useState(null);
 
-  let locationWithPortlandDefaulted = null
+  // let locationWithPortlandDefaulted = null
   async function submit() {
     setLoadingActive(true);
-    locationWithPortlandDefaulted = treeLocation + " Portland, Oregon"
+    // locationWithPortlandDefaulted = treeLocation + " Portland, Oregon"
     try {
       let treeCoordinates = await convertLocation(treeLocation);
       setTreeCoordinates(treeCoordinates)
       await firebase.database().ref("/tree").push({
         type,
         description,
-        locationWithPortlandDefaulted,
+        treeLocation,
         treeCoordinates,
         userID,
       });

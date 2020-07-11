@@ -33,8 +33,8 @@ const ListItemDetailScreen = (props) => {
 
   let cardType = props.route.params.type;
   let cardDescription = props.route.params.description
-  let cardLocation = props.route.params.location;
-
+  let cardLocation = props.route.params.treeLocation;
+console.log("cardLocation?", props.route.params);
   let currentUserID = null;
 
 
