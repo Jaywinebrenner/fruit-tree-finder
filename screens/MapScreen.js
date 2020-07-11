@@ -22,7 +22,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { mapStyle } from "../constants/mapStyle";
-import customTree from "../media/customTreeThree.png";
+import customTree from "../media/customTreeFour.png";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import Search from "../components/Search";
 import DrawerHomeSwipe from "./DrawerHomeSwipe";
