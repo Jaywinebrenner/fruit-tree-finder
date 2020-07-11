@@ -96,8 +96,10 @@ const renderLoginScreen = () => {
           </TouchableOpacity>
           <Text style={styles.backText}>Log in</Text>
         </View>
-          <KeyboardAwareScrollView style={styles.middle}>
-
+          <KeyboardAwareScrollView
+            style={styles.middle}
+            keyboardShouldPersistTaps='handled'
+          >
             <View style={styles.form}>
               <Text style={styles.imageText}>PORTLAND FRUIT TREE {"\n"} PROJECT</Text>
               <Text style={styles.imageTextTwo}>
