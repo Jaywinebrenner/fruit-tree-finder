@@ -78,65 +78,67 @@ const renderLoginScreen = () => {
       style={styles.container}
       keyboardShouldPersistTaps='handled'
     >
-    <ImageBackground source={maroonGradient} style={styles.gradientImage}>
-      <Entypo
-        name="tree"
-        size={500}
-        color="rgba(163, 119, 125, 0.5)"
-        style={styles.bigTree}
-      />
-      <View style={styles.top}>
-        <TouchableOpacity onPress={() => navigation.navigate("Map")}>
-          <AntDesign
-            name="arrowleft"
-            size={30}
-            color="#e1eddf"
-            style={styles.backArrow}
-          />
-        </TouchableOpacity>
-        <Text style={styles.backText}>Log in</Text>
-      </View>
+      <ImageBackground source={maroonGradient} style={styles.gradientImage}>
+        <Entypo
+          name="tree"
+          size={500}
+          color="rgba(163, 119, 125, 0.5)"
+          style={styles.bigTree}
+        />
+        <View style={styles.top}>
+          <TouchableOpacity onPress={() => navigation.navigate("Map")}>
+            <AntDesign
+              name="arrowleft"
+              size={30}
+              color="#e1eddf"
+              style={styles.backArrow}
+            />
+          </TouchableOpacity>
+          <Text style={styles.backText}>Log in</Text>
+        </View>
+          <KeyboardAwareScrollView style={styles.middle}>
 
-      <View style={styles.form}>
-        <Text style={styles.imageText}>PORTLAND FRUIT TREE {"\n"} PROJECT</Text>
-        <Text style={styles.imageTextTwo}>
-          Gather food from the plentiful bounties {"\n"} of your neighborhood
-        </Text>
-        <TouchableOpacity>
-          <Text style={styles.text}>Welcome!</Text>
-          <TextInput
-            autoCapitalize="none"
-            keyboardType={"email-address"}
-            placeholder="Email"
-            placeholderTextColor="grey"
-            value={email}
-            onChangeText={setEmail}
-            style={styles.input}
-            autoCapitalize={"none"}
-          />
-          <TextInput
-            placeholder="Password"
-            secureTextEntry={true}
-            placeholderTextColor="grey"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={setPassword}
-            style={styles.input}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.login}
-          onPress={() => login(email, password)}
-        >
-          <Text style={styles.loginButtonText}>LOGIN</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.signUp}
-          onPress={() => signUp(email, password)}
-        >
-          <Text style={styles.signUpButtonText}>SIGN UP</Text>
-        </TouchableOpacity>
-      </View>
+            <View style={styles.form}>
+              <Text style={styles.imageText}>PORTLAND FRUIT TREE {"\n"} PROJECT</Text>
+              <Text style={styles.imageTextTwo}>
+                Gather food from the plentiful bounties {"\n"} of your neighborhood
+              </Text>
+              <TouchableOpacity>
+                <Text style={styles.text}>Welcome!</Text>
+                <TextInput
+                  autoCapitalize="none"
+                  keyboardType={"email-address"}
+                  placeholder="Email"
+                  placeholderTextColor="grey"
+                  value={email}
+                  onChangeText={setEmail}
+                  style={styles.input}
+                  autoCapitalize={"none"}
+                />
+                <TextInput
+                  placeholder="Password"
+                  secureTextEntry={true}
+                  placeholderTextColor="grey"
+                  secureTextEntry={true}
+                  value={password}
+                  onChangeText={setPassword}
+                  style={styles.input}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.login}
+                onPress={() => login(email, password)}
+              >
+                <Text style={styles.loginButtonText}>LOGIN</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.signUp}
+                onPress={() => signUp(email, password)}
+              >
+                <Text style={styles.signUpButtonText}>SIGN UP</Text>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAwareScrollView>
       </ImageBackground>
     </View>
   )
@@ -251,6 +253,9 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 20,
   },
+  middle: {
+    zIndex: 1
+  }
 });
 
 export default LoginScreen;
