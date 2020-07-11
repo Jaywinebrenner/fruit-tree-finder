@@ -78,8 +78,8 @@ console.log("cardLocation?", props.route.params);
       },
       { text: "YES", onPress: () => deleteTree(firebaseUniqueKey) },
     ]);
-  }; 
-  
+  };
+
   const deleteTree = (firebaseUniqueKey) => {
     console.log("KEY NUMBER in DELTE FUNCTION?", firebaseUniqueKey);
     firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
@@ -103,7 +103,7 @@ console.log("cardLocation?", props.route.params);
         onPress={() => areYouSure()}
       />
     </View>
-  
+
   return (
     <View style={styles.container}>
       <ImageBackground source={maroonGradient} style={styles.gradientImage}>
@@ -173,16 +173,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   top: {
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center",
+    width: "100%",
     paddingTop: 25,
     paddingBottom: 10,
     flexDirection: "row",
     backgroundColor: "rgba(236, 250, 217, .2)",
+    zIndex: 2
   },
   backText: {
     color: "#e1eddf",
     fontSize: 25,
+    alignSelf: "center",
+    textAlign: "center",
+    margin: "auto"
   },
   gradientImage: {
     height: "100%",
@@ -223,11 +228,14 @@ const styles = StyleSheet.create({
     right: -60,
     // zIndex: 1,
   },
+  // backArrow: {
+  //   position: "absolute",
+  //   right: 85,
+  //   top: -15
+  //   // marginLeft: "10%",
+  // },
   backArrow: {
-    position: "absolute",
-    right: 85,
-    top: -15
-    // marginLeft: "10%",
+    marginLeft: "10%"
   },
   detailsHeader: {
     marginBottom: 10,

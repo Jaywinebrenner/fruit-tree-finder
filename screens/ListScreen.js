@@ -15,10 +15,12 @@ import { useNavigation } from "@react-navigation/native";
 import maroonGradient from "../assets/maroonGradient.png";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import FilterDropDownList from "../components/FilterDropDownList";
 import { getDistance, convertDistance } from 'geolib';
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
+import Search from "../components/Search";
 
 const ListScreen = () => {
 
@@ -100,9 +102,9 @@ const ListScreen = () => {
           style={styles.bigTree}
         />
         <View style={styles.top}>
-          <Text style={styles.headerText}>All Trees</Text>
+          <Search navigation={navigation} />
+          { /* <FilterDropDownList filter={filter} setFilter={setFilter} /> */}
         </View>
-        <FilterDropDownList filter={filter} setFilter={setFilter} />
         <TouchableOpacity
           style={styles.toggle}
           onPress={() => navigation.navigate("Map")}
@@ -150,18 +152,12 @@ const ListScreen = () => {
             treeArray.map((value, index) => {
               return (
                 <View style={styles.cardContainer} key={index}>
-                  <View style={styles.cardTop}>
-                    <Text style={styles.cardTitleText}>{value.type}</Text>
-                    <Text style={styles.cardDistanceText}>{milesOrYards(value.distance)}</Text>
-                  </View>
-
-                  <View style={styles.cardMiddle}>
-                    <Text style={styles.cardDescriptionText}>
-                      {value.description}
-                    </Text>
-                  </View>
-
-                  <View style={styles.bottom}>
+                  <View style={{flexDirection: "row"}}>
+                    <MaterialCommunityIcons name="pine-tree-box" size={40} color="white" style={styles.boxTree}/>
+                    <View style={styles.cardInfo}>
+                      <Text style={styles.cardTitleText}>{value.type}</Text>
+                      <Text style={styles.cardDistanceText}>{milesOrYards(value.distance)}</Text>
+                    </View>
                     <TouchableOpacity
                       style={styles.cardDetailsButtonWrapper}
                       onPress={() =>
@@ -174,6 +170,9 @@ const ListScreen = () => {
                       <Text style={styles.cardDetailsButtonText}>Details</Text>
                     </TouchableOpacity>
                   </View>
+                  <Text style={styles.cardDescriptionText}>
+                  {value.description}
+                  </Text>
                 </View>
               );
             })} */}
@@ -190,11 +189,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   top: {
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
     paddingTop: 25,
-    paddingBottom: 10,
-    flexDirection: "row",
+    // paddingBottom: 10,
+    height: 80,
+    // flexDirection: "row",
     backgroundColor: "rgba(236, 250, 217, .2)",
   },
   headerText: {
@@ -207,41 +207,17 @@ const styles = StyleSheet.create({
     color: "#e1eddf",
     fontSize: 25,
   },
-  middle: {
-    flex: 15,
-    backgroundColor: "white",
-  },
   cardContainer: {
-    alignItems: "center",
-    alignSelf: "center",
     justifyContent: "center",
-    width: "90%",
-    height: 180,
+    width: "100%",
     marginTop: 12,
     padding: 10,
-    // borderRadius: 8,
     color: "red",
     backgroundColor: "rgba(255, 255, 255, .05)",
-    borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, .5)",
-    borderRadius: 8,
-    // shadowColor: "black",
-    // elevation: 5,
-    // shadowRadius: 2,
-    // shadowOpacity: 0.6,
-  },
-  cardTop: {
-    flex: 0.25,
-  },
-  cardMiddle: {
-    marginTop: 20,
-    flex: 0.5,
-  },
-  cardBottom: {
-    flex: 0.25,
   },
   cardDetailsButtonWrapper: {
-    marginTop: 4,
+    position: "absolute",
+    right: "3%",
     borderWidth: 1,
     borderRadius: 2,
     padding: 4,
@@ -251,17 +227,14 @@ const styles = StyleSheet.create({
     color: "white",
   },
   cardDistanceText: {
-    alignSelf: "center",
     fontSize: 15,
     color: "white",
   },
   cardTitleText: {
-    alignSelf: "center",
     fontSize: 22,
     color: "white",
   },
   cardDescriptionText: {
-    alignSelf: "center",
     color: "rgba(255, 255, 255, .5)",
   },
   toggle: {
@@ -278,19 +251,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     zIndex: 1,
   },
-  // toggle: {
-  //   position: "absolute",
-  //   top: "45%",
-  //   right: "0%",
-  //   paddingVertical: 4,
-  //   paddingLeft: 15,
-  //   paddingRight: 7,
-  //   backgroundColor: "rgba(105, 105, 105, .2)",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   borderBottomLeftRadius: 15,
-  //   borderTopLeftRadius: 15,
-  // },
   hr: {
     borderBottomColor: "black",
     borderBottomWidth: 1,
@@ -298,15 +258,16 @@ const styles = StyleSheet.create({
   gradientImage: {
     height: "100%",
     width: "100%",
-    // zIndex: 0,
   },
   bigTree: {
     position: "absolute",
     bottom: -50,
     top: 300,
     right: -60,
-    // zIndex: 1,
   },
+  boxTree: {
+    marginRight: "3%"
+  }
 });
 
 export default ListScreen;

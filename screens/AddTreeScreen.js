@@ -205,7 +205,8 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     paddingBottom: 10,
     flexDirection: "row",
-    backgroundColor: "rgba(236, 250, 217, .2)"
+    backgroundColor: "rgba(236, 250, 217, .2)",
+    alignItems: "center"
   },
   gradientImage: {
     height: "100%",
