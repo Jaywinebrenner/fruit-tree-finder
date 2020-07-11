@@ -35,22 +35,16 @@ const MapScreen = ({navigation}) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [currentDatabase, setCurrentDatabase] = useState([]);
   const [filter, setFilter] = useState("All Trees");
+  const [tracksViewChanges, setTracksViewChanges] = useState(false);
 
-    let currentUserID = null;
-
-    if (firebase.auth().currentUser) {
-      currentUserID = firebase.auth().currentUser.uid;
-    }
-
-    console.log("current USER ID Map Screen", currentUserID);
-
-
-  let user = firebase.auth().currentUser
-  
+  let currentUserID = null;
+  if (firebase.auth().currentUser) {
+    currentUserID = firebase.auth().currentUser.uid;
+  }
 
   useEffect(() => {
     _getUserLocactionAsync();
-
+    setTracksViewChanges(true);
     async function fetchData() {
       let result = await firebase.database().ref("/tree");
       await result.on("value", (snapshot) => {
@@ -115,6 +109,12 @@ const MapScreen = ({navigation}) => {
     )
   }
 
+  function stopTrackingViewChanges() {
+    if (tracksViewChanges) {
+      setTracksViewChanges(false);
+    }
+  }
+
   const AllTreesMapMarkers =
     currentDatabase &&
     Object.values(currentDatabase).map((tree, index) => {
@@ -127,10 +127,16 @@ const MapScreen = ({navigation}) => {
             latitude: latitude,
             longitude: longitude,
           }}
+          tracksViewChanges={tracksViewChanges}
           title={tree.type}
           description={tree.description}
         >
-          <Image style={styles.customTree} source={customTree} />
+          <Image
+            onLoad={() => stopTrackingViewChanges()}
+            fadeDuration={0}
+            style={styles.customTree} source={customTree}
+          />
+          {/*<MaterialCommunityIcons name="tree" size={40} color="#769382" />*/}
           {/* <Entypo name="tree" size={30} color="green" /> */}
         </Marker>
       );
@@ -156,6 +162,7 @@ const MapScreen = ({navigation}) => {
         );
       }
     });
+
 
   return (
     <View style={styles.container}>
@@ -186,7 +193,7 @@ const MapScreen = ({navigation}) => {
       </MapView>
 
 
-      {user && renderAddATreeButton()}
+      {currentUserID && renderAddATreeButton()}
 
       <TouchableOpacity
         style={styles.toggle}
