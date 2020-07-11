@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   TextInput,
+  Platform
 } from "react-native";
 import firebase from "firebase";
 import { useNavigation } from "@react-navigation/native";
@@ -180,14 +181,14 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     flexDirection: "row",
     backgroundColor: "rgba(236, 250, 217, .2)",
-    zIndex: 2
+    zIndex: 2,
   },
   backText: {
     color: "#e1eddf",
     fontSize: 25,
     alignSelf: "center",
     textAlign: "center",
-    margin: "auto"
+    margin: "auto",
   },
   gradientImage: {
     height: "100%",
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
   //   // marginLeft: "10%",
   // },
   backArrow: {
-    marginLeft: "10%"
+    marginLeft: "10%",
   },
   detailsHeader: {
     marginBottom: 10,
@@ -277,10 +278,17 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     marginBottom: 0,
   },
-  iconWrapper: {},
-  deleteIcon: {
-    marginTop: 200,
-    alignSelf: "center",
+  iconWrapper: {
+    ...Platform.select({
+      ios: {
+        marginTop: 140,
+        alignSelf: "center",
+      },
+      android: {
+        marginTop: 200,
+        alignSelf: "center",
+      },
+    }),
   },
 });
 

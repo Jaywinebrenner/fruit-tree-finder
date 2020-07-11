@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   ScrollView,
+  Platform
 } from "react-native";
 import ViewMapButton from "../components/ViewMapButton"
 import firebase from "firebase";
@@ -126,8 +127,10 @@ const ListScreen = () => {
                   </View>
 
                   <View style={styles.cardMiddle}>
-                    <Text style={styles.cardDescriptionText}>
-                      {value.description}
+                    <Text elipsesMode="tail" style={styles.cardDescriptionText}>
+                      {value.description.length > 40
+                        ? value.description.substring(0, 40 - 4) + "..."
+                        : value.description}
                     </Text>
                   </View>
 
@@ -216,13 +219,36 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, .05)",
   },
   cardDetailsButtonWrapper: {
-    position: "absolute",
-    right: "3%",
-    borderWidth: 1,
-    borderRadius: 2,
-    padding: 4,
-    borderColor: "white",
+    ...Platform.select({
+      ios: {
+          position: "absolute",
+          right: "3%",
+          borderWidth: 1,
+          borderRadius: 2,
+          padding: 4,
+          bottom: 17,
+          borderColor: "white",
+      },
+      android: {
+          position: "absolute",
+          right: "3%",
+          borderWidth: 1,
+          borderRadius: 2,
+          padding: 4,
+          borderColor: "white",
+      },
+    }),
   },
+
+  // cardDetailsButtonWrapper: {
+  //   position: "absolute",
+  //   right: "3%",
+  //   borderWidth: 1,
+  //   borderRadius: 2,
+  //   padding: 4,
+  //   borderColor: "white",
+  // },
+
   cardDetailsButtonText: {
     color: "white",
   },
@@ -266,8 +292,8 @@ const styles = StyleSheet.create({
     right: -60,
   },
   boxTree: {
-    marginRight: "3%"
-  }
+    marginRight: "3%",
+  },
 });
 
 export default ListScreen;
