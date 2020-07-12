@@ -1,6 +1,7 @@
 import React from "react";
 import {
   StyleSheet,
+  Image,
   Text,
   View,
   Alert,
@@ -13,6 +14,10 @@ import Icon from 'react-native-vector-icons/Feather';
 import { Foundation } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as firebase from "firebase";
+import customTree from "../media/customTreeFourOutline.png";
+import customTreeMyTree from "../media/customTreeMyTree.png";
+import customTreeVerified from "../media/customTreeVerified.png";
+
 
 const FilterDropDown = ({filter, setFilter}) => {
 
@@ -26,12 +31,13 @@ const FilterDropDown = ({filter, setFilter}) => {
           {
             label: "All Trees",
             value: "All Trees",
-            icon: () => <Foundation name="trees" size={14} color="green" />,
+            icon: () => <Image source={customTree} style={styles.customTree} />,
+            // icon: () => <Foundation name="trees" size={14} color="green" />,
           },
           {
             label: "Verified",
             value: "Verified Trees",
-            icon: () => <FontAwesome name="tree" size={12} color="red" />
+            icon: () => <Image source={customTreeVerified} style={styles.customTree} />,
           },
         ]}
         defaultValue={filter}
@@ -43,7 +49,7 @@ const FilterDropDown = ({filter, setFilter}) => {
         dropDownStyle={{ backgroundColor: "#fafafa" }}
         onChangeItem={(item) => setFilter(item.value)}
       />
-      )
+    );
     }
 
   const renderDropDownSignedIn = () => {
@@ -53,17 +59,23 @@ const FilterDropDown = ({filter, setFilter}) => {
         {
           label: "All Trees",
           value: "All Trees",
-          icon: () => <Foundation name="trees" size={14} color="green" />,
+          icon: () => <Image source={customTree} style={styles.customTree} />,
+          // icon: () => <Foundation name="trees" size={14} color="green" />,
+        },
+        {
+          label: "My Trees",
+          value: "My Trees",
+          icon: () => (
+            <Image source={customTreeMyTree} style={styles.customTree} />
+          ),
+          // icon: () => <FontAwesome name="tree" size={12} color="blue" />,
         },
         {
           label: "Verified",
           value: "Verified Trees",
-          icon: () => <FontAwesome name="tree" size={12} color="red" />
-         },
-        {
-          label: "My Trees",
-          value: "My Trees" ,
-          icon: () => <FontAwesome name="tree" size={12} color="blue" />
+          icon: () => (
+            <Image source={customTreeVerified} style={styles.customTree} />
+          ),
         },
       ]}
       defaultValue={filter}
@@ -75,7 +87,7 @@ const FilterDropDown = ({filter, setFilter}) => {
       dropDownStyle={{ backgroundColor: "#fafafa" }}
       onChangeItem={(item) => setFilter(item.value)}
     />
-  )
+  );
 }
 
 
@@ -96,6 +108,10 @@ const styles = StyleSheet.create({
     left: 15,
     height: 40,
     width: 115,
+  },
+  customTree: {
+    width: 20,
+    height: 30,
   },
 });
 
