@@ -22,11 +22,12 @@ import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { mapStyle } from "../constants/mapStyle";
-import customTree from "../media/customTreeFour.png";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import Search from "../components/Search";
 import DrawerHomeSwipe from "./DrawerHomeSwipe";
 import FilterDropDown from "../components/FilterDropDown";
+import customTree from "../media/customTreeFourOutline.png";
+import customTreeMyTree from "../media/customTreeMyTree.png";
 
 const MapScreen = ({navigation}) => {
 
@@ -157,7 +158,14 @@ const MapScreen = ({navigation}) => {
             }}
             title={value.type}
             description={value.description}
-          ></Marker>
+          >
+            <Image
+              onLoad={() => stopTrackingViewChanges()}
+              fadeDuration={0}
+              style={styles.customTree}
+              source={customTreeMyTree}
+            />
+          </Marker>
         );
       }
     });
