@@ -27,7 +27,8 @@ import Search from "../components/Search";
 import DrawerHomeSwipe from "./DrawerHomeSwipe";
 import FilterDropDown from "../components/FilterDropDown";
 import customTree from "../media/customTreeFourOutline.png";
-import customTreeMyTree from "../media/customTreeMyTree.png";
+
+import customTreeMyTree from "../media/customTreeMyTreeNEW.png";
 
 const MapScreen = ({navigation}) => {
 
@@ -48,14 +49,15 @@ const MapScreen = ({navigation}) => {
     async function fetchData() {
       let result = await firebase.database().ref("/tree");
       await result.on("value", (snapshot) => {
-        // console.log("snapshot val", snapshot.val());
         let database = snapshot.val();
         setCurrentDatabase(database);
+
       });
     }
     fetchData();
   }, []);
 
+  firebase.auth().currentUser && console.log("CURRENT USER", firebase.auth());
 
   !currentDatabase && console.log("I Don't exist");
   currentDatabase &&
@@ -115,33 +117,58 @@ const MapScreen = ({navigation}) => {
     }
   }
 
-  const AllTreesMapMarkers =
-    currentDatabase &&
-    Object.values(currentDatabase).map((tree, index) => {
-      let latitude = tree.treeCoordinates[0];
-      let longitude = tree.treeCoordinates[1];
-      return (
-        <Marker
-          key={index}
-          coordinate={{
-            latitude: latitude,
-            longitude: longitude,
-          }}
-          tracksViewChanges={tracksViewChanges}
-          title={tree.type}
-          description={tree.description}
-        >
-          <Image
-            onLoad={() => stopTrackingViewChanges()}
-            fadeDuration={0}
-            style={styles.customTree} source={customTree}
-          />
-          {/* <MaterialCommunityIcons name="tree" size={40} color="#769382" /> */}
-          {/* <Entypo name="tree" size={30} color="green" /> */}
-        </Marker>
-      );
-    });
+  // const AllTreesMapMarkers =
+  //   currentDatabase &&
+  //   Object.values(currentDatabase).map((tree, index) => {
+  //     let latitude = tree.treeCoordinates[0];
+  //     let longitude = tree.treeCoordinates[1];
+  //     return (
+  //       <Marker
+  //         key={index}
+  //         coordinate={{
+  //           latitude: latitude,
+  //           longitude: longitude,
+  //         }}
+  //         tracksViewChanges={tracksViewChanges}
+  //         title={tree.type}
+  //         description={tree.description}
+  //       >
+  //         <Image
+  //           onLoad={() => stopTrackingViewChanges()}
+  //           fadeDuration={0}
+  //           style={styles.customTree} source={customTree}
+  //         />
+  //       </Marker>
+  //     );
+  //   });
 
+    const AllTreesMapMarkers =
+    currentDatabase &&
+    Object.values(currentDatabase).map((value, index) => {
+      let latitude = value.treeCoordinates[0];
+      let longitude = value.treeCoordinates[1];
+       if (value.userID !== currentUserID) {
+         return (
+           <Marker
+             key={index}
+             coordinate={{
+               latitude: latitude,
+               longitude: longitude,
+             }}
+             tracksViewChanges={tracksViewChanges}
+             title={value.type}
+             description={value.description}
+           >
+             <Image
+               onLoad={() => stopTrackingViewChanges()}
+               fadeDuration={0}
+               style={styles.customTree}
+               source={customTree}
+             />
+           </Marker>
+         );
+       }
+    });
 
   const MyTreesMapMarkers =
     currentDatabase &&
@@ -170,11 +197,28 @@ const MapScreen = ({navigation}) => {
       }
     });
 
+   const renderTreesToMap = () => {
+      if (filter === "All Trees"){
+        return (
+          <React.Fragment>
+            {MyTreesMapMarkers}
+            {AllTreesMapMarkers}
+          </React.Fragment>
+        );
+      }
+      if (filter === "My Trees") {
+        return (
+           <React.Fragment>
+               {MyTreesMapMarkers}
+           </React.Fragment>
+        )
+      }
+    }
+
 
   return (
     <View style={styles.container}>
       <Search navigation={navigation} />
-      {/* <ViewListButton toggleToListView={toggleToListView} /> */}
       <FilterDropDown filter={filter} setFilter={setFilter} />
       <CurrentLocationButton
         cb={() => {
@@ -196,8 +240,7 @@ const MapScreen = ({navigation}) => {
         // }}
         rotateEnabled={false}
       >
-        {filter === "All Trees" && AllTreesMapMarkers}
-        {filter === "My Trees" && MyTreesMapMarkers}
+       { renderTreesToMap() }
       </MapView>
 
       {currentUserID && renderAddATreeButton()}
