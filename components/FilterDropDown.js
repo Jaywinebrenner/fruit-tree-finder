@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     top: 80,
     left: 15,
     height: 40,
-    width: 115,
+    width: 125,
   },
   customTree: {
     width: 20,
