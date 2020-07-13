@@ -61,7 +61,7 @@ const mapTrees = () => {
     });
   }
 
-  // Looping through Map Database in ListScreen
+  // Looping through an Object Database in ListScreen
        {treeList &&
             Object.values(treeList).map((value, index) => {
               return (
