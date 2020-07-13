@@ -3,14 +3,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MapScreen from "../screens/MapScreen"
 import ListScreen from "../screens/ListScreen";
 import ListItemDetailScreen from "../screens/ListItemDetailScreen";
-import MyTreesMapScreen from '../screens/MyTreesMapScreen'
 
 const ListMapTab = createBottomTabNavigator();
-
-// const mainHeaderStyle = {
-//   backgroundColor: "#092455",
-//   height: 100,
-// };
 
 const ListMapNavigator = () => {
   return (

@@ -248,7 +248,9 @@ const styles = StyleSheet.create({
     },
     topStrip: {
       height: 30,
-      // backgroundColor: "rgba(255, 255, 255, .7)",
+      backgroundColor: "rgba(255, 255, 255, .7)",
+      // transparent maroon?
+      // backgroundColor: "rgba(83, 22, 19, .5)",
       justifyContent: "center",
       alignItems: "center",
     },
