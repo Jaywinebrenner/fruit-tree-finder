@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   ImageBackground,
   ScrollView,
-  Platform
+  Platform,
+  Image
 } from "react-native";
 import ViewMapButton from "../components/ViewMapButton"
 import firebase from "firebase";
@@ -22,6 +23,7 @@ import { getDistance, convertDistance } from 'geolib';
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import Search from "../components/Search";
+import customTreeBox from "../media/customTreeBox.png";
 
 const ListScreen = () => {
 
@@ -122,12 +124,13 @@ const ListScreen = () => {
               return (
                 <View style={styles.cardContainer} key={index}>
                   <View style={{ flexDirection: "row" }}>
-                    <MaterialCommunityIcons
+                    {/* <MaterialCommunityIcons
                       name="pine-tree-box"
                       size={40}
                       color="white"
                       style={styles.boxTree}
-                    />
+                    /> */}
+                    <Image style={styles.boxTree} source={customTreeBox} />
                     <View style={styles.cardInfo}>
                       <Text style={styles.cardTitleText}>{value.type}</Text>
                       <Text style={styles.cardDistanceText}>
@@ -270,6 +273,8 @@ const styles = StyleSheet.create({
   },
   boxTree: {
     marginRight: "3%",
+    width: 40,
+    height: 40
   },
 });
 
