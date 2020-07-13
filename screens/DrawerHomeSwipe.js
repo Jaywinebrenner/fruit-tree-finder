@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import BottomDrawer from "rn-bottom-drawer";
 import {
   StyleSheet,
@@ -7,21 +7,48 @@ import {
   Alert,
   ImageBackground,
   TextInput,
-  Image
+  Image,
+  ScrollView,
+  TouchableOpacity
 } from "react-native";
-import apples from "../media/apples.jpg";
 import { Foundation } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomSheet from "reanimated-bottom-sheet";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import logo from "../media/logoWhite.png";
-import applePainting from "../media/apple-painting.png"
+import { AntDesign } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 import maroonGradient from "../assets/maroonGradient.png";
-
+import { getDistance, convertDistance } from 'geolib';
+import customTreeBox from "../media/customTreeBox.png";
 
 // const TAB_BAR_HEIGHT = 30;
 
-const DrawerHomeSwipe = () => {
+const DrawerHomeSwipe = (props) => {
+
+  const userCoords = props.userCoords;
+  const treeList = props.treeList;
+  const filter = props.filter;
+
+  const [treeArray, setTreeArray] = useState(null);
+
+  if (treeList && userCoords) {
+    Object.values(treeList).forEach((tree) => {
+      let treeLat = tree.treeCoordinates[0];
+      let treeLong = tree.treeCoordinates[1];
+      tree.distance = getDistance(
+        { latitude: treeLat, longitude: treeLong },
+        { latitude: userCoords[0], longitude: userCoords[1] },
+      );
+    });
+    if (!treeArray) {
+      setTreeArray(
+        Object.values(treeList).sort((a, b) =>
+          a.distance > b.distance ? 1 : -1,
+        ),
+      );
+    }
+    console.log("TREEARRAY", treeArray);
+  }
 
   const renderHeader = () => {
     <View>
@@ -30,186 +57,210 @@ const DrawerHomeSwipe = () => {
   }
 
   const renderContent = () => {
+    console.log("PROPSSS", props);
+
+    function milesOrYards(distance) {
+      if (distance < 1609.34) {
+        let dist = Math.round(convertDistance(distance, "yd"));
+        return(dist + " yards away");
+      } else {
+        let dist = Math.round(convertDistance(distance, "mi"));
+        return (dist + " miles away");
+      }
+    }
+
     return (
       <React.Fragment>
-        <View style={styles.welcomeTextWrapper}>
-          <View style={styles.topStrip}>
-            {/* <ImageBackground
-              source={maroonGradient}
-              style={styles.gradientImageTopStrip}
-            > */}
-              <View
-                style={{
-                  paddingTop: 0,
-                  borderBottomColor: "black",
-                  borderBottomWidth: 3,
-                  width: 50,
-                  borderRadius: 9,
-                  padding: 0,
-                  margin: 0,
-                }}
-              />
-   
-            </View>
-          <ImageBackground source={apples} style={styles.applesImage}>
-            <Text style={styles.welcomeText}>
-              Welcome to The Fruit Tree Finder{" "}
-            </Text>
-            <Text style={styles.welcomeSubheader}>
-              Promote food justice. Prevent food waste. Strengthen our
-              community.
-            </Text>
-          </ImageBackground>
+      <View style={styles.topStrip}>
+        {/* <ImageBackground
+          source={maroonGradient}
+          style={styles.gradientImageTopStrip}
+        > */}
+          <View
+            style={styles.dragView}
+          />
+
         </View>
+        <ImageBackground source={maroonGradient} style={styles.gradientImage}>
+          <Entypo
+            name="tree"
+            size={500}
+            color="rgba(163, 119, 125, 0.5)"
+            style={styles.bigTree}
+          />
+          <ScrollView style={styles.container}>
 
-        <View style={styles.bottomOfDrawerWrapper}>
-          <ImageBackground source={maroonGradient} style={styles.gradientImage}>
-            <Text style={styles.pickDeliciousSubheader}>
-              {" "}
-              Pick delicious food from the thriving bounties growing in your
-              very neighborhood.
-            </Text>
-            <Text style={styles.subheader}>
-              {" "}
-              Explore our map of the various fruit trees in your area.{" "}
-            </Text>
-
-            <Text style={styles.subheader}>Happy Hunting!</Text>
-
-            {/* <View style={styles.iconWrapper}>
-              <Image style={styles.applePainting} source={applePainting} />
-            </View> */}
-            <View style={styles.linkWrapper}>
-              <Text style={styles.linkSubheader}>
-                If you would like to learn more about the Portland Fruit Tree
-                Project, please visit us on the web:
-              </Text>
-              <Image source={logo} style={styles.deepLinkImage} />
-            </View>
-          </ImageBackground>
-        </View>
+            {treeArray &&
+              treeArray.map((value, index) => {
+                return (
+                  <View style={styles.cardContainer} key={index}>
+                    <View style={{ flexDirection: "row" }}>
+                      {/* <MaterialCommunityIcons
+                        name="pine-tree-box"
+                        size={40}
+                        color="white"
+                        style={styles.boxTree}
+                      /> */}
+                      <Image style={styles.boxTree} source={customTreeBox} />
+                      <View style={styles.cardInfo}>
+                        <Text style={styles.cardTitleText}>{value.type}</Text>
+                        <Text style={styles.cardDistanceText}>
+                          {milesOrYards(value.distance)}
+                        </Text>
+                      </View>
+                      <TouchableOpacity
+                        style={styles.cardDetailsButtonWrapper}
+                        onPress={() =>
+                          navigation.navigate("ListItemDetailScreen", {
+                            index,
+                            ...value,
+                          })
+                        }
+                      >
+                        <Text style={styles.cardDetailsButtonText}>Details</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.cardMiddle}>
+                      <Text elipsesMode="tail" style={styles.cardDescriptionText}>
+                        {value.description.length > 40
+                          ? value.description.substring(0, 40 - 4) + "..."
+                          : value.description}
+                      </Text>
+                    </View>
+                  </View>
+                );
+              })}
+          </ScrollView>
+        </ImageBackground>
       </React.Fragment>
     );
   };
 
   return (
     <BottomSheet
-      snapPoints={[370, 130, 30]}
-      renderHeader={renderHeader}
-      renderContent={renderContent}
-      initialSnap={2}
+    snapPoints={[656, 350, 30]}
+    renderHeader={renderHeader}
+    renderContent={renderContent}
+    initialSnap={2}
     />
   );
 }
 
 
 const styles = StyleSheet.create({
-  welcomeTextWrapper: {
-    width: "100%",
-  },
-  applesImage: {
-    padding: 10,
-    height: 115,
-    resizeMode: "cover",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  welcomeTextWrapper: {},
-  welcomeText: {
-    textAlign: "center",
-    fontSize: 22,
-    marginBottom: 3,
-    color: "white",
-    fontWeight: "bold",
-    textShadowColor: "black",
-    textShadowOffset: { width: 5, height: 5 },
-    textShadowRadius: 10,
-  },
-  welcomeSubheader: {
-    color: "white",
-    textAlign: "center",
-    fontSize: 15,
-    textShadowColor: "black",
-    textShadowOffset: { width: 5, height: 5 },
-    textShadowRadius: 10,
-  },
-  pickDeliciousSubheader: {
-    textAlign: "center",
-    fontSize: 20,
-    color: "white",
-    marginBottom: 10,
-    lineHeight: 22,
-    paddingTop: 20,
-  },
-  iconWrapper: {
-    alignSelf: "center",
-    flexDirection: "row",
-  },
-  textInput: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    paddingLeft: 28,
-    borderRadius: 3,
-  },
-  searchIcon: {
-    position: "absolute",
-    bottom: 8,
-    left: 4,
-  },
-  drawerBody: {
-    backgroundColor: "red",
-  },
-  bottomOfDrawerWrapper: {
-    // paddingTop: 20,
-    backgroundColor: "white",
-    height: 400,
-  },
-  deepLinkImage: {
-    marginTop: 5,
-    width: 180,
-    height: 60,
-    alignSelf: "center",
-  },
-  linkWrapper: {
-    marginTop: 0,
-    paddingLeft: 50,
-    paddingRight: 50,
-    paddingTop: 10,
-  },
-  subheader: {
-    textAlign: "center",
-    color: "white",
-  },
-  linkSubheader: {
-    fontSize: 10,
-    textAlign: "center",
-    color: "white"
-  },
-  applePainting: {
-    height: 80,
-    width: 90,
-    marginBottom: 15,
-    marginTop: 5,
-  },
-  topStrip: {
-    height: 30,
-    backgroundColor: "rgba(255, 255, 255, .7)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  gradientImage: {
-    height: "100%",
-    width: "100%",
-    zIndex: 0,
-  },
-  gradientImageTopStrip: {
-    height: "100%",
-    width: "100%",
-    zIndex: 0,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+    container: {
+      flex: 1,
+    },
+    top: {
+      // justifyContent: "center",
+      // alignItems: "center",
+      paddingTop: 25,
+      // paddingBottom: 10,
+      height: 80,
+      // flexDirection: "row",
+      backgroundColor: "rgba(236, 250, 217, .2)",
+    },
+    headerText: {
+      textAlign: "center",
+      fontSize: 25,
+      alignSelf: "center",
+      color: "white",
+    },
+    backText: {
+      color: "#e1eddf",
+      fontSize: 25,
+    },
+    cardContainer: {
+      justifyContent: "center",
+      width: "100%",
+      marginTop: 12,
+      padding: 10,
+      color: "red",
+      backgroundColor: "rgba(255, 255, 255, .05)",
+    },
+    cardDetailsButtonWrapper: {
+      ...Platform.select({
+        ios: {
+            position: "absolute",
+            right: "3%",
+            borderWidth: 1,
+            borderRadius: 2,
+            padding: 4,
+            bottom: 17,
+            borderColor: "white",
+        },
+        android: {
+            position: "absolute",
+            right: "3%",
+            borderWidth: 1,
+            borderRadius: 2,
+            padding: 4,
+            borderColor: "white",
+        },
+      }),
+    },
+    cardDetailsButtonText: {
+      color: "white",
+    },
+    cardDistanceText: {
+      fontSize: 15,
+      color: "white",
+    },
+    cardTitleText: {
+      fontSize: 22,
+      color: "white",
+    },
+    cardDescriptionText: {
+      color: "rgba(255, 255, 255, .5)",
+    },
+    toggle: {
+      position: "absolute",
+      top: "45%",
+      left: "0%",
+      paddingVertical: 4,
+      paddingLeft: 7,
+      paddingRight: 15,
+      backgroundColor: "rgba(255, 255, 255, .15)",
+      justifyContent: "center",
+      alignItems: "center",
+      borderBottomRightRadius: 15,
+      borderTopRightRadius: 15,
+      zIndex: 1,
+    },
+    hr: {
+      borderBottomColor: "black",
+      borderBottomWidth: 1,
+    },
+    gradientImage: {
+      height: "100%",
+      width: "100%",
+    },
+    bigTree: {
+      position: "absolute",
+      bottom: -50,
+      top: 300,
+      right: -60,
+    },
+    boxTree: {
+      marginRight: "3%",
+      width: 40,
+      height: 40
+    },
+    topStrip: {
+      height: 30,
+      // backgroundColor: "rgba(255, 255, 255, .7)",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    dragView: {
+      paddingTop: 0,
+      borderBottomColor: "#531613",
+      borderBottomWidth: 8,
+      width: 50,
+      borderRadius: 9,
+      padding: 0,
+      margin: 0,
+    }
+  });
 
 export default DrawerHomeSwipe
