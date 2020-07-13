@@ -14,9 +14,9 @@ import Icon from 'react-native-vector-icons/Feather';
 import { Foundation } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as firebase from "firebase";
-import customTree from "../media/customTreeFourOutline.png";
-import customTreeMyTree from "../media/customTreeMyTree.png";
-import customTreeVerified from "../media/customTreeVerified.png";
+import customTree from "../media/customTreeAllNEW.png";
+import customTreeMyTree from "../media/customTreeMyTreeNEW.png";
+import customTreeVerified from "../media/customTreeVerifiedNEW.png";
 
 
 const FilterDropDown = ({filter, setFilter}) => {
@@ -32,7 +32,7 @@ const FilterDropDown = ({filter, setFilter}) => {
             label: "All Trees",
             value: "All Trees",
             icon: () => <Image source={customTree} style={styles.customTree} />,
-            // icon: () => <Foundation name="trees" size={14} color="green" />,
+
           },
           {
             label: "Verified",
@@ -60,7 +60,6 @@ const FilterDropDown = ({filter, setFilter}) => {
           label: "All Trees",
           value: "All Trees",
           icon: () => <Image source={customTree} style={styles.customTree} />,
-          // icon: () => <Foundation name="trees" size={14} color="green" />,
         },
         {
           label: "My Trees",
@@ -68,7 +67,6 @@ const FilterDropDown = ({filter, setFilter}) => {
           icon: () => (
             <Image source={customTreeMyTree} style={styles.customTree} />
           ),
-          // icon: () => <FontAwesome name="tree" size={12} color="blue" />,
         },
         {
           label: "Verified",

@@ -94,7 +94,7 @@ const DrawerHomeSwipe = () => {
 
   return (
     <BottomSheet
-      snapPoints={[370, 130, 30]}
+      snapPoints={[500, 130, 30]}
       renderHeader={renderHeader}
       renderContent={renderContent}
       initialSnap={2}
