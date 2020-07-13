@@ -32,10 +32,9 @@ const AddTreeScreen = () => {
   const [treeLocation, setTreeLocation] = useState(null)
   const [treeCoordinates, setTreeCoordinates] = useState(null);
 
-  // let locationWithPortlandDefaulted = null
+
   async function submit() {
     setLoadingActive(true);
-    // locationWithPortlandDefaulted = treeLocation + " Portland, Oregon"
     try {
       let treeCoordinates = await convertLocation(treeLocation);
       setTreeCoordinates(treeCoordinates)
@@ -124,7 +123,7 @@ const AddTreeScreen = () => {
               />
               <TextInput
                 multiline={true}
-                placeholder={"Enter the type of tree"}
+                placeholder={"Enter type of tree"}
                 style={styles.input}
                 value={type}
                 onChangeText={setType}

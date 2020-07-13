@@ -32,7 +32,7 @@ const ListScreen = () => {
   const [treeList, setTreeList] = useState(null);
   const [treeArray, setTreeArray] = useState(null);
   const [filter, setFilter] = useState("All Trees");
-  const [objectDatabase, setObjectDatabase ] = useState(null)
+
 
   useEffect(() => {
     _getUserLocactionAsync();
@@ -41,7 +41,6 @@ const ListScreen = () => {
     result.on("value", (snapshot) => {
       let allTrees = snapshot.val();
       setTreeList(allTrees);
-      setObjectDatabase(allTrees)
     });
   }, []);
 
@@ -70,11 +69,15 @@ const ListScreen = () => {
       let treeLong = tree.treeCoordinates[1];
       tree.distance = getDistance(
         { latitude: treeLat, longitude: treeLong },
-        { latitude: userCoords[0], longitude: userCoords[1] }
+        { latitude: userCoords[0], longitude: userCoords[1] },
       );
     });
     if (!treeArray) {
-      setTreeArray(Object.values(treeList).sort((a, b) => (a.distance > b.distance) ? 1 : -1));
+      setTreeArray(
+        Object.values(treeList).sort((a, b) =>
+          a.distance > b.distance ? 1 : -1,
+        ),
+      );
     }
     console.log("TREEARRAY", treeArray);
   }
@@ -104,7 +107,6 @@ const ListScreen = () => {
         />
         <View style={styles.top}>
           <Search navigation={navigation} />
-          { /* <FilterDropDownList filter={filter} setFilter={setFilter} /> */}
         </View>
         <TouchableOpacity
           style={styles.toggle}
@@ -115,51 +117,22 @@ const ListScreen = () => {
 
         <ScrollView style={styles.container}>
 
-          {objectDatabase &&
-            Object.values(objectDatabase).map((value, index) => {
-              return (
-                <View style={styles.cardContainer} key={index}>
-                  <View style={styles.cardTop}>
-                    <Text style={styles.cardTitleText}>{value.type}</Text>
-                    <Text style={styles.cardDistanceText}>
-                      {milesOrYards(value.distance)}
-                    </Text>
-                  </View>
-
-                  <View style={styles.cardMiddle}>
-                    <Text elipsesMode="tail" style={styles.cardDescriptionText}>
-                      {value.description.length > 40
-                        ? value.description.substring(0, 40 - 4) + "..."
-                        : value.description}
-                    </Text>
-                  </View>
-
-                  <View style={styles.bottom}>
-                    <TouchableOpacity
-                      style={styles.cardDetailsButtonWrapper}
-                      onPress={() =>
-                        navigation.navigate("ListItemDetailScreen", {
-                          index,
-                          ...value,
-                        })
-                      }
-                    >
-                      <Text style={styles.cardDetailsButtonText}>Details</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              );
-            })}
-
-          {/* {treeArray &&
+          {treeArray &&
             treeArray.map((value, index) => {
               return (
                 <View style={styles.cardContainer} key={index}>
-                  <View style={{flexDirection: "row"}}>
-                    <MaterialCommunityIcons name="pine-tree-box" size={40} color="white" style={styles.boxTree}/>
+                  <View style={{ flexDirection: "row" }}>
+                    <MaterialCommunityIcons
+                      name="pine-tree-box"
+                      size={40}
+                      color="white"
+                      style={styles.boxTree}
+                    />
                     <View style={styles.cardInfo}>
                       <Text style={styles.cardTitleText}>{value.type}</Text>
-                      <Text style={styles.cardDistanceText}>{milesOrYards(value.distance)}</Text>
+                      <Text style={styles.cardDistanceText}>
+                        {milesOrYards(value.distance)}
+                      </Text>
                     </View>
                     <TouchableOpacity
                       style={styles.cardDetailsButtonWrapper}
@@ -173,12 +146,16 @@ const ListScreen = () => {
                       <Text style={styles.cardDetailsButtonText}>Details</Text>
                     </TouchableOpacity>
                   </View>
-                  <Text style={styles.cardDescriptionText}>
-                  {value.description}
-                  </Text>
+                  <View style={styles.cardMiddle}>
+                    <Text elipsesMode="tail" style={styles.cardDescriptionText}>
+                      {value.description.length > 40
+                        ? value.description.substring(0, 40 - 4) + "..."
+                        : value.description}
+                    </Text>
+                  </View>
                 </View>
               );
-            })} */}
+            })}
         </ScrollView>
       </ImageBackground>
     </React.Fragment>
