@@ -1,5 +1,7 @@
 Figure out how get the Center Map Button to work on both MapScreen and MyTreesMapScreen
 
+Spin out Trees on Maplist from closest to furthest
+
 Add Key to distinguish between User added Trees, Databsase Trees and Verfified Trees.
 
 Likely look into this optimising custom marker stuff if trees bog down the app.
