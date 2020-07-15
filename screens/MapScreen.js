@@ -34,9 +34,10 @@ const MapScreen = ({navigation}) => {
 
   const [region, setRegion] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [currentDatabase, setCurrentDatabase] = useState([]);
+  const [allTrees, setAllTrees] = useState([]);
   const [filter, setFilter] = useState("All Trees");
   const [tracksViewChanges, setTracksViewChanges] = useState(false);
+  const [userCoords, setUserCoords] = useState(null);
 
   let currentUserID = null;
   if (firebase.auth().currentUser) {
@@ -49,21 +50,13 @@ const MapScreen = ({navigation}) => {
     async function fetchData() {
       let result = await firebase.database().ref("/tree");
       await result.on("value", (snapshot) => {
-        let database = snapshot.val();
-        setCurrentDatabase(database);
-
+        // console.log("snapshot val", snapshot.val());
+        let trees = snapshot.val();
+        setAllTrees(trees);
       });
     }
     fetchData();
   }, []);
-
-  firebase.auth().currentUser && console.log("CURRENT USER", firebase.auth());
-
-  !currentDatabase && console.log("I Don't exist");
-  currentDatabase &&
-    Object.values(currentDatabase).forEach((value) => {
-      console.log("Value USER ID", value.userID);
-    });
 
   const _getUserLocactionAsync = async () => {
     try {
@@ -75,6 +68,7 @@ const MapScreen = ({navigation}) => {
       let userLocation = await Location.getCurrentPositionAsync({
         enabledHighAccuracy: true,
       });
+      setUserCoords([userLocation.coords.latitude, userLocation.coords.longitude]);
 
       // On Phone
       // let region = {
@@ -117,62 +111,36 @@ const MapScreen = ({navigation}) => {
     }
   }
 
-  // const AllTreesMapMarkers =
-  //   currentDatabase &&
-  //   Object.values(currentDatabase).map((tree, index) => {
-  //     let latitude = tree.treeCoordinates[0];
-  //     let longitude = tree.treeCoordinates[1];
-  //     return (
-  //       <Marker
-  //         key={index}
-  //         coordinate={{
-  //           latitude: latitude,
-  //           longitude: longitude,
-  //         }}
-  //         tracksViewChanges={tracksViewChanges}
-  //         title={tree.type}
-  //         description={tree.description}
-  //       >
-  //         <Image
-  //           onLoad={() => stopTrackingViewChanges()}
-  //           fadeDuration={0}
-  //           style={styles.customTree} source={customTree}
-  //         />
-  //       </Marker>
-  //     );
-  //   });
-
-    const AllTreesMapMarkers =
-    currentDatabase &&
-    Object.values(currentDatabase).map((value, index) => {
-      let latitude = value.treeCoordinates[0];
-      let longitude = value.treeCoordinates[1];
-       if (value.userID !== currentUserID) {
-         return (
-           <Marker
-             key={index}
-             coordinate={{
-               latitude: latitude,
-               longitude: longitude,
-             }}
-             tracksViewChanges={tracksViewChanges}
-             title={value.type}
-             description={value.description}
-           >
-             <Image
-               onLoad={() => stopTrackingViewChanges()}
-               fadeDuration={0}
-               style={styles.customTree}
-               source={customTree}
-             />
-           </Marker>
-         );
-       }
+  const AllTreesMapMarkers =
+    allTrees &&
+    Object.values(allTrees).map((tree, index) => {
+      let latitude = tree.treeCoordinates[0];
+      let longitude = tree.treeCoordinates[1];
+      return (
+        <Marker
+          key={index}
+          coordinate={{
+            latitude: latitude,
+            longitude: longitude,
+          }}
+          tracksViewChanges={tracksViewChanges}
+          title={tree.type}
+          description={tree.description}
+        >
+          <Image
+            onLoad={() => stopTrackingViewChanges()}
+            fadeDuration={0}
+            style={styles.customTree} source={customTree}
+          />
+          {/* <MaterialCommunityIcons name="tree" size={40} color="#769382" /> */}
+          {/* <Entypo name="tree" size={30} color="green" /> */}
+        </Marker>
+      );
     });
 
   const MyTreesMapMarkers =
-    currentDatabase &&
-    Object.values(currentDatabase).map((value, index) => {
+    allTrees &&
+    Object.values(allTrees).map((value, index) => {
       let latitude = value.treeCoordinates[0];
       let longitude = value.treeCoordinates[1];
       if (value.userID === currentUserID) {
@@ -245,14 +213,12 @@ const MapScreen = ({navigation}) => {
 
       {currentUserID && renderAddATreeButton()}
 
-      <TouchableOpacity
-        style={styles.toggle}
-        onPress={() => navigation.navigate("ListScreen")}
-      >
-        <Ionicons name="ios-arrow-forward" size={60} color="white" />
-      </TouchableOpacity>
-
-      <DrawerHomeSwipe />
+      <DrawerHomeSwipe
+        currentUserID={currentUserID}
+        treeList={allTrees}
+        userCoords={userCoords}
+        filter={filter}
+        />
     </View>
   );
 }

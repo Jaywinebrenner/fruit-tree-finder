@@ -5,7 +5,6 @@ import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AddTreeScreen from "../screens/AddTreeScreen";
 import {ListMapNavigator} from "../navigation/ListMapNavigator";
-import {MyTreesListMapNavigator} from "../navigation/MyTreesListMapNavigator";
 import { Ionicons } from "@expo/vector-icons";
 
 const RegisteredStack = createStackNavigator();
