@@ -8,7 +8,9 @@ import {
   ImageBackground,
   ScrollView,
   Platform,
-  Image
+  Image,
+  LayoutAnimation,
+  UIManager,
 } from "react-native";
 import ViewMapButton from "../components/ViewMapButton"
 import firebase from "firebase";
