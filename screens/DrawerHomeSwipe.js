@@ -9,7 +9,8 @@ import {
   TextInput,
   Image,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from "react-native";
 import { Foundation } from "@expo/vector-icons";
 import BottomSheet from "reanimated-bottom-sheet";
@@ -21,9 +22,13 @@ import maroonGradient from "../assets/maroonGradient.png";
 import { getDistance, convertDistance } from 'geolib';
 import customTreeBox from "../media/customTreeBox.png";
 
-// const TAB_BAR_HEIGHT = 30;
 
 const DrawerHomeSwipe = (props) => {
+
+  const windowHeight = Dimensions.get('window').height;
+  const drawerTopHeight = (windowHeight * .84);
+  const drawerHalfHeight = (windowHeight * .5);
+  const drawerBottomHeight = (windowHeight * .04);
 
   const userCoords = props.userCoords;
   const treeList = props.treeList;
@@ -50,57 +55,37 @@ const DrawerHomeSwipe = (props) => {
     console.log("TREEARRAY", treeArray);
   }
 
-  const renderHeader = () => {
-    <View>
-        <Text>HEADER THAT SHOULDNT MOVE</Text>
-    </View>;
+  function milesOrYards(distance) {
+    if (distance < 1609.34) {
+      let dist = Math.round(convertDistance(distance, "yd"));
+      return(dist + " yards away");
+    } else {
+      let dist = Math.round(convertDistance(distance, "mi"));
+      return (dist + " miles away");
+    }
   }
 
   const renderContent = () => {
-    console.log("PROPSSS", props);
-
-    function milesOrYards(distance) {
-      if (distance < 1609.34) {
-        let dist = Math.round(convertDistance(distance, "yd"));
-        return(dist + " yards away");
-      } else {
-        let dist = Math.round(convertDistance(distance, "mi"));
-        return (dist + " miles away");
-      }
-    }
 
     return (
       <React.Fragment>
-      <View style={styles.topStrip}>
-        {/* <ImageBackground
-          source={maroonGradient}
-          style={styles.gradientImageTopStrip}
-        > */}
-          <View
-            style={styles.dragView}
-          />
-
+        <View style={styles.topStrip}>
+          <View style={styles.dragView} />
         </View>
-        <ImageBackground source={maroonGradient} style={styles.gradientImage}>
+          <ScrollView horizontal="true">
+          <ImageBackground source={maroonGradient} style={styles.gradientImage}>
           <Entypo
-            name="tree"
-            size={500}
-            color="rgba(163, 119, 125, 0.5)"
-            style={styles.bigTree}
+          name="tree"
+          size={500}
+          color="rgba(163, 119, 125, 0.5)"
+          style={styles.bigTree}
           />
-          <ScrollView style={styles.container}>
-
             {treeArray &&
               treeArray.map((value, index) => {
                 return (
+                  <TouchableOpacity>
                   <View style={styles.cardContainer} key={index}>
                     <View style={{ flexDirection: "row" }}>
-                      {/* <MaterialCommunityIcons
-                        name="pine-tree-box"
-                        size={40}
-                        color="white"
-                        style={styles.boxTree}
-                      /> */}
                       <Image style={styles.boxTree} source={customTreeBox} />
                       <View style={styles.cardInfo}>
                         <Text style={styles.cardTitleText}>{value.type}</Text>
@@ -120,55 +105,33 @@ const DrawerHomeSwipe = (props) => {
                         <Text style={styles.cardDetailsButtonText}>Details</Text>
                       </TouchableOpacity>
                     </View>
-                    <View style={styles.cardMiddle}>
-                      <Text elipsesMode="tail" style={styles.cardDescriptionText}>
-                        {value.description.length > 40
-                          ? value.description.substring(0, 40 - 4) + "..."
-                          : value.description}
-                      </Text>
-                    </View>
                   </View>
+                  </TouchableOpacity>
                 );
               })}
+              </ImageBackground>
           </ScrollView>
-        </ImageBackground>
       </React.Fragment>
     );
   };
 
   return (
     <BottomSheet
-    snapPoints={[656, 350, 30]}
-    renderHeader={renderHeader}
-    renderContent={renderContent}
-    initialSnap={2}
+      snapPoints={[drawerTopHeight, drawerHalfHeight, drawerBottomHeight]}
+      renderContent={renderContent}
+      initialSnap={2}
     />
   );
 }
-
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
     },
     top: {
-      // justifyContent: "center",
-      // alignItems: "center",
       paddingTop: 25,
-      // paddingBottom: 10,
       height: 80,
-      // flexDirection: "row",
       backgroundColor: "rgba(236, 250, 217, .2)",
-    },
-    headerText: {
-      textAlign: "center",
-      fontSize: 25,
-      alignSelf: "center",
-      color: "white",
-    },
-    backText: {
-      color: "#e1eddf",
-      fontSize: 25,
     },
     cardContainer: {
       justifyContent: "center",
@@ -179,23 +142,15 @@ const styles = StyleSheet.create({
       backgroundColor: "rgba(255, 255, 255, .05)",
     },
     cardDetailsButtonWrapper: {
+      position: "absolute",
+      right: "3%",
+      borderWidth: 1,
+      borderRadius: 2,
+      padding: 4,
+      borderColor: "white",
       ...Platform.select({
         ios: {
-            position: "absolute",
-            right: "3%",
-            borderWidth: 1,
-            borderRadius: 2,
-            padding: 4,
-            bottom: 17,
-            borderColor: "white",
-        },
-        android: {
-            position: "absolute",
-            right: "3%",
-            borderWidth: 1,
-            borderRadius: 2,
-            padding: 4,
-            borderColor: "white",
+          bottom: 17,
         },
       }),
     },
@@ -212,24 +167,6 @@ const styles = StyleSheet.create({
     },
     cardDescriptionText: {
       color: "rgba(255, 255, 255, .5)",
-    },
-    toggle: {
-      position: "absolute",
-      top: "45%",
-      left: "0%",
-      paddingVertical: 4,
-      paddingLeft: 7,
-      paddingRight: 15,
-      backgroundColor: "rgba(255, 255, 255, .15)",
-      justifyContent: "center",
-      alignItems: "center",
-      borderBottomRightRadius: 15,
-      borderTopRightRadius: 15,
-      zIndex: 1,
-    },
-    hr: {
-      borderBottomColor: "black",
-      borderBottomWidth: 1,
     },
     gradientImage: {
       height: "100%",
@@ -265,4 +202,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default DrawerHomeSwipe
+export default DrawerHomeSwipe;
