@@ -24,7 +24,6 @@ import maroonGradient from "../assets/maroonGradient.png";
 import { getDistance, convertDistance } from 'geolib';
 import customTreeBox from "../media/customTreeBox.png";
 
-
 const DrawerHomeSwipe = (props) => {
 
   const windowHeight = Dimensions.get('window').height;
@@ -37,16 +36,43 @@ const DrawerHomeSwipe = (props) => {
   const treeList = props.treeList;
   const filter = props.filter;
 
+
+
+  let treeListIndex = null;
+
+  // if (props.treeList) {
+  //   Object.values(props.treeList).forEach((value, index) => {
+  //     console.log("TREE CORDS", value.treeCoordinates);
+  //     // console.log("FIRE BASE KEY??", index);
+  //   });
+  // }
+
+    if (props.treeList) {
+    Object.values(props.treeList).forEach((value, index) => {
+      console.log("TREE CORDS", value.treeCoordinates);
+      // console.log("FIRE BASE KEY??", index);
+    });
+  }
+console.log("props.treeList", props.treeList);
+
   const [expanded, setExpanded] = useState(false)
 
 
   if (Platform.OS === 'android') {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
+
+    // let firebaseUniqueKey = null;
+    // const findFirebaseUniqueKeyToDelete = (cardKeyNumber) => {
+    //   firebaseUniqueKey = Object.keys(currentDatabase)[cardKeyNumber];
+    // };
+    // findFirebaseUniqueKeyToDelete(cardKey);
   
-  const dropDown = () => {
+  const dropDown = (name) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setExpanded(!expanded)
+    setExpanded(name)
+    // setExpanded(!expanded)
+
   };
 
 
@@ -68,7 +94,7 @@ const DrawerHomeSwipe = (props) => {
         ),
       );
     }
-    console.log("TREEARRAY", treeArray);
+    // console.log("TREEARRAY", treeArray);
   }
 
   function milesOrYards(distance) {
@@ -112,8 +138,8 @@ const DrawerHomeSwipe = (props) => {
             {treeArray &&
               treeArray.map((value, index) => {
                 return (
-                  <TouchableOpacity>
-                    <View style={styles.cardContainer} key={index}>
+                  <TouchableOpacity key={value.index}>
+                    <View style={styles.cardContainer}>
                       <View style={{ flexDirection: "row" }}>
                         <Image style={styles.boxTree} source={customTreeBox} />
                         <View style={styles.cardInfo}>
@@ -130,37 +156,36 @@ const DrawerHomeSwipe = (props) => {
                           //     ...value,
                           //   })
                           // }
-                          onPress={() => dropDown()}
+                          onPress={() => dropDown(value.type)}
                         >
                           <Text style={styles.cardDetailsButtonText}>
                             Details
                           </Text>
                         </TouchableOpacity>
                       </View>
-                    <View
-                      style={{
-                        height: expanded ? 220 : 0,
-                        overflow: "hidden",
-                        paddingLeft: 10,
-                        paddingRIght: 10,
-                      }}
-                    >
-                      <View style={styles.locationWrapper}>
-                        <Text style={styles.treeLocationText}>
-                          {value.treeLocation}
-                        </Text>
-                      </View>
-                      <View style={styles.descriptionWrapper}>
-                        <Text style={styles.descriptionText}>
-                          {value.description}
-                        </Text>
-                      </View>
-                      <View style={styles.deleteButtonWrapper}>
-                      { renderDeleteButton }
+                      <View
+                        style={{
+                          height: (expanded === value.type) ? 220 : 0,
+                          overflow: "hidden",
+                          paddingLeft: 10,
+                          paddingRIght: 10,
+                        }}
+                      >
+                        <View style={styles.locationWrapper}>
+                          <Text style={styles.treeLocationText}>
+                            {value.treeLocation}
+                          </Text>
+                        </View>
+                        <View style={styles.descriptionWrapper}>
+                          <Text style={styles.descriptionText}>
+                            {value.description}
+                          </Text>
+                        </View>
+                        <View style={styles.deleteButtonWrapper}>
+                          {renderDeleteButton}
+                        </View>
                       </View>
                     </View>
-                    </View>
-
                   </TouchableOpacity>
                 );
               })}

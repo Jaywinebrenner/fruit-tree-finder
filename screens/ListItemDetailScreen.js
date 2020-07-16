@@ -29,6 +29,7 @@ const ListItemDetailScreen = (props) => {
 
   let cardKey = props.route.params.index;
   // console.log("card key", cardKey);
+  
   console.log("Props on list item", props)
 
 

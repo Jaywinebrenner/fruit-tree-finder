@@ -37,8 +37,9 @@ const ListScreen = () => {
   const [treeArray, setTreeArray] = useState(null);
   const [filter, setFilter] = useState("All Trees");
 
-
+  
   useEffect(() => {
+
     _getUserLocactionAsync();
     // Pulling down database
     let result = firebase.database().ref("/tree");

@@ -132,8 +132,6 @@ const MapScreen = ({navigation}) => {
             fadeDuration={0}
             style={styles.customTree} source={customTree}
           />
-          {/* <MaterialCommunityIcons name="tree" size={40} color="#769382" /> */}
-          {/* <Entypo name="tree" size={30} color="green" /> */}
         </Marker>
       );
     });
@@ -183,7 +181,6 @@ const MapScreen = ({navigation}) => {
       }
     }
 
-
   return (
     <View style={styles.container}>
       <Search navigation={navigation} />
@@ -203,9 +200,6 @@ const MapScreen = ({navigation}) => {
         showUserLocation={true}
         showsCompass={true}
         customMapStyle={mapStyle}
-        // ref={(map) => {
-        //   this.map = map;
-        // }}
         rotateEnabled={false}
       >
        { renderTreesToMap() }
