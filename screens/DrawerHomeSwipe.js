@@ -71,6 +71,9 @@ console.log("props.treeList", props.treeList);
   const dropDown = (name) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setExpanded(name)
+    if (name === expanded){
+      setExpanded(null)
+    }
     // setExpanded(!expanded)
 
   };
@@ -118,7 +121,7 @@ console.log("props.treeList", props.treeList);
       />
     </View>
   );
-
+console.log("EXPANEDED", expanded);
 
   const renderContent = () => {
 
