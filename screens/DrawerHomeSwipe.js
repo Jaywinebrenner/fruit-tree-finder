@@ -37,47 +37,33 @@ const DrawerHomeSwipe = (props) => {
   const filter = props.filter;
 
 
-
-  let treeListIndex = null;
-
-  // if (props.treeList) {
-  //   Object.values(props.treeList).forEach((value, index) => {
-  //     console.log("TREE CORDS", value.treeCoordinates);
-  //     // console.log("FIRE BASE KEY??", index);
-  //   });
-  // }
+  if (props.treeList) {
+    Object.values(props.treeList).forEach((value, index) => {
+      console.log("TREE CORDS", value.treeCoordinates);
+      // console.log("FIRE BASE KEY??", index);
+    });
+  }
 
     if (props.treeList) {
     Object.values(props.treeList).forEach((value, index) => {
       console.log("TREE CORDS", value.treeCoordinates);
-      // console.log("FIRE BASE KEY??", index);
     });
   }
 console.log("props.treeList", props.treeList);
 
   const [expanded, setExpanded] = useState(false)
 
-
   if (Platform.OS === 'android') {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
 
-    // let firebaseUniqueKey = null;
-    // const findFirebaseUniqueKeyToDelete = (cardKeyNumber) => {
-    //   firebaseUniqueKey = Object.keys(currentDatabase)[cardKeyNumber];
-    // };
-    // findFirebaseUniqueKeyToDelete(cardKey);
-  
-  const dropDown = (name) => {
+  const dropDown = (treeCoordinates) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setExpanded(name)
-    if (name === expanded){
-      setExpanded(null)
+    setExpanded(treeCoordinates);
+    if (treeCoordinates === expanded) {
+      setExpanded(null);
     }
-    // setExpanded(!expanded)
-
   };
-
 
   const [treeArray, setTreeArray] = useState(null);
 
@@ -110,6 +96,34 @@ console.log("props.treeList", props.treeList);
     }
   }
 
+  const generateKey = (pre) => {
+    return `${pre}_${new Date().getTime()}`;
+  };
+
+  // DELETE
+  // const areYouSure = () => {
+  //   Alert.alert("Warning!", "Are you sure you want to delete this tree???", [
+  //     {
+  //       text: "NO",
+  //       onPress: () => console.warn("NO Pressed"),
+  //       style: "cancel",
+  //     },
+  //     { text: "YES", onPress: () => deleteTree(firebaseUniqueKey) },
+  //   ]);
+  // };
+
+  // const deleteTree = (firebaseUniqueKey) => {
+  //   console.log("KEY NUMBER in DELTE FUNCTION?", firebaseUniqueKey);
+  //   firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
+  //   navigation.navigate("ListScreen");
+  // };
+
+  // let firebaseUniqueKey = null;
+  // const findFirebaseUniqueKeyToDelete = (cardKeyNumber) => {
+  //   firebaseUniqueKey = Object.keys(currentDatabase)[cardKeyNumber];
+  // };
+  // findFirebaseUniqueKeyToDelete(cardKey);
+
   const renderDeleteButton = treeList && (
     <View onPress={() => areYouSure()}>
       <AntDesign
@@ -121,7 +135,7 @@ console.log("props.treeList", props.treeList);
       />
     </View>
   );
-console.log("EXPANEDED", expanded);
+
 
   const renderContent = () => {
 
@@ -159,8 +173,9 @@ console.log("EXPANEDED", expanded);
                           //     ...value,
                           //   })
                           // }
-                          onPress={() => dropDown(value.type)}
+                          onPress={() => dropDown(value.treeCoordinates)}
                         >
+                          {/* {console.log("key", key)} */}
                           <Text style={styles.cardDetailsButtonText}>
                             Details
                           </Text>
@@ -168,7 +183,7 @@ console.log("EXPANEDED", expanded);
                       </View>
                       <View
                         style={{
-                          height: (expanded === value.type) ? 220 : 0,
+                          height: expanded === value.treeCoordinates ? 220 : 0,
                           overflow: "hidden",
                           paddingLeft: 10,
                           paddingRIght: 10,
