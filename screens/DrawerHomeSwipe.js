@@ -23,6 +23,7 @@ import { Entypo } from "@expo/vector-icons";
 import maroonGradient from "../assets/maroonGradient.png";
 import { getDistance, convertDistance } from 'geolib';
 import customTreeBox from "../media/customTreeBox.png";
+import firebase from "firebase";
 
 const DrawerHomeSwipe = (props) => {
 
@@ -36,22 +37,25 @@ const DrawerHomeSwipe = (props) => {
   const treeList = props.treeList;
   const filter = props.filter;
 
-
-  if (props.treeList) {
-    Object.values(props.treeList).forEach((value, index) => {
-      console.log("TREE CORDS", value.treeCoordinates);
-      // console.log("FIRE BASE KEY??", index);
-    });
-  }
-
+console.log("TREE LIST", props.treeList);
     if (props.treeList) {
     Object.values(props.treeList).forEach((value, index) => {
-      console.log("TREE CORDS", value.treeCoordinates);
+      // console.log("TREE CORDS", value.treeCoordinates);
     });
   }
 console.log("props.treeList", props.treeList);
 
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(false);
+  const [coordsToDelete, setCoordsToDelete] = useState(null);
+  const [typeToDelete, setTypeToDelete] = useState(null);
+
+// Need currentUserID to render delete button
+  let currentUserID = null;
+  if (firebase.auth().currentUser) {
+    currentUserID = firebase.auth().currentUser.uid;
+  }
+
+
 
   if (Platform.OS === 'android') {
     UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -64,6 +68,26 @@ console.log("props.treeList", props.treeList);
       setExpanded(null);
     }
   };
+
+
+
+treeArray && console.log("TREE ARRAY", treeArray);
+
+  const deleteTree = (treeCoordinates, type) => {
+    setCoordsToDelete(treeCoordinates);
+    setTypeToDelete(type);
+    console.log("UPON DELETE COORDS", coordsToDelete);
+    console.log("UPON DELTE TYPE", typeToDelete);
+
+  console.log(treeArray.indexOf("bison"));
+
+    // treeArray.map(value => {
+    //   if((value.treeCoordinates === coordsToDelete) && (value.type === typeToDelete)){
+    //     console.log("THEY ARE THE SAMMMMMMMMMMME");
+    //   }
+    // })
+
+  }
 
   const [treeArray, setTreeArray] = useState(null);
 
@@ -124,18 +148,26 @@ console.log("props.treeList", props.treeList);
   // };
   // findFirebaseUniqueKeyToDelete(cardKey);
 
-  const renderDeleteButton = treeList && (
-    <View onPress={() => areYouSure()}>
-      <AntDesign
-        style={styles.deleteIcon}
-        name="delete"
-        size={30}
-        color="white"
-        onPress={() => areYouSure()}
-      />
-    </View>
-  );
+  // const renderDeleteButton = treeList && (
+  //   <View
+  //     // onPress={() => areYouSure()}
+  //     onPress={deleteTree(value.treeCoordinates, value.type)}
+  //   >
+  //     <AntDesign
+  //       style={styles.deleteIcon}
+  //       name="delete"
+  //       size={30}
+  //       color="white"
+  //     />
+  //   </View>
+  // );
 
+  
+
+
+
+
+let idCounter = 0
 
   const renderContent = () => {
 
@@ -155,7 +187,7 @@ console.log("props.treeList", props.treeList);
             {treeArray &&
               treeArray.map((value, index) => {
                 return (
-                  <TouchableOpacity key={value.index}>
+                  <TouchableOpacity key={index}>
                     <View style={styles.cardContainer}>
                       <View style={{ flexDirection: "row" }}>
                         <Image style={styles.boxTree} source={customTreeBox} />
@@ -167,15 +199,8 @@ console.log("props.treeList", props.treeList);
                         </View>
                         <TouchableOpacity
                           style={styles.cardDetailsButtonWrapper}
-                          // onPress={() =>
-                          //   navigation.navigate("ListItemDetailScreen", {
-                          //     index,
-                          //     ...value,
-                          //   })
-                          // }
                           onPress={() => dropDown(value.treeCoordinates)}
                         >
-                          {/* {console.log("key", key)} */}
                           <Text style={styles.cardDetailsButtonText}>
                             Details
                           </Text>
@@ -199,9 +224,30 @@ console.log("props.treeList", props.treeList);
                             {value.description}
                           </Text>
                         </View>
+                        {console.log("Value USER ID", value.userID)}
+                        {console.log("Current USER ID", currentUserID)}
+
+                        {value.userID === currentUserID && 
                         <View style={styles.deleteButtonWrapper}>
-                          {renderDeleteButton}
-                        </View>
+                          {/* {renderDeleteButton} */}
+                          <View
+                          // onPress={() => areYouSure()}
+                          >
+                            <AntDesign
+                              style={styles.deleteIcon}
+                              name="delete"
+                              size={30}
+                              color="white"
+                              onPress={() =>
+                                deleteTree(value.treeCoordinates, value.type)
+                              }
+                            />
+                          </View>
+                        </View>}
+
+
+
+
                       </View>
                     </View>
                   </TouchableOpacity>
@@ -314,7 +360,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   deleteButtonWrapper: {
-
+zIndex: 10,
     marginLeft: 10
   },
 });

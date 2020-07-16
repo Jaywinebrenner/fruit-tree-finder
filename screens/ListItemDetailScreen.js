@@ -29,7 +29,7 @@ const ListItemDetailScreen = (props) => {
 
   let cardKey = props.route.params.index;
   // console.log("card key", cardKey);
-  
+
   console.log("Props on list item", props)
 
 
@@ -105,6 +105,7 @@ console.log("cardLocation?", props.route.params);
         onPress={() => areYouSure()}
       />
     </View>
+
 
   return (
     <View style={styles.container}>

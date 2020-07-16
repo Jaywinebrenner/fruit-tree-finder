@@ -27,6 +27,7 @@ import * as Permissions from "expo-permissions";
 import Search from "../components/Search";
 import customTreeBox from "../media/customTreeBox.png";
 
+
 const ListScreen = () => {
 
   const navigation = useNavigation();

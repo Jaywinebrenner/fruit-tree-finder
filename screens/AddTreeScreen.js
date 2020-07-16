@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput, Alert, TouchableWithoutFeedback, Keyboard } from "react-native";
 import maroonGradient from "../assets/maroonGradient.png";
 import Modal from "react-native-modal";
@@ -25,25 +25,38 @@ const AddTreeScreen = () => {
     userID = firebase.auth().currentUser.uid;
   }
 
+  let treeIdentification = null;
+  useEffect(() => {
+    const generateTreeID = () => {
+      treeIdentification = Math.random();
+      setTreeID(treeIdentification);
+  }
+    generateTreeID()
+  }, []);
+
   const [loadingActive, setLoadingActive] = useState(false);
 
   const [type, setType] = useState(null);
   const [description, setDescription] = useState(null);
   const [treeLocation, setTreeLocation] = useState(null)
   const [treeCoordinates, setTreeCoordinates] = useState(null);
-
+  const [treeID, setTreeID] = useState(null)
 
   async function submit() {
     setLoadingActive(true);
     try {
       let treeCoordinates = await convertLocation(treeLocation);
       setTreeCoordinates(treeCoordinates)
+      setTreeID("FART")
+      console.log("TREE ID IN SUBMIT", treeID);
+      // console.log("TREE COORDS IN SUBMIT", treeCoordinates);
       await firebase.database().ref("/tree").push({
         type,
         description,
         treeLocation,
         treeCoordinates,
         userID,
+        treeID
       });
       setType(null);
       setDescription(null);
