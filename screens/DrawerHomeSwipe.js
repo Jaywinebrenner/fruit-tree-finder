@@ -30,35 +30,31 @@ const DrawerHomeSwipe = (props) => {
   const windowHeight = Dimensions.get('window').height;
   const drawerTopHeight = (windowHeight * .52);
   const drawerHalfHeight = (windowHeight * .18);
-  const drawerBottomHeight = (windowHeight * .08);
- // ANDROID const drawerBottomHeight = (windowHeight * .04)
+  let drawerBottomHeight = (windowHeight * .08);
+
+  if (Platform.OS === "android") {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+    drawerBottomHeight = windowHeight * 0.04;
+  }
 
   const userCoords = props.userCoords;
   const treeList = props.treeList;
   const filter = props.filter;
 
-console.log("TREE LIST", props.treeList);
+  console.log("TREE LIST", props.treeList);
     if (props.treeList) {
     Object.values(props.treeList).forEach((value, index) => {
       // console.log("TREE CORDS", value.treeCoordinates);
     });
   }
-console.log("props.treeList", props.treeList);
+  console.log("props.treeList", props.treeList);
 
   const [expanded, setExpanded] = useState(false);
-  const [coordsToDelete, setCoordsToDelete] = useState(null);
-  const [typeToDelete, setTypeToDelete] = useState(null);
 
-// Need currentUserID to render delete button
+  // Need currentUserID to render delete button
   let currentUserID = null;
   if (firebase.auth().currentUser) {
     currentUserID = firebase.auth().currentUser.uid;
-  }
-
-
-
-  if (Platform.OS === 'android') {
-    UIManager.setLayoutAnimationEnabledExperimental(true);
   }
 
   const dropDown = (treeCoordinates) => {
@@ -69,25 +65,31 @@ console.log("props.treeList", props.treeList);
     }
   };
 
+  const areYouSure = (treeIDInput) => {
+    Alert.alert("Warning!", "Are you sure you want to delete this tree???", [
+      {
+        text: "NO",
+        onPress: () => console.warn("NO Pressed"),
+        style: "cancel",
+      },
+      { text: "YES", onPress: () => deleteTree(treeIDInput) },
+    ]);
+  };
 
+    let firebaseUniqueKey = null
+  const deleteTree = (treeIDInput) => {
 
-treeArray && console.log("TREE ARRAY", treeArray);
-
-  const deleteTree = (treeCoordinates, type) => {
-    setCoordsToDelete(treeCoordinates);
-    setTypeToDelete(type);
-    console.log("UPON DELETE COORDS", coordsToDelete);
-    console.log("UPON DELTE TYPE", typeToDelete);
-
-  console.log(treeArray.indexOf("bison"));
-
-    // treeArray.map(value => {
-    //   if((value.treeCoordinates === coordsToDelete) && (value.type === typeToDelete)){
-    //     console.log("THEY ARE THE SAMMMMMMMMMMME");
-    //   }
-    // })
-
-  }
+    Object.entries(treeList).map((value) => {
+      console.log("Just FB ID?", value[0]);
+      console.log("tree ID?", value[1].treeID);
+      if (value[1].treeID === treeIDInput) {
+        firebaseUniqueKey = value[0];
+        console.log("THEY ARE THE SAMMMMMMMMMMME");
+        console.log("FIRE BASE ID?", firebaseUniqueKey);
+        firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
+      }
+    });
+  };
 
   const [treeArray, setTreeArray] = useState(null);
 
@@ -119,55 +121,6 @@ treeArray && console.log("TREE ARRAY", treeArray);
       return (dist + " miles away");
     }
   }
-
-  const generateKey = (pre) => {
-    return `${pre}_${new Date().getTime()}`;
-  };
-
-  // DELETE
-  // const areYouSure = () => {
-  //   Alert.alert("Warning!", "Are you sure you want to delete this tree???", [
-  //     {
-  //       text: "NO",
-  //       onPress: () => console.warn("NO Pressed"),
-  //       style: "cancel",
-  //     },
-  //     { text: "YES", onPress: () => deleteTree(firebaseUniqueKey) },
-  //   ]);
-  // };
-
-  // const deleteTree = (firebaseUniqueKey) => {
-  //   console.log("KEY NUMBER in DELTE FUNCTION?", firebaseUniqueKey);
-  //   firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
-  //   navigation.navigate("ListScreen");
-  // };
-
-  // let firebaseUniqueKey = null;
-  // const findFirebaseUniqueKeyToDelete = (cardKeyNumber) => {
-  //   firebaseUniqueKey = Object.keys(currentDatabase)[cardKeyNumber];
-  // };
-  // findFirebaseUniqueKeyToDelete(cardKey);
-
-  // const renderDeleteButton = treeList && (
-  //   <View
-  //     // onPress={() => areYouSure()}
-  //     onPress={deleteTree(value.treeCoordinates, value.type)}
-  //   >
-  //     <AntDesign
-  //       style={styles.deleteIcon}
-  //       name="delete"
-  //       size={30}
-  //       color="white"
-  //     />
-  //   </View>
-  // );
-
-  
-
-
-
-
-let idCounter = 0
 
   const renderContent = () => {
 
@@ -239,14 +192,11 @@ let idCounter = 0
                               size={30}
                               color="white"
                               onPress={() =>
-                                deleteTree(value.treeCoordinates, value.type)
+                                areYouSure(value.treeID)
                               }
                             />
                           </View>
                         </View>}
-
-
-
 
                       </View>
                     </View>
