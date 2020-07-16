@@ -27,6 +27,7 @@ import * as Permissions from "expo-permissions";
 import Search from "../components/Search";
 import customTreeBox from "../media/customTreeBox.png";
 
+
 const ListScreen = () => {
 
   const navigation = useNavigation();
@@ -37,8 +38,9 @@ const ListScreen = () => {
   const [treeArray, setTreeArray] = useState(null);
   const [filter, setFilter] = useState("All Trees");
 
-
+  
   useEffect(() => {
+
     _getUserLocactionAsync();
     // Pulling down database
     let result = firebase.database().ref("/tree");
