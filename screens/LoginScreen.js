@@ -29,14 +29,13 @@ function LoginScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [loadingActive, setLoadingActive] = useState(false);
 
-  // console.log("email", email);
-  // console.log("password", password);
-
    async function signUp(email, password) {
      setLoadingActive(true);
      try {
        if (password.length < 5) {
          alert("Please Enter 6 characters");
+         navigation.navigate("Login");
+          setLoadingActive(false);
          return;
        }
        await firebase.auth().createUserWithEmailAndPassword(email, password);
@@ -74,10 +73,7 @@ function LoginScreen({ navigation }) {
 
 const renderLoginScreen = () => {
   return (
-    <View
-      style={styles.container}
-      keyboardShouldPersistTaps='handled'
-    >
+    <View style={styles.container} keyboardShouldPersistTaps="handled">
       <ImageBackground source={maroonGradient} style={styles.gradientImage}>
         <Entypo
           name="tree"
@@ -96,54 +92,57 @@ const renderLoginScreen = () => {
           </TouchableOpacity>
           <Text style={styles.backText}>Log in</Text>
         </View>
-          <KeyboardAwareScrollView
-            style={styles.middle}
-            keyboardShouldPersistTaps='handled'
-          >
-            <View style={styles.form}>
-              <Text style={styles.imageText}>PORTLAND FRUIT TREE {"\n"} PROJECT</Text>
+        <KeyboardAwareScrollView
+          style={styles.middle}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={styles.form}>
+            <View style={styles.titleWrapper}>
+              <Text style={styles.imageText}>PORTLAND FRUIT TREE PROJECT</Text>
               <Text style={styles.imageTextTwo}>
-                Gather food from the plentiful bounties {"\n"} of your neighborhood
+                Gather food from the plentiful bounties of your
+                neighborhood
               </Text>
-              <TouchableOpacity>
-                <Text style={styles.text}>Welcome!</Text>
-                <TextInput
-                  autoCapitalize="none"
-                  keyboardType={"email-address"}
-                  placeholder="Email"
-                  placeholderTextColor="grey"
-                  value={email}
-                  onChangeText={setEmail}
-                  style={styles.input}
-                  autoCapitalize={"none"}
-                />
-                <TextInput
-                  placeholder="Password"
-                  secureTextEntry={true}
-                  placeholderTextColor="grey"
-                  secureTextEntry={true}
-                  value={password}
-                  onChangeText={setPassword}
-                  style={styles.input}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.login}
-                onPress={() => login(email, password)}
-              >
-                <Text style={styles.loginButtonText}>LOGIN</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.signUp}
-                onPress={() => signUp(email, password)}
-              >
-                <Text style={styles.signUpButtonText}>SIGN UP</Text>
-              </TouchableOpacity>
             </View>
-          </KeyboardAwareScrollView>
+            <TouchableOpacity>
+              <Text style={styles.text}>Welcome!</Text>
+              <TextInput
+                autoCapitalize="none"
+                keyboardType={"email-address"}
+                placeholder="Email"
+                placeholderTextColor="grey"
+                value={email}
+                onChangeText={setEmail}
+                style={styles.input}
+                autoCapitalize={"none"}
+              />
+              <TextInput
+                placeholder="Password"
+                secureTextEntry={true}
+                placeholderTextColor="grey"
+                secureTextEntry={true}
+                value={password}
+                onChangeText={setPassword}
+                style={styles.input}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.login}
+              onPress={() => login(email, password)}
+            >
+              <Text style={styles.loginButtonText}>LOGIN</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.signUp}
+              onPress={() => signUp(email, password)}
+            >
+              <Text style={styles.signUpButtonText}>SIGN UP</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAwareScrollView>
       </ImageBackground>
     </View>
-  )
+  );
       }
 
     return <React.Fragment>{console.log("loading active???", loadingActive)}{loadingActive ? <LoadingScreen/> : renderLoginScreen()}</React.Fragment>
@@ -155,45 +154,36 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: "100%",
-    // // backgroundColor: "#f9fcfb",
-    // flex: 1,
-    // marginBottom: 24,
-    // marginTop: 24,
   },
   top: {
     paddingTop: 25,
     paddingBottom: 10,
     flexDirection: "row",
-    backgroundColor: "rgba(236, 250, 217, .2)"
+    backgroundColor: "rgba(236, 250, 217, .2)",
   },
   gradientImage: {
     height: "100%",
     width: "100%",
-    zIndex: 0
+    zIndex: 0,
   },
   bigTree: {
     position: "absolute",
     bottom: -50,
     top: 300,
     right: -60,
-    zIndex: 1
+    zIndex: 1,
   },
   backText: {
     color: "#e1eddf",
     fontSize: 25,
   },
   backArrow: {
-    marginLeft: "10%"
+    marginLeft: "10%",
   },
   form: {
     margin: "10%",
-    zIndex: 1
+    zIndex: 1,
   },
-  // buttonText: {
-  //   textAlign: "center",
-  //   color: "grey",
-  //   fontSize: 17,
-  // },
   input: {
     alignSelf: "center",
     height: 40,
@@ -209,28 +199,33 @@ const styles = StyleSheet.create({
     color: "#e1eddf",
     fontSize: 17,
   },
+  titleWrapper: {
+    flex: 1,
+  },
   imageText: {
-    alignSelf: "center",
-    fontSize: 28,
+    textAlign: "center",
+    fontSize: 32,
+    color: "#e1eddf",
     fontWeight: "bold",
-    color: "#210606",
-    // textAlign: "left",
-    // marginLeft: "3%",
-    // marginTop: "40%",
+    lineHeight: 31,
+    shadowColor: "black",
+    elevation: 5,
+    shadowRadius: 5,
+    shadowOpacity: 0.6,
   },
   imageTextTwo: {
-    alignSelf: "center",
+    color: "#e1eddf",
+    textAlign: "center",
     fontSize: 13,
     fontWeight: "bold",
-    color: "#210606",
-    textAlign: "left",
-    margin: "2%",
+    marginTop: "5%",
+    marginBottom: "5%",
   },
   login: {
     alignSelf: "center",
     justifyContent: "center",
-    backgroundColor: "#802941",
-    padding: 5,
+    backgroundColor: "#531613",
+    padding: 7,
     marginTop: 15,
     borderRadius: 3,
   },
@@ -238,17 +233,19 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
     // backgroundColor: "white",
-    height: 40,
-    width: 80,
+    height: 35,
+    width: 73,
     padding: 5,
     borderRadius: 3,
     borderWidth: 1,
-    borderColor: "#802941",
+    // borderColor: "#802941",
+    borderColor: "#e1eddf",
     marginTop: 20,
   },
   signUpButtonText: {
     alignSelf: "center",
-    color: "#802941",
+    // color: "#802941",
+    color: "#e1eddf",
   },
   loginButtonText: {
     alignSelf: "center",
@@ -256,8 +253,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   middle: {
-    zIndex: 1
-  }
+    zIndex: 1,
+  },
 });
 
 export default LoginScreen;

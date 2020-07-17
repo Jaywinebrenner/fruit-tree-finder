@@ -26,7 +26,7 @@ import customTreeBox from "../media/customTreeBox.png";
 import firebase from "firebase";
 
 const DrawerHomeSwipe = (props) => {
-  
+
   const windowHeight = Dimensions.get('window').height;
   const drawerTopHeight = (windowHeight * .59);
   const drawerHalfHeight = (windowHeight * .18);

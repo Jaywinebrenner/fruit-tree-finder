@@ -41,7 +41,6 @@ const MapScreen = ({navigation}) => {
   const [tracksViewChanges, setTracksViewChanges] = useState(false);
   const [userCoords, setUserCoords] = useState(null);
 
-
   let currentUserID = null;
   if (firebase.auth().currentUser) {
     currentUserID = firebase.auth().currentUser.uid;
@@ -215,7 +214,7 @@ const MapScreen = ({navigation}) => {
         customMapStyle={mapStyle}
         rotateEnabled={false}
       >
-       { renderTreesToMap() }
+        {renderTreesToMap()}
       </MapView>
 
       {currentUserID && renderAddATreeButton()}
@@ -225,7 +224,7 @@ const MapScreen = ({navigation}) => {
         treeList={allTrees}
         userCoords={userCoords}
         filter={filter}
-        />
+      />
     </View>
   );
 }
