@@ -45,7 +45,7 @@ const DrawerHomeSwipe = (props) => {
   console.log("TREE LIST", props.treeList);
     if (props.treeList) {
     Object.values(props.treeList).forEach((value, index) => {
-      // console.log("TREE CORDS", value.treeCoordinates);
+      // console.log("TREE ID", value.treeID);
     });
   }
   console.log("props.treeList", props.treeList);
@@ -77,9 +77,8 @@ const DrawerHomeSwipe = (props) => {
     ]);
   };
 
-    let firebaseUniqueKey = null
+  let firebaseUniqueKey = null
   const deleteTree = (treeIDInput) => {
-
     Object.entries(treeList).map((value) => {
       console.log("Just FB ID?", value[0]);
       console.log("tree ID?", value[1].treeID);
@@ -88,9 +87,9 @@ const DrawerHomeSwipe = (props) => {
         console.log("THEY ARE THE SAMMMMMMMMMMME");
         console.log("FIRE BASE ID?", firebaseUniqueKey);
         firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
-      }
-    });
-  };
+        }
+      });
+    };
 
   const [treeArray, setTreeArray] = useState(null);
 
@@ -139,7 +138,7 @@ const DrawerHomeSwipe = (props) => {
                 </View>
                 <TouchableOpacity
                   style={styles.cardDetailsButtonWrapper}
-                  onPress={() => dropDown(value.treeCoordinates)}
+                  onPress={() => dropDown(value.treeID)}
                 >
                   <Text style={styles.cardDetailsButtonText}>Details</Text>
                 </TouchableOpacity>
@@ -147,7 +146,7 @@ const DrawerHomeSwipe = (props) => {
 
               <View
                 style={{
-                  height: expanded === value.treeCoordinates ? 190 : 0,
+                  maxHeight: expanded === value.treeID ? 190 : 0,
                   overflow: "hidden",
                   paddingLeft: 10,
                   paddingRight: 10,
@@ -191,7 +190,7 @@ const DrawerHomeSwipe = (props) => {
     const renderMyTrees =
       treeArray &&
       treeArray.map((value, index) => {
-        if (value.userID !== currentUserID) {
+        if (value.userID === currentUserID) {
         return (
           <TouchableOpacity key={index}>
             <View style={styles.cardContainer}>
@@ -369,7 +368,7 @@ const styles = StyleSheet.create({
   },
   descriptionWrapper: {
     marginTop: 10,
-    height: 115,
+    // height: 115,
   },
   descriptionText: {
     fontSize: 16,
@@ -384,7 +383,8 @@ const styles = StyleSheet.create({
   },
   deleteButtonWrapper: {
     zIndex: 10,
-    marginLeft: 10
+    marginLeft: -8,
+    marginTop: 15
   },
 });
 
