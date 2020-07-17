@@ -26,9 +26,11 @@ import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import Search from "../components/Search";
 import DrawerHomeSwipe from "./DrawerHomeSwipe";
 import FilterDropDown from "../components/FilterDropDown";
-import customTree from "../media/customTreeFourOutline.png";
+import customTree from "../media/customTree.png";
+import customTreeMyTree from "../media/customTreeMyTree.png";
+import customTreeVerified from "../media/customTreeVerified.png";
 
-import customTreeMyTree from "../media/customTreeMyTreeNEW.png";
+
 
 const MapScreen = ({navigation}) => {
 
@@ -39,10 +41,13 @@ const MapScreen = ({navigation}) => {
   const [tracksViewChanges, setTracksViewChanges] = useState(false);
   const [userCoords, setUserCoords] = useState(null);
 
+
   let currentUserID = null;
   if (firebase.auth().currentUser) {
     currentUserID = firebase.auth().currentUser.uid;
   }
+
+
 
   useEffect(() => {
     _getUserLocactionAsync();
@@ -94,7 +99,12 @@ const MapScreen = ({navigation}) => {
       }
     }
   };
-
+            //  onPress={() =>
+            //             navigation.navigate("ListItemDetailScreen", {
+            //               index,
+            //               ...value,
+            //             })
+            //           }
 
   const renderAddATreeButton = () => {
     return (
@@ -116,24 +126,27 @@ const MapScreen = ({navigation}) => {
     Object.values(allTrees).map((tree, index) => {
       let latitude = tree.treeCoordinates[0];
       let longitude = tree.treeCoordinates[1];
-      return (
-        <Marker
-          key={index}
-          coordinate={{
-            latitude: latitude,
-            longitude: longitude,
-          }}
-          tracksViewChanges={tracksViewChanges}
-          title={tree.type}
-          description={tree.description}
-        >
-          <Image
-            onLoad={() => stopTrackingViewChanges()}
-            fadeDuration={0}
-            style={styles.customTree} source={customTree}
-          />
-        </Marker>
-      );
+      if (tree.userID !== currentUserID) {
+        return (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: latitude,
+              longitude: longitude,
+            }}
+            tracksViewChanges={tracksViewChanges}
+            title={tree.type}
+            description={tree.description}
+          >
+            <Image
+              onLoad={() => stopTrackingViewChanges()}
+              fadeDuration={0}
+              style={styles.customTree}
+              source={customTree}
+            />
+          </Marker>
+        );
+      }
     });
 
   const MyTreesMapMarkers =

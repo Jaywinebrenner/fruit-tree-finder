@@ -20,7 +20,7 @@ import maroonGradient from "../assets/maroonGradient.png";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import FilterDropDownList from "../components/FilterDropDownList";
+import FilterDropDownList from "../unused/FilterDropDownList";
 import { getDistance, convertDistance } from 'geolib';
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
