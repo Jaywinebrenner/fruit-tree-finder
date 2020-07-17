@@ -12,13 +12,13 @@ import {
   ImageBackground,
   Image,
 } from "react-native";
-import logo from "../media/logo.png";
 import firebase from "firebase";
 import apples from "../media/apples.jpg";
 import LoadingScreen from "./LoadingScreen";
 import maroonGradient from "../assets/maroonGradient.png";
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import logoWhite from "../media/logoWhite.png";
 
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -98,10 +98,10 @@ const renderLoginScreen = () => {
         >
           <View style={styles.form}>
             <View style={styles.titleWrapper}>
-              <Text style={styles.imageText}>PORTLAND FRUIT TREE PROJECT</Text>
+              <Image source={logoWhite} style={styles.logoWhite} />
+              <Text style={styles.imageText}>FRUIT TREE FINDER</Text>
               <Text style={styles.imageTextTwo}>
-                Gather food from the plentiful bounties of your
-                neighborhood
+                Gather food from the plentiful bounties of your neighborhood
               </Text>
             </View>
             <TouchableOpacity>
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   },
   imageText: {
     textAlign: "center",
-    fontSize: 32,
+    fontSize: 29,
     color: "#e1eddf",
     fontWeight: "bold",
     lineHeight: 31,
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 13,
     fontWeight: "bold",
-    marginTop: "5%",
+    // marginTop: "5%",
     marginBottom: "5%",
   },
   login: {
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#531613",
     padding: 7,
-    marginTop: 15,
+    marginTop: 20,
     borderRadius: 3,
   },
   signUp: {
@@ -254,6 +254,15 @@ const styles = StyleSheet.create({
   },
   middle: {
     zIndex: 1,
+  },
+  logoWhite: {
+    width: 300,
+    height: 90,
+    alignSelf: "center",
+    shadowColor: "black",
+    elevation: 5,
+    shadowRadius: 5,
+    shadowOpacity: 0.6,
   },
 });
 

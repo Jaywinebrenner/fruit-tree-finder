@@ -24,6 +24,7 @@ import maroonGradient from "../assets/maroonGradient.png";
 import { getDistance, convertDistance } from 'geolib';
 import customTreeBox from "../media/customTreeBox.png";
 import firebase from "firebase";
+import { render } from "react-dom";
 
 const DrawerHomeSwipe = (props) => {
 
@@ -122,6 +123,143 @@ const DrawerHomeSwipe = (props) => {
     }
   }
 
+  const renderAllTrees = 
+    treeArray &&
+      treeArray.map((value, index) => {
+        return (
+          <TouchableOpacity key={index}>
+            <View style={styles.cardContainer}>
+              <View style={{ flexDirection: "row" }}>
+                <Image style={styles.boxTree} source={customTreeBox} />
+                <View style={styles.cardInfo}>
+                  <Text style={styles.cardTitleText}>{value.type}</Text>
+                  <Text style={styles.cardDistanceText}>
+                    {milesOrYards(value.distance)}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={styles.cardDetailsButtonWrapper}
+                  onPress={() => dropDown(value.treeCoordinates)}
+                >
+                  <Text style={styles.cardDetailsButtonText}>Details</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View
+                style={{
+                  height: expanded === value.treeCoordinates ? 190 : 0,
+                  overflow: "hidden",
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                }}
+              >
+                <View style={styles.locationWrapper}>
+                  <Text style={styles.treeLocationText}>
+                    {value.treeLocation}
+                  </Text>
+                </View>
+                <View style={styles.descriptionWrapper}>
+                  <Text style={styles.descriptionText}>
+                    {value.description}
+                  </Text>
+                </View>
+                {value.userID === currentUserID && (
+                  <View style={styles.deleteButtonWrapper}>
+                    <View>
+                      <AntDesign
+                        style={styles.deleteIcon}
+                        name="delete"
+                        size={30}
+                        color="white"
+                        onPress={() => areYouSure(value.treeID)}
+                      />
+                    </View>
+                  </View>
+                )}
+              </View>
+            </View>
+          </TouchableOpacity>
+        );
+      });
+
+      treeArray && treeArray.map((value) => {
+        console.log("value USER ID?", value.userID);
+        console.log("Current User ID", currentUserID);
+      })
+    console.log("Tree Array", treeArray);
+    
+    const renderMyTrees =
+      treeArray &&
+      treeArray.map((value, index) => {
+        if (value.userID !== currentUserID) {
+        return (
+          <TouchableOpacity key={index}>
+            <View style={styles.cardContainer}>
+              <View style={{ flexDirection: "row" }}>
+                <Image style={styles.boxTree} source={customTreeBox} />
+                <View style={styles.cardInfo}>
+                  <Text style={styles.cardTitleText}>{value.type}</Text>
+                  <Text style={styles.cardDistanceText}>
+                    {milesOrYards(value.distance)}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={styles.cardDetailsButtonWrapper}
+                  onPress={() => dropDown(value.treeCoordinates)}
+                >
+                  <Text style={styles.cardDetailsButtonText}>
+                    Details
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <View
+                style={{
+                  height: expanded === value.treeCoordinates ? 190 : 0,
+                  overflow: "hidden",
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                }}
+              >
+                <View style={styles.locationWrapper}>
+                  <Text style={styles.treeLocationText}>
+                    {value.treeLocation}
+                  </Text>
+                </View>
+                <View style={styles.descriptionWrapper}>
+                  <Text style={styles.descriptionText}>
+                    {value.description}
+                  </Text>
+                </View>
+                {value.userID === currentUserID && (
+                  <View style={styles.deleteButtonWrapper}>
+                    <View>
+                      <AntDesign
+                        style={styles.deleteIcon}
+                        name="delete"
+                        size={30}
+                        color="white"
+                        onPress={() => areYouSure(value.treeID)}
+                      />
+                    </View>
+                  </View>
+                )}
+              </View>
+            </View>
+          </TouchableOpacity>
+        );
+        }
+      });
+
+   const renderTreesToList = () => {
+     if (filter === "All Trees") {
+       return <React.Fragment>{renderAllTrees}</React.Fragment>;
+     }
+     if (filter === "My Trees") {
+       return <React.Fragment>{renderMyTrees}</React.Fragment>;
+     }
+   };
+    
   const renderContent = () => {
 
     return (
@@ -131,72 +269,13 @@ const DrawerHomeSwipe = (props) => {
             <View style={styles.dragView} />
           </View>
           <ScrollView>
-          <Entypo
-          name="tree"
-          size={500}
-          color="rgba(163, 119, 125, 0.5)"
-          style={styles.bigTree}
-          />
-            {treeArray &&
-              treeArray.map((value, index) => {
-                return (
-                  <TouchableOpacity key={index}>
-                    <View style={styles.cardContainer}>
-                      <View style={{ flexDirection: "row" }}>
-                        <Image style={styles.boxTree} source={customTreeBox} />
-                        <View style={styles.cardInfo}>
-                          <Text style={styles.cardTitleText}>{value.type}</Text>
-                          <Text style={styles.cardDistanceText}>
-                            {milesOrYards(value.distance)}
-                          </Text>
-                        </View>
-                        <TouchableOpacity
-                          style={styles.cardDetailsButtonWrapper}
-                          onPress={() => dropDown(value.treeCoordinates)}
-                        >
-                          <Text style={styles.cardDetailsButtonText}>
-                            Details
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-
-                      <View
-                        style={{
-                          height: expanded === value.treeCoordinates ? 190 : 0,
-                          overflow: "hidden",
-                          paddingLeft: 10,
-                          paddingRight: 10,
-           
-                        }}
-                      >
-                        <View style={styles.locationWrapper}>
-                          <Text style={styles.treeLocationText}>
-                            {value.treeLocation}
-                          </Text>
-                        </View>
-                        <View style={styles.descriptionWrapper}>
-                          <Text style={styles.descriptionText}>
-                            {value.description}
-                          </Text>
-                        </View>
-                        {value.userID === currentUserID && (
-                          <View style={styles.deleteButtonWrapper}>
-                            <View>
-                              <AntDesign
-                                style={styles.deleteIcon}
-                                name="delete"
-                                size={30}
-                                color="white"
-                                onPress={() => areYouSure(value.treeID)}
-                              />
-                            </View>
-                          </View>
-                        )}
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                );
-              })}
+            <Entypo
+              name="tree"
+              size={500}
+              color="rgba(163, 119, 125, 0.5)"
+              style={styles.bigTree}
+            />
+            {renderTreesToList()}
           </ScrollView>
         </ImageBackground>
       </React.Fragment>
