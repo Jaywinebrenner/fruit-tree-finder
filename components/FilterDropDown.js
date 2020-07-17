@@ -14,9 +14,9 @@ import Icon from 'react-native-vector-icons/Feather';
 import { Foundation } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as firebase from "firebase";
-import customTree from "../media/customTreeAllNEW.png";
-import customTreeMyTree from "../media/customTreeMyTreeNEW.png";
-import customTreeVerified from "../media/customTreeVerifiedNEW.png";
+import customTree from "../media/customTree.png";
+import customTreeMyTree from "../media/customTreeMyTree.png";
+import customTreeVerified from "../media/customTreeVerified.png";
 
 
 const FilterDropDown = ({filter, setFilter}) => {

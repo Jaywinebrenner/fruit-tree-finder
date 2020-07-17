@@ -3,13 +3,12 @@ DEFAULT DARK MARROON: #531613 / rgb(125, 19, 19)
 
 Figure out how get the Center Map Button to work on both MapScreen and MyTreesMapScreen
 
-Spin out Trees on Maplist from closest to furthest
+Customize the widow that opens on the map when hovering over a tree
 
 Add Key to distinguish between User added Trees, Databsase Trees and Verfified Trees.
 
 Likely look into this optimising custom marker stuff if trees bog down the app.
 
-Complete update functionality
 
 If the user has not made any trees- make a rendered <View> saying "There are no trees" or something along those lines on MyTrees
 

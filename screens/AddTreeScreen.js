@@ -9,7 +9,6 @@ import { API_KEY } from "../geocoder";
 import Geocoder from "react-native-geocoding";
 import { useNavigation } from "@react-navigation/native";
 import LoadingScreen from './LoadingScreen';
-
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -65,11 +64,14 @@ const AddTreeScreen = () => {
       Alert.alert("Tree Added Successfully!");
       navigation.navigate("Map");
     } catch (error) {
-      Alert.alert("This Location didn't work for some reason. Please give it another shot.");
+      Alert.alert(error.toString());
       setLoadingActive(false);
       return
     }
   };
+
+  // "This Location didn't work for some reason. Please give it another shot.";
+
 
   async function convertLocation(location) {
     let treeCoordinates = await Geocoder.from(location)
@@ -85,22 +87,6 @@ const AddTreeScreen = () => {
         return;
       });
     return treeCoordinates;
-  }
-
-  const createAddressObject = (location) => {
-
-    let properlyFormatedAddress =
-      location.address +
-      " " +
-      location.city +
-      " " +
-      location.state +
-      " " +
-      location.zipCode;
-    console.log("PROPERLY FORMATED ADDRESS", properlyFormatedAddress);
-
-    setTreeLocation(properlyFormatedAddress)
-    setIsLocationModalVisible(false)
   }
 
   const renderAddTreeScreen = () => {
@@ -164,7 +150,7 @@ const AddTreeScreen = () => {
                 onChangeText={setDescription}
                 // returnKeyType={"next"}
                 placeholderTextColor="rgba(236, 250, 217, .3)"
-                maxLength={180}
+                maxLength={215}
               />
             </View>
             <View style={styles.line} />

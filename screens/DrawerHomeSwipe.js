@@ -26,9 +26,9 @@ import customTreeBox from "../media/customTreeBox.png";
 import firebase from "firebase";
 
 const DrawerHomeSwipe = (props) => {
-
+  
   const windowHeight = Dimensions.get('window').height;
-  const drawerTopHeight = (windowHeight * .52);
+  const drawerTopHeight = (windowHeight * .59);
   const drawerHalfHeight = (windowHeight * .18);
   let drawerBottomHeight = (windowHeight * .08);
 
@@ -159,12 +159,14 @@ const DrawerHomeSwipe = (props) => {
                           </Text>
                         </TouchableOpacity>
                       </View>
+
                       <View
                         style={{
-                          height: expanded === value.treeCoordinates ? 220 : 0,
+                          height: expanded === value.treeCoordinates ? 190 : 0,
                           overflow: "hidden",
                           paddingLeft: 10,
-                          paddingRIght: 10,
+                          paddingRight: 10,
+           
                         }}
                       >
                         <View style={styles.locationWrapper}>
@@ -177,27 +179,19 @@ const DrawerHomeSwipe = (props) => {
                             {value.description}
                           </Text>
                         </View>
-                        {console.log("Value USER ID", value.userID)}
-                        {console.log("Current USER ID", currentUserID)}
-
-                        {value.userID === currentUserID && 
-                        <View style={styles.deleteButtonWrapper}>
-                          {/* {renderDeleteButton} */}
-                          <View
-                          // onPress={() => areYouSure()}
-                          >
-                            <AntDesign
-                              style={styles.deleteIcon}
-                              name="delete"
-                              size={30}
-                              color="white"
-                              onPress={() =>
-                                areYouSure(value.treeID)
-                              }
-                            />
+                        {value.userID === currentUserID && (
+                          <View style={styles.deleteButtonWrapper}>
+                            <View>
+                              <AntDesign
+                                style={styles.deleteIcon}
+                                name="delete"
+                                size={30}
+                                color="white"
+                                onPress={() => areYouSure(value.treeID)}
+                              />
+                            </View>
                           </View>
-                        </View>}
-
+                        )}
                       </View>
                     </View>
                   </TouchableOpacity>
@@ -295,11 +289,11 @@ const styles = StyleSheet.create({
     margin: 0,
   },
   descriptionWrapper: {
-    marginTop: 15,
-    height: 130
+    marginTop: 10,
+    height: 115,
   },
   descriptionText: {
-    fontSize: 20,
+    fontSize: 16,
     color: "white",
   },
   locationWrapper: {
@@ -310,7 +304,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   deleteButtonWrapper: {
-zIndex: 10,
+    zIndex: 10,
     marginLeft: 10
   },
 });
