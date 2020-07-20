@@ -25,6 +25,7 @@ import { getDistance, convertDistance } from 'geolib';
 import customTreeBox from "../media/customTreeBox.png";
 import firebase from "firebase";
 import { render } from "react-dom";
+// import { Collapse } from "react-collapse";
 
 const DrawerHomeSwipe = (props) => {
 

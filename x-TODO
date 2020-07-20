@@ -8,9 +8,6 @@ Search by tree type in top Search Field. Make sure map as well as Drawer List is
 
 Add a way to deal with Verified Trees. Likely through an admin account on the app itself. 
 
-Likely look into this optimising custom marker stuff if trees bog down the app. 
-// LEE DID THIS???
-
 If the user has not made any trees- make a rendered <View> saying "There are no trees" or something along those lines on MyTrees
 
 Ensure the geolocator tracks location- i THINK it simply finds initial location.
@@ -86,3 +83,7 @@ Gantenben and Failling. Apple Tree. On the median outside the corner house. Houn
 Albina Alley - Plum, 
 
 Kerby ALley - Blackberry
+
+N Fargo and N Williams - two low pruned easy to pick apple trees right in front of the abandoned pink house / 
+
+N Cook and N Williams - well maintained healthy blackberry, all along the farm fence
