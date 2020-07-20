@@ -24,12 +24,9 @@ function App() {
   }
   const auth = firebase.auth();
 
-  console.log("CURRENT USER APP", auth.currentUser);
-
     let [loading, setLoading] = useState(true);
 
     let [loggedIn, setLoggedIn] = useState(false);
-    console.log("LOGGED IN?", loggedIn);
 
     auth.onAuthStateChanged((user) => {
       if (user) {

@@ -98,7 +98,7 @@ return (
 
 const styles = StyleSheet.create({
   filterButton: {
-    zIndex: 1,
+    zIndex: 3,
     padding: 0,
     position: "absolute",
     top: 80,
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   filterDropDown: {
     backgroundColor: "#fafafa",
-    zIndex: 1,
+    zIndex: 3,
     padding: 0,
     position: "absolute",
     top: 80,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     width: 125,
   },
   dropDownStyle: {
-    zIndex: 1,
+    zIndex: 3,
     padding: 0,
     position: "absolute",
     top: 180,
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
   dropDownStyleSignedOut: {
-    zIndex: 1,
+    zIndex: 3,
     padding: 0,
     position: "absolute",
     top: 180,
@@ -143,4 +143,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default FilterDropDown
+export default FilterDropDown;
