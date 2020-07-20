@@ -32,21 +32,21 @@ const FilterDropDown = ({filter, setFilter}) => {
             label: "All Trees",
             value: "All Trees",
             icon: () => <Image source={customTree} style={styles.customTree} />,
-
           },
           {
             label: "Verified",
             value: "Verified Trees",
-            icon: () => <Image source={customTreeVerified} style={styles.customTree} />,
+            icon: () => (
+              <Image source={customTreeVerified} style={styles.customTree} />
+            ),
           },
         ]}
         defaultValue={filter}
-        containerStyle={styles.filterButton}
-        style={{ backgroundColor: "#fafafa" }}
+        style={styles.filterDropDown}
         itemStyle={{
           justifyContent: "flex-start",
         }}
-        dropDownStyle={{ backgroundColor: "#fafafa" }}
+        dropDownStyle={styles.dropDownStyleSignedOut}
         onChangeItem={(item) => setFilter(item.value)}
       />
     );
@@ -77,12 +77,11 @@ const FilterDropDown = ({filter, setFilter}) => {
         },
       ]}
       defaultValue={filter}
-      containerStyle={styles.filterButton}
-      style={{ backgroundColor: "#fafafa" }}
+      style={styles.filterDropDown}
       itemStyle={{
         justifyContent: "flex-start",
       }}
-      dropDownStyle={{ backgroundColor: "#fafafa" }}
+      dropDownStyle={styles.dropDownStyle}
       onChangeItem={(item) => setFilter(item.value)}
     />
   );
@@ -110,6 +109,36 @@ const styles = StyleSheet.create({
   customTree: {
     width: 20,
     height: 30,
+  },
+  filterDropDown: {
+    backgroundColor: "#fafafa",
+    zIndex: 1,
+    padding: 0,
+    position: "absolute",
+    top: 80,
+    left: 15,
+    height: 40,
+    width: 125,
+  },
+  dropDownStyle: {
+    zIndex: 1,
+    padding: 0,
+    position: "absolute",
+    top: 180,
+    left: 15,
+    height: 140,
+    width: 125,
+    marginTop: 80,
+  },
+  dropDownStyleSignedOut: {
+    zIndex: 1,
+    padding: 0,
+    position: "absolute",
+    top: 180,
+    left: 15,
+    height: 100,
+    width: 125,
+    marginTop: 80,
   },
 });
 

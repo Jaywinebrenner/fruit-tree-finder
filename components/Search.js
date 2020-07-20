@@ -4,10 +4,7 @@ import firebase from "firebase";
 import { signOut } from "../actions/sessions";
 import { FontAwesome5 } from '@expo/vector-icons';
 
-function Search(props) {
-
-  const navProps = props;
-  console.log("NAV", navProps);
+function Search({navigation, searchInput, setSearchInput}) {
 
   const [ loggedIn, setLoggedIn ] = useState(false);
 
@@ -23,6 +20,8 @@ function Search(props) {
           placeholder="Search for a specific variety of tree"
           style={styles.textInput}
           clearTextOnFocus={true}
+          value={searchInput}
+          onChangeText={setSearchInput}
         >
         </TextInput>
       </View>
@@ -35,7 +34,7 @@ function Search(props) {
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
-          onPress={() => navProps.navigation.navigate("Login")}
+          onPress={() => navigation.navigate("Login")}
           style={styles.button}
         >
           <Text style={styles.text}>Sign In</Text>
