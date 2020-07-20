@@ -32,6 +32,7 @@ import customTreeVerified from "../media/customTreeVerified.png";
 
 
 
+
 const MapScreen = ({navigation}) => {
 
   const [region, setRegion] = useState(null);
@@ -40,12 +41,21 @@ const MapScreen = ({navigation}) => {
   const [filter, setFilter] = useState("All Trees");
   const [tracksViewChanges, setTracksViewChanges] = useState(false);
   const [userCoords, setUserCoords] = useState(null);
+  // const [searchedTrees, setSearchedTrees] = useState([])
+   const [searchInput, setSearchInput] = useState("");
+   const [searchInputArray, setSearchInputArray] = useState(null)
+
+
+  // let searchedTrees = allTrees.filter((tree) => {
+  //   return tree.type.toLowerCase().indexOf(searchInput.toLowerCase()) !== -1;
+  // });
+
+  // console.log("searched Trees", searchedTrees);
 
   let currentUserID = null;
   if (firebase.auth().currentUser) {
     currentUserID = firebase.auth().currentUser.uid;
   }
-
 
 
   useEffect(() => {
@@ -57,6 +67,7 @@ const MapScreen = ({navigation}) => {
         // console.log("snapshot val", snapshot.val());
         let trees = snapshot.val();
         setAllTrees(trees);
+        // setFilteredTrees(trees)
       });
     }
     fetchData();
@@ -98,12 +109,6 @@ const MapScreen = ({navigation}) => {
       }
     }
   };
-            //  onPress={() =>
-            //             navigation.navigate("ListItemDetailScreen", {
-            //               index,
-            //               ...value,
-            //             })
-            //           }
 
   const renderAddATreeButton = () => {
     return (
@@ -195,7 +200,11 @@ const MapScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Search navigation={navigation} />
+      <Search
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
+        navigation={navigation}
+      />
       <FilterDropDown filter={filter} setFilter={setFilter} />
       <CurrentLocationButton
         cb={() => {
