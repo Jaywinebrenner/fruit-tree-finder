@@ -30,8 +30,6 @@ import customTree from "../media/customTree.png";
 import customTreeMyTree from "../media/customTreeMyTree.png";
 import customTreeVerified from "../media/customTreeVerified.png";
 
-
-
 const MapScreen = ({navigation}) => {
 
   const [region, setRegion] = useState(null);
@@ -45,8 +43,6 @@ const MapScreen = ({navigation}) => {
   if (firebase.auth().currentUser) {
     currentUserID = firebase.auth().currentUser.uid;
   }
-
-
 
   useEffect(() => {
     _getUserLocactionAsync();

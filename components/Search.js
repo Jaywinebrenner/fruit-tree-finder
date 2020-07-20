@@ -7,7 +7,6 @@ import { FontAwesome5 } from '@expo/vector-icons';
 function Search(props) {
 
   const navProps = props;
-  console.log("NAV", navProps);
 
   const [ loggedIn, setLoggedIn ] = useState(false);
 

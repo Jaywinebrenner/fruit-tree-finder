@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BottomDrawer from "rn-bottom-drawer";
 import {
   StyleSheet,
@@ -28,6 +28,11 @@ import { render } from "react-dom";
 
 const DrawerHomeSwipe = (props) => {
 
+  useEffect(() => {
+    updateTreeList();
+    // console.log("USE EFFECT FIRED");
+  }, []);
+
   const windowHeight = Dimensions.get('window').height;
   const drawerTopHeight = (windowHeight * .59);
   const drawerHalfHeight = (windowHeight * .18);
@@ -41,16 +46,9 @@ const DrawerHomeSwipe = (props) => {
   const userCoords = props.userCoords;
   const treeList = props.treeList;
   const filter = props.filter;
-
-  console.log("TREE LIST", props.treeList);
-    if (props.treeList) {
-    Object.values(props.treeList).forEach((value, index) => {
-      // console.log("TREE ID", value.treeID);
-    });
-  }
-  console.log("props.treeList", props.treeList);
-
   const [expanded, setExpanded] = useState(false);
+  const [newTreeList, setNewTreeList] = useState(null);
+  const [treeArray, setTreeArray] = useState(null);
 
   // Need currentUserID to render delete button
   let currentUserID = null;
@@ -91,25 +89,32 @@ const DrawerHomeSwipe = (props) => {
       });
     };
 
-  const [treeArray, setTreeArray] = useState(null);
-
-  if (treeList && userCoords) {
-    Object.values(treeList).forEach((tree) => {
-      let treeLat = tree.treeCoordinates[0];
-      let treeLong = tree.treeCoordinates[1];
-      tree.distance = getDistance(
-        { latitude: treeLat, longitude: treeLong },
-        { latitude: userCoords[0], longitude: userCoords[1] },
-      );
-    });
-    if (!treeArray) {
-      setTreeArray(
-        Object.values(treeList).sort((a, b) =>
-          a.distance > b.distance ? 1 : -1,
-        ),
-      );
+  function createTreeArray() {
+    if (treeList && userCoords) {
+      Object.values(treeList).forEach((tree) => {
+        let treeLat = tree.treeCoordinates[0];
+        let treeLong = tree.treeCoordinates[1];
+        tree.distance = getDistance(
+          { latitude: treeLat, longitude: treeLong },
+          { latitude: userCoords[0], longitude: userCoords[1] },
+        );
+      });
+      let newTreeArray = Object.values(treeList).sort((a, b) =>
+      a.distance > b.distance ? 1 : -1,);
+      setTreeArray(newTreeArray);
     }
-    // console.log("TREEARRAY", treeArray);
+  }
+
+  function updateTreeList() {
+    if (!newTreeList && Object.keys(treeList).length > 0 && userCoords) {
+      setNewTreeList(treeList);
+      createTreeArray();
+    }
+    if (Object.keys(treeList).length > 0 && newTreeList && newTreeList != treeList) {
+      createTreeArray();
+      setNewTreeList(treeList);
+    }
+    return treeArray;
   }
 
   function milesOrYards(distance) {
@@ -122,8 +127,8 @@ const DrawerHomeSwipe = (props) => {
     }
   }
 
-  const renderAllTrees = 
-    treeArray &&
+  const renderAllTrees =
+    updateTreeList() &&
       treeArray.map((value, index) => {
         return (
           <TouchableOpacity key={index}>
@@ -181,12 +186,12 @@ const DrawerHomeSwipe = (props) => {
         );
       });
 
-      treeArray && treeArray.map((value) => {
-        console.log("value USER ID?", value.userID);
-        console.log("Current User ID", currentUserID);
-      })
-    console.log("Tree Array", treeArray);
-    
+    //   treeArray && treeArray.map((value) => {
+    //     console.log("value USER ID?", value.userID);
+    //     console.log("Current User ID", currentUserID);
+    //   })
+    // console.log("Tree Array", treeArray);
+
     const renderMyTrees =
       treeArray &&
       treeArray.map((value, index) => {
@@ -258,7 +263,7 @@ const DrawerHomeSwipe = (props) => {
        return <React.Fragment>{renderMyTrees}</React.Fragment>;
      }
    };
-    
+
   const renderContent = () => {
 
     return (
