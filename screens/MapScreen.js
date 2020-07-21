@@ -1,7 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, View, Alert,TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, View, Alert,TouchableOpacity, Image, TouchableHighlight } from "react-native";
 import { useState, useEffect } from "react";
-import { Marker } from "react-native-maps";
+import { Marker, Callout } from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import DestinationButton from "../components/DestinationButton";
@@ -14,6 +14,7 @@ import firebase, { database } from "firebase";
 import { Entypo } from '@expo/vector-icons';
 import { mapStyle } from "../constants/mapStyle";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+// import { Callout } from "react-native-maps";
 import Search from "../components/Search";
 import DrawerHomeSwipe from "./DrawerHomeSwipe";
 import FilterDropDown from "../components/FilterDropDown";
@@ -122,10 +123,10 @@ const MapScreen = ({navigation}) => {
 
   const AllTreesMapMarkers =
     allTrees &&
-    Object.values(allTrees).map((tree, index) => {
-      let latitude = tree.treeCoordinates[0];
-      let longitude = tree.treeCoordinates[1];
-      if (tree.userID !== currentUserID) {
+    Object.values(allTrees).map((value, index) => {
+      let latitude = value.treeCoordinates[0];
+      let longitude = value.treeCoordinates[1];
+      if (value.userID !== currentUserID) {
         return (
           <Marker
             key={index}
@@ -134,9 +135,26 @@ const MapScreen = ({navigation}) => {
               longitude: longitude,
             }}
             tracksViewChanges={tracksViewChanges}
-            title={tree.type}
-            description={tree.description}
+            title={value.type}
+            description={value.description}
           >
+            <Callout
+              tooltip
+              style={styles.customView}
+              onPress={() => alert("touched")}
+            >
+              <TouchableHighlight underlayColor="lightblue">
+                <View {...value}>
+                  <View style={styles.calloutTop}>
+                    <Text style={styles.calloutText}>{value.type}</Text>
+                  </View>
+
+                  <View style={styles.calloutBottom}>
+                    <Text>{value.description}</Text>
+                  </View>
+                </View>
+              </TouchableHighlight>
+            </Callout>
             <Image
               onLoad={() => stopTrackingViewChanges()}
               fadeDuration={0}
@@ -164,6 +182,24 @@ const MapScreen = ({navigation}) => {
             title={value.type}
             description={value.description}
           >
+            <Callout
+              tooltip
+              style={styles.customView}
+              onPress={() => alert("touched")}
+            >
+              <TouchableHighlight underlayColor="lightblue">
+                <View {...value}>
+                  <View style={styles.calloutTop}>
+                    <Text style={styles.calloutText}>{value.type}</Text>
+                  </View>
+
+                  <View style={styles.calloutBottom}>
+                    <Text>{value.description}</Text>
+                  </View>
+                </View>
+              </TouchableHighlight>
+            </Callout>
+
             <Image
               onLoad={() => stopTrackingViewChanges()}
               fadeDuration={0}
@@ -269,19 +305,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "white",
     borderColor: "grey",
-    borderWidth: .5,
+    borderWidth: 0.5,
     borderRadius: 25,
     height: 35,
     marginLeft: "3%",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 3,  },
+    zIndex: 3,
+  },
   buttonText: {
     color: "black",
     fontSize: 15,
     textShadowColor: "white",
     textShadowRadius: 10,
-    margin: "2%"
+    margin: "2%",
   },
   toggle: {
     position: "absolute",
@@ -294,11 +331,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderBottomLeftRadius: 15,
-    borderTopLeftRadius: 15
+    borderTopLeftRadius: 15,
   },
   customTree: {
     width: 30,
     height: 40,
-  }
+  },
+  customView: {
+    width: 200,
+    height: 100,
+    backgroundColor: "#fdfcf8",
+    borderWidth: 3,
+    borderColor: "#692e2c",
+    borderRadius: 10,
+  },
+  calloutText: {
+    width: 200,
+    fontSize: 20,
+    color: "#fdfcf8",
+    borderRadius: 10,
+  },
+  calloutTop: {
+    backgroundColor: "#692e2c",
+  },
 });
 export default MapScreen
