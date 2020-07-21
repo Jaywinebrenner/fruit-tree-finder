@@ -23,8 +23,8 @@ import customTreeMyTree from "../media/customTreeMyTree.png";
 import customTreeVerified from "../media/customTreeVerified.png";
 
 
-const MapScreen = ({navigation}) => {
 
+const MapScreen = ({navigation}) => {
 
 
   const [region, setRegion] = useState(null);
@@ -127,6 +127,12 @@ const MapScreen = ({navigation}) => {
       let latitude = value.treeCoordinates[0];
       let longitude = value.treeCoordinates[1];
       if (value.userID !== currentUserID) {
+        let region = {
+          latitude: value.treeCoordinates[0],
+          longitude: value.treeCoordinates[1],
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        };
         return (
           <Marker
             key={index}
@@ -137,11 +143,21 @@ const MapScreen = ({navigation}) => {
             tracksViewChanges={tracksViewChanges}
             title={value.type}
             description={value.description}
+            onPress={() => setRegion(region)}
+            // onPress={(e) =>
+            //   _mapView.animateToCoordinate(
+            //     {
+            //       latitude: e.nativeEvent.coordinate.latitude,
+            //       longitude: e.nativeEvent.coordinate.longitude,
+            //     },
+            //     500,
+            //   )
+            // }
           >
             <Callout
               tooltip
               style={styles.customView}
-              onPress={() => alert("touched")}
+              // onPress={() => alert("touched")}
             >
               <TouchableHighlight underlayColor="lightblue">
                 <View {...value}>
@@ -169,9 +185,15 @@ const MapScreen = ({navigation}) => {
   const MyTreesMapMarkers =
     allTrees &&
     Object.values(allTrees).map((value, index) => {
-      let latitude = value.treeCoordinates[0];
-      let longitude = value.treeCoordinates[1];
+     let latitude = value.treeCoordinates[0];
+     let longitude = value.treeCoordinates[1];
       if (value.userID === currentUserID) {
+        let region = {
+          latitude: value.treeCoordinates[0],
+          longitude: value.treeCoordinates[1],
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        };
         return (
           <Marker
             key={index}
@@ -181,6 +203,7 @@ const MapScreen = ({navigation}) => {
             }}
             title={value.type}
             description={value.description}
+            onPress={() => setRegion(region)}
           >
             <Callout
               tooltip
@@ -249,11 +272,14 @@ const MapScreen = ({navigation}) => {
         title="Not sure what this does"
         description="Not sure what this does either"
         initialRegion={region}
+        region={region}
         style={styles.map}
         showUserLocation={true}
         showsCompass={true}
         customMapStyle={mapStyle}
         rotateEnabled={false}
+
+        // onRegionChange={onRegionChange}
       >
         {renderTreesToMap()}
       </MapView>
