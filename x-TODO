@@ -1,6 +1,7 @@
 
 DEFAULT DARK MARROON: #531613 / rgb(125, 19, 19)
 
+Error handle - no two trees at same location...
 
 Figure out how get the Center Map Button to work on MapScreen, exorcise ghost
 
@@ -16,11 +17,9 @@ Add error handling for Tree Location input. Primarily, ensure the inputted Tree 
 
 Need to render loading screen logic in places... too lazy to check which ones right now.
 
-Customize the window that opens on the map when hovering over a tree
+Customize the window that opens on the map when hovering over a tree // OPEN UP DETAILS IN THE DRAWER UPON ICON CLICK, CHANGE ICON IN SOME FASTION TO INIDCATE IT IS SELECTED, MAYBE CENTER ICON IN UPPER HALF 
 
 add some kind of animation on the Drawer List upon switching between AllTrees / MyTrees. Like a spring "Up"??
-
-Make ListItem drop down only as large as it needs to be?
 
 
 //STRETCH

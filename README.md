@@ -6,8 +6,20 @@
 
 The Fruit Finder is a mobile application for Android and iOS which connects people to the pleniful fruit tree bounties in their neighborhood. The goal of The Fruit Finder is to document all fruit trees in the Portland area to provide fresh, delicious fruit to those in want and to prevent needless food waste. 
 
- <img src="./x-demo/fruit.gif" alt="Fruit Tree Demo" width="300">
 
+## How It Works
+
+Upon first running the app, the user will be directed to a map screen containing all of the trees available for gleaning in their proximity.  A bottom drawer contains all the trees available for gleaning in a list formatted by proximity to the user.
+
+<img src="./x-demo/1.gif" alt="Fruit Tree Demo" width="200">
+
+The All Trees filter in the drop down gives users access to Trees inputted by other users as well as verified trees sanctioned by the Portland Fruit Tree Project. (note: Verified trees have not been entered into the database yet)
+
+<img src="./x-demo/2.gif" alt="Fruit Tree Demo" width="200">
+
+If a user would like to input trees into our database, they will need to login. Once loggin, users will be able to input trees and filter the map as well as the list in the bottom drawer by All Trees, Verified trees and My Trees. If a user needs to delete a tree they inputted to our database, it's as easy as hitting the delete icon. 
+
+<img src="./x-demo/3.gif" alt="Fruit Tree Demo" width="200">
 
 ## Setup/Installation Requirements
 <img src="https://i.imgur.com/UStodOA.jpg" alt="Github pic" width="300">

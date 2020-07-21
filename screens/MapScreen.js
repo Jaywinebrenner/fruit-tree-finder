@@ -33,6 +33,8 @@ import customTreeVerified from "../media/customTreeVerified.png";
 
 const MapScreen = ({navigation}) => {
 
+  allTrees && console.log("ALL TREES MAP", allTrees);
+
   const [region, setRegion] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [allTrees, setAllTrees] = useState([]);
@@ -61,10 +63,8 @@ const MapScreen = ({navigation}) => {
     async function fetchData() {
       let result = await firebase.database().ref("/tree");
       await result.on("value", (snapshot) => {
-        // console.log("snapshot val", snapshot.val());
         let trees = snapshot.val();
         setAllTrees(trees);
-        // setFilteredTrees(trees)
       });
     }
     fetchData();
@@ -109,11 +109,18 @@ const MapScreen = ({navigation}) => {
 
   const renderAddATreeButton = () => {
     return (
-      <TouchableOpacity style={styles.addTreeButton} onPress={() => navigation.navigate("AddTreeScreen")}>
+      <TouchableOpacity
+        style={styles.addTreeButton}
+        onPress={() =>
+          navigation.navigate("AddTreeScreen", {
+            allTrees: allTrees,
+          })
+        }
+      >
         <Entypo name="plus" size={18} color="black" />
         <Text style={styles.buttonText}>Add a tree</Text>
       </TouchableOpacity>
-    )
+    );
   }
 
   function stopTrackingViewChanges() {

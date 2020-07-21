@@ -15,7 +15,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
 
-const AddTreeScreen = () => {
+const AddTreeScreen = ({allTrees}) => {
+
+  console.log("ALL TREES ON ADD A SCREEN", allTrees);
 
   const navigation = useNavigation();
 
@@ -47,8 +49,8 @@ const AddTreeScreen = () => {
       let treeCoordinates = await convertLocation(treeLocation);
       setTreeCoordinates(treeCoordinates)
       setTreeID("FART")
-      console.log("TREE ID IN SUBMIT", treeID);
       // console.log("TREE COORDS IN SUBMIT", treeCoordinates);
+  
       await firebase.database().ref("/tree").push({
         type,
         description,
