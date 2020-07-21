@@ -98,10 +98,6 @@ const ListScreen = () => {
     }
   }
 
-  const toggleToMapView = () => {
-    navigation.navigate("Map");
-  };
-
   return (
     <React.Fragment>
       <ImageBackground source={maroonGradient} style={styles.gradientImage}>
@@ -128,12 +124,7 @@ const ListScreen = () => {
               return (
                 <View style={styles.cardContainer} key={index}>
                   <View style={{ flexDirection: "row" }}>
-                    {/* <MaterialCommunityIcons
-                      name="pine-tree-box"
-                      size={40}
-                      color="white"
-                      style={styles.boxTree}
-                    /> */}
+
                     <Image style={styles.boxTree} source={customTreeBox} />
                     <View style={styles.cardInfo}>
                       <Text style={styles.cardTitleText}>{value.type}</Text>

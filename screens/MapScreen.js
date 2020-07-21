@@ -1,26 +1,17 @@
 import React from "react";
-import { StyleSheet, Text, View, Alert, ImageBackground, TextInput, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, View, Alert,TouchableOpacity, Image } from "react-native";
 import { useState, useEffect } from "react";
 import { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import DestinationButton from "../components/DestinationButton";
-import Driver from "../components/Driver";
 import { CurrentLocationButton } from "../components/CurrentLocationButton";
 import { API_KEY } from "../geocoder";
 import Geocoder from "react-native-geocoding";
 import Modal from "react-native-modal";
 Geocoder.init(API_KEY);
-import ViewListButton from "../components/ViewListButton"
 import firebase, { database } from "firebase";
 import { Entypo } from '@expo/vector-icons';
-import apples from "../media/apples.jpg";
-import { Foundation } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
-import { FontAwesome } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
 import { mapStyle } from "../constants/mapStyle";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import Search from "../components/Search";
@@ -33,7 +24,7 @@ import customTreeVerified from "../media/customTreeVerified.png";
 
 const MapScreen = ({navigation}) => {
 
-  allTrees && console.log("ALL TREES MAP", allTrees);
+
 
   const [region, setRegion] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -113,7 +104,7 @@ const MapScreen = ({navigation}) => {
         style={styles.addTreeButton}
         onPress={() =>
           navigation.navigate("AddTreeScreen", {
-            allTrees: allTrees,
+            allTrees,
           })
         }
       >
@@ -202,6 +193,7 @@ const MapScreen = ({navigation}) => {
       }
     }
 
+    
   return (
     <View style={styles.container}>
       <Search

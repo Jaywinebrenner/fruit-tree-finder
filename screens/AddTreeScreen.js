@@ -15,9 +15,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
 
-const AddTreeScreen = ({allTrees}) => {
+const AddTreeScreen = (props) => {
 
-  console.log("ALL TREES ON ADD A SCREEN", allTrees);
+  let allTrees = props.route.params.allTrees;
 
   const navigation = useNavigation();
 
@@ -43,14 +43,24 @@ const AddTreeScreen = ({allTrees}) => {
   const [treeCoordinates, setTreeCoordinates] = useState(null);
   const [treeID, setTreeID] = useState(null)
 
+
   async function submit() {
     setLoadingActive(true);
     try {
       let treeCoordinates = await convertLocation(treeLocation);
       setTreeCoordinates(treeCoordinates)
-      setTreeID("FART")
-      // console.log("TREE COORDS IN SUBMIT", treeCoordinates);
-  
+
+      //WTF, not working!! Geocoder is giving different coords for same address...
+      Object.entries(allTrees).map((value) => {
+        console.log("MADE IT HERE");
+        console.log("COORD of DBS", value[1].treeCoordinates);
+        console.log("COOORD ENTERED TREE", treeCoordinates);
+        if (value[1].treeCoordinates === treeCoordinates) {
+          console.log("There is already a tree here. Please choose a different location.")
+        }
+      });
+
+      setTreeID("")
       await firebase.database().ref("/tree").push({
         type,
         description,
@@ -73,7 +83,6 @@ const AddTreeScreen = ({allTrees}) => {
   };
 
   // "This Location didn't work for some reason. Please give it another shot.";
-
 
   async function convertLocation(location) {
     let treeCoordinates = await Geocoder.from(location)
