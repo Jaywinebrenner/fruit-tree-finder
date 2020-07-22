@@ -1,20 +1,27 @@
 import React from "react";
-import { StyleSheet, Text, View, Alert,TouchableOpacity, Image, TouchableHighlight } from "react-native";
-import { useState, useEffect } from "react";
-import { Marker, Callout } from "react-native-maps";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  TouchableOpacity,
+  Image,
+  TouchableHighlight,
+  Animated,
+} from "react-native";
+import { useState, useEffect, useRef } from "react";
+import { Marker, Callout, AnimatedRegion } from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import DestinationButton from "../components/DestinationButton";
 import { CurrentLocationButton } from "../components/CurrentLocationButton";
 import { API_KEY } from "../geocoder";
 import Geocoder from "react-native-geocoding";
-import Modal from "react-native-modal";
 Geocoder.init(API_KEY);
 import firebase, { database } from "firebase";
 import { Entypo } from '@expo/vector-icons';
 import { mapStyle } from "../constants/mapStyle";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-// import { Callout } from "react-native-maps";
 import Search from "../components/Search";
 import DrawerHomeSwipe from "./DrawerHomeSwipe";
 import FilterDropDown from "../components/FilterDropDown";
@@ -25,7 +32,8 @@ import customTreeVerified from "../media/customTreeVerified.png";
 
 
 const MapScreen = ({navigation}) => {
-
+  
+const mapRef = useRef(null);
 
   const [region, setRegion] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -36,7 +44,6 @@ const MapScreen = ({navigation}) => {
   // const [searchedTrees, setSearchedTrees] = useState([])
    const [searchInput, setSearchInput] = useState("");
    const [searchInputArray, setSearchInputArray] = useState(null)
-
 
   // let searchedTrees = allTrees.filter((tree) => {
   //   return tree.type.toLowerCase().indexOf(searchInput.toLowerCase()) !== -1;
@@ -50,6 +57,11 @@ const MapScreen = ({navigation}) => {
   }
 
   useEffect(() => {
+
+    if (mapRef) {
+      console.log(mapRef);
+    }
+
     _getUserLocactionAsync();
     setTracksViewChanges(true);
     async function fetchData() {
@@ -99,6 +111,8 @@ const MapScreen = ({navigation}) => {
     }
   };
 
+
+
   const renderAddATreeButton = () => {
     return (
       <TouchableOpacity
@@ -127,12 +141,6 @@ const MapScreen = ({navigation}) => {
       let latitude = value.treeCoordinates[0];
       let longitude = value.treeCoordinates[1];
       if (value.userID !== currentUserID) {
-        let region = {
-          latitude: value.treeCoordinates[0],
-          longitude: value.treeCoordinates[1],
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        };
         return (
           <Marker
             key={index}
@@ -143,16 +151,15 @@ const MapScreen = ({navigation}) => {
             tracksViewChanges={tracksViewChanges}
             title={value.type}
             description={value.description}
-            onPress={() => setRegion(region)}
-            // onPress={(e) =>
-            //   _mapView.animateToCoordinate(
-            //     {
-            //       latitude: e.nativeEvent.coordinate.latitude,
-            //       longitude: e.nativeEvent.coordinate.longitude,
-            //     },
-            //     500,
-            //   )
-            // }
+            onPress={(e) =>
+              mapRef.current.animateToCoordinate(
+                {
+                  latitude: e.nativeEvent.coordinate.latitude,
+                  longitude: e.nativeEvent.coordinate.longitude,
+                },
+                600,
+              )
+            }
           >
             <Callout
               tooltip
@@ -203,7 +210,15 @@ const MapScreen = ({navigation}) => {
             }}
             title={value.type}
             description={value.description}
-            onPress={() => setRegion(region)}
+            onPress={(e) =>
+              mapRef.current.animateToCoordinate(
+                {
+                  latitude: e.nativeEvent.coordinate.latitude,
+                  longitude: e.nativeEvent.coordinate.longitude,
+                },
+                600,
+              )
+            }
           >
             <Callout
               tooltip
@@ -278,7 +293,7 @@ const MapScreen = ({navigation}) => {
         showsCompass={true}
         customMapStyle={mapStyle}
         rotateEnabled={false}
-
+        ref={mapRef}
         // onRegionChange={onRegionChange}
       >
         {renderTreesToMap()}
