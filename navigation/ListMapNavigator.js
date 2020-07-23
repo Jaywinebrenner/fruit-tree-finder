@@ -1,8 +1,8 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MapScreen from "../screens/MapScreen"
-import ListScreen from "../screens/ListScreen";
-import ListItemDetailScreen from "../screens/ListItemDetailScreen";
+// import ListScreen from "../unused/ListScreen";
+
 
 const ListMapTab = createBottomTabNavigator();
 
@@ -12,16 +12,6 @@ const ListMapNavigator = () => {
       <ListMapTab.Screen
         name="Map"
         component={MapScreen}
-        options={{ tabBarVisible: false }}
-      />
-      <ListMapTab.Screen
-        name="ListScreen"
-        component={ListScreen}
-        options={{ tabBarVisible: false }}
-      />
-      <ListMapTab.Screen
-        name="ListItemDetailScreen"
-        component={ListItemDetailScreen}
         options={{ tabBarVisible: false }}
       />
     </ListMapTab.Navigator>

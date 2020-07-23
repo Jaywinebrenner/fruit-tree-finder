@@ -158,8 +158,10 @@ const styles = StyleSheet.create({
   top: {
     paddingTop: 25,
     paddingBottom: 10,
+    flex: 0.28,
     flexDirection: "row",
     backgroundColor: "rgba(236, 250, 217, .2)",
+
   },
   gradientImage: {
     height: "100%",
@@ -260,9 +262,6 @@ const styles = StyleSheet.create({
     height: 90,
     alignSelf: "center",
     shadowColor: "black",
-    elevation: 5,
-    shadowRadius: 5,
-    shadowOpacity: 0.6,
   },
 });
 

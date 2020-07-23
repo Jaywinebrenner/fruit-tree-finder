@@ -13,7 +13,7 @@ const HEIGHT = Dimensions.get("window").width;
 
 
 export const CurrentLocationButton = (props) => {
-    const cb = props.cb ? props.cb : () => console.log("callback function not passed to CurrentLocationButton")
+    const centerButton = props.centerButton ? props.centerButton : () => console.log("callback function not passed to CurrentLocationButton")
     const bottom = props.bottom ? props.bottom : -150
 
     
@@ -25,7 +25,7 @@ export const CurrentLocationButton = (props) => {
             name="my-location" 
             color="black" 
             size={25}
-            onPress={()=> {cb()}}/>
+            onPress={()=> {centerButton()}}/>
       </View>
   );
 };

@@ -17,10 +17,7 @@ import firebase from "firebase";
 import { Ionicons, createIconSetFromFontello } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import maroonGradient from "../assets/maroonGradient.png";
-import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import FilterDropDownList from "../unused/FilterDropDownList";
 import { getDistance, convertDistance } from 'geolib';
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
@@ -98,10 +95,6 @@ const ListScreen = () => {
     }
   }
 
-  const toggleToMapView = () => {
-    navigation.navigate("Map");
-  };
-
   return (
     <React.Fragment>
       <ImageBackground source={maroonGradient} style={styles.gradientImage}>
@@ -128,12 +121,7 @@ const ListScreen = () => {
               return (
                 <View style={styles.cardContainer} key={index}>
                   <View style={{ flexDirection: "row" }}>
-                    {/* <MaterialCommunityIcons
-                      name="pine-tree-box"
-                      size={40}
-                      color="white"
-                      style={styles.boxTree}
-                    /> */}
+
                     <Image style={styles.boxTree} source={customTreeBox} />
                     <View style={styles.cardInfo}>
                       <Text style={styles.cardTitleText}>{value.type}</Text>

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import BottomDrawer from "rn-bottom-drawer";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -28,6 +27,8 @@ import { render } from "react-dom";
 // import { Collapse } from "react-collapse";
 
 const DrawerHomeSwipe = (props) => {
+
+  // const drawerRef = useRef(null);
 
   useEffect(() => {
     updateTreeList();
@@ -79,12 +80,8 @@ const DrawerHomeSwipe = (props) => {
   let firebaseUniqueKey = null
   const deleteTree = (treeIDInput) => {
     Object.entries(treeList).map((value) => {
-      console.log("Just FB ID?", value[0]);
-      console.log("tree ID?", value[1].treeID);
       if (value[1].treeID === treeIDInput) {
         firebaseUniqueKey = value[0];
-        console.log("THEY ARE THE SAMMMMMMMMMMME");
-        console.log("FIRE BASE ID?", firebaseUniqueKey);
         firebase.database().ref(`/tree/${firebaseUniqueKey}`).remove();
         }
       });
@@ -187,15 +184,30 @@ const DrawerHomeSwipe = (props) => {
         );
       });
 
-    //   treeArray && treeArray.map((value) => {
-    //     console.log("value USER ID?", value.userID);
-    //     console.log("Current User ID", currentUserID);
-    //   })
-    // console.log("Tree Array", treeArray);
+      const renderNoMyTrees =
+      treeArray &&
+      treeArray.map((value, index) => {
+        console.log("TREE ON MY TREES", treeArray);
+        if (value.userID !== currentUserID) {
+        return (
+          <TouchableOpacity>
+            <View style={styles.cardContainer}>
+              <View style={{ flexDirection: "row" }}>
+                <Image style={styles.boxTree} source={customTreeBox} />
+                <View style={styles.cardInfo}>
+                  <Text style={styles.cardTitleText}>You have not made any trees</Text>
+                </View>
+              </View>
+              </View>
+         </TouchableOpacity>
+        );
+        } 
+      }) 
 
     const renderMyTrees =
       treeArray &&
       treeArray.map((value, index) => {
+        console.log("TREE ON MY TREES", treeArray);
         if (value.userID === currentUserID) {
         return (
           <TouchableOpacity key={index}>
@@ -220,7 +232,7 @@ const DrawerHomeSwipe = (props) => {
 
               <View
                 style={{
-                  height: expanded === value.treeCoordinates ? 190 : 0,
+                  maxHeight: expanded === value.treeCoordinates ? 190 : 0,
                   overflow: "hidden",
                   paddingLeft: 10,
                   paddingRight: 10,
@@ -253,8 +265,10 @@ const DrawerHomeSwipe = (props) => {
             </View>
           </TouchableOpacity>
         );
-        }
-      });
+        } 
+      }) 
+      
+    
 
    const renderTreesToList = () => {
      if (filter === "All Trees") {
@@ -270,6 +284,9 @@ const DrawerHomeSwipe = (props) => {
     return (
       <React.Fragment>
         <ImageBackground source={maroonGradient} style={styles.gradientImage}>
+
+        {/* <Text style={{ fontSize: 40 }} onPress={() => {drawerRef.current.snapTo(0)}}>TEST</Text> */}
+
           <View style={styles.topStrip}>
             <View style={styles.dragView} />
           </View>
@@ -289,6 +306,7 @@ const DrawerHomeSwipe = (props) => {
 
   return (
     <BottomSheet
+      // ref={drawerRef}
       snapPoints={[drawerTopHeight, drawerHalfHeight, drawerBottomHeight]}
       renderContent={renderContent}
       initialSnap={2}

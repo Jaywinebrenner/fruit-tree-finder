@@ -1,28 +1,29 @@
 import React from "react";
-import { StyleSheet, Text, View, Alert, ImageBackground, TextInput, TouchableOpacity, Image } from "react-native";
-import { useState, useEffect } from "react";
-import { Marker } from "react-native-maps";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  TouchableOpacity,
+  Image,
+  TouchableHighlight,
+  Animated,
+} from "react-native";
+import { useState, useEffect, useRef } from "react";
+import { Marker, Callout, AnimatedRegion } from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import DestinationButton from "../components/DestinationButton";
-import Driver from "../components/Driver";
 import { CurrentLocationButton } from "../components/CurrentLocationButton";
 import { API_KEY } from "../geocoder";
 import Geocoder from "react-native-geocoding";
 import Modal from "react-native-modal";
 Geocoder.init(API_KEY);
-import ViewListButton from "../components/ViewListButton"
 import firebase, { database } from "firebase";
 import { Entypo } from '@expo/vector-icons';
-import apples from "../media/apples.jpg";
-import { Foundation } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
-import { FontAwesome } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
 import { mapStyle } from "../constants/mapStyle";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+// import { Callout } from "react-native-maps";
 import Search from "../components/Search";
 import DrawerHomeSwipe from "./DrawerHomeSwipe";
 import FilterDropDown from "../components/FilterDropDown";
@@ -31,9 +32,12 @@ import customTreeMyTree from "../media/customTreeMyTree.png";
 import customTreeVerified from "../media/customTreeVerified.png";
 
 
-const MapScreen = ({navigation}) => {
 
-  allTrees && console.log("ALL TREES MAP", allTrees);
+const MapScreen = ({navigation}) => {
+  
+const mapRef = useRef(null);
+
+  
 
   const [region, setRegion] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -58,6 +62,11 @@ const MapScreen = ({navigation}) => {
   }
 
   useEffect(() => {
+
+    if (mapRef) {
+      console.log(mapRef);
+    }
+
     _getUserLocactionAsync();
     setTracksViewChanges(true);
     async function fetchData() {
@@ -113,7 +122,7 @@ const MapScreen = ({navigation}) => {
         style={styles.addTreeButton}
         onPress={() =>
           navigation.navigate("AddTreeScreen", {
-            allTrees: allTrees,
+            allTrees,
           })
         }
       >
@@ -131,10 +140,16 @@ const MapScreen = ({navigation}) => {
 
   const AllTreesMapMarkers =
     allTrees &&
-    Object.values(allTrees).map((tree, index) => {
-      let latitude = tree.treeCoordinates[0];
-      let longitude = tree.treeCoordinates[1];
-      if (tree.userID !== currentUserID) {
+    Object.values(allTrees).map((value, index) => {
+      let latitude = value.treeCoordinates[0];
+      let longitude = value.treeCoordinates[1];
+      if (value.userID !== currentUserID) {
+        // let region = {
+        //   latitude: value.treeCoordinates[0],
+        //   longitude: value.treeCoordinates[1],
+        //   latitudeDelta: 0.0922,
+        //   longitudeDelta: 0.0421,
+        // };
         return (
           <Marker
             key={index}
@@ -143,9 +158,36 @@ const MapScreen = ({navigation}) => {
               longitude: longitude,
             }}
             tracksViewChanges={tracksViewChanges}
-            title={tree.type}
-            description={tree.description}
+            title={value.type}
+            description={value.description}
+            onPress={(e) =>
+              mapRef.current.animateToCoordinate(
+                {
+                  latitude: e.nativeEvent.coordinate.latitude,
+                  longitude: e.nativeEvent.coordinate.longitude,
+                },
+                300,
+              )
+            }
           >
+            <Callout
+              tooltip
+              style={styles.customView}
+              onPress={() => alert("touched")}
+            >
+              <TouchableHighlight underlayColor="lightblue">
+                <View {...value}>
+                  <View style={styles.calloutTop}>
+                    <Text style={styles.calloutText}>{value.type}</Text>
+          
+                  </View>
+
+                  <View style={styles.calloutBottom}>
+                    <Text>{value.description}</Text>
+                  </View>
+                </View>
+              </TouchableHighlight>
+            </Callout>
             <Image
               onLoad={() => stopTrackingViewChanges()}
               fadeDuration={0}
@@ -160,9 +202,15 @@ const MapScreen = ({navigation}) => {
   const MyTreesMapMarkers =
     allTrees &&
     Object.values(allTrees).map((value, index) => {
-      let latitude = value.treeCoordinates[0];
-      let longitude = value.treeCoordinates[1];
+     let latitude = value.treeCoordinates[0];
+     let longitude = value.treeCoordinates[1];
       if (value.userID === currentUserID) {
+        let region = {
+          latitude: value.treeCoordinates[0],
+          longitude: value.treeCoordinates[1],
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        };
         return (
           <Marker
             key={index}
@@ -172,7 +220,34 @@ const MapScreen = ({navigation}) => {
             }}
             title={value.type}
             description={value.description}
+            onPress={(e) =>
+              mapRef.current.animateToCoordinate(
+                {
+                  latitude: e.nativeEvent.coordinate.latitude,
+                  longitude: e.nativeEvent.coordinate.longitude,
+                },
+                300,
+              )
+            }
           >
+            <Callout
+              tooltip
+              style={styles.customView}
+              // onPress={() => alert("touched")}
+            >
+              <TouchableHighlight underlayColor="lightblue">
+                <View {...value}>
+                  <View style={styles.calloutTop}>
+                    <Text style={styles.calloutText}>{value.type}</Text>
+                  </View>
+
+                  <View style={styles.calloutBottom}>
+                    <Text>{value.description}</Text>
+                  </View>
+                </View>
+              </TouchableHighlight>
+            </Callout>
+
             <Image
               onLoad={() => stopTrackingViewChanges()}
               fadeDuration={0}
@@ -202,6 +277,22 @@ const MapScreen = ({navigation}) => {
       }
     }
 
+    const centerMap = () => {
+      const { 
+        latitude, longitude , latitudeDelta, longitudeDelta 
+    } = region
+        mapRef.current.animateToRegion(
+        {
+          latitude,
+          longitude,
+          latitudeDelta,
+          longitudeDelta,
+        },
+        300,
+      )
+    }
+
+    
   return (
     <View style={styles.container}>
       <Search
@@ -211,21 +302,25 @@ const MapScreen = ({navigation}) => {
       />
       <FilterDropDown filter={filter} setFilter={setFilter} />
       <CurrentLocationButton
-        cb={() => {
+        centerButton={() => {
           centerMap();
         }}
       />
       <MapView
+        showsUserLocation={true}
         provider={PROVIDER_GOOGLE}
         loadingEnabled
         title="Not sure what this does"
         description="Not sure what this does either"
         initialRegion={region}
+        region={region}
         style={styles.map}
         showUserLocation={true}
         showsCompass={true}
         customMapStyle={mapStyle}
         rotateEnabled={false}
+        ref={mapRef}
+        // onRegionChange={onRegionChange}
       >
         {renderTreesToMap()}
       </MapView>
@@ -277,19 +372,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "white",
     borderColor: "grey",
-    borderWidth: .5,
+    borderWidth: 0.5,
     borderRadius: 25,
     height: 35,
     marginLeft: "3%",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 3,  },
+    zIndex: 3,
+  },
   buttonText: {
     color: "black",
     fontSize: 15,
     textShadowColor: "white",
     textShadowRadius: 10,
-    margin: "2%"
+    margin: "2%",
   },
   toggle: {
     position: "absolute",
@@ -302,11 +398,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderBottomLeftRadius: 15,
-    borderTopLeftRadius: 15
+    borderTopLeftRadius: 15,
   },
   customTree: {
     width: 30,
     height: 40,
-  }
+  },
+  customView: {
+    width: 200,
+    height: 100,
+    backgroundColor: "#fdfcf8",
+    borderWidth: 3,
+    borderColor: "#692e2c",
+    borderRadius: 10,
+  },
+  calloutText: {
+    width: 200,
+    fontSize: 20,
+    color: "#fdfcf8",
+    borderRadius: 10,
+  },
+  calloutTop: {
+    backgroundColor: "#692e2c",
+  },
 });
 export default MapScreen
