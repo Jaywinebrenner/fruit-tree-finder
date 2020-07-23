@@ -134,14 +134,14 @@ const AddTreeScreen = (props) => {
               />
               <TextInput
                 multiline={true}
-                placeholder={"Enter type of tree"}
+                placeholder={"Enter type of tree      "}
                 style={styles.input}
                 value={type}
                 onChangeText={setType}
                 // returnKeyType={"next"}
                 placeholderTextColor="rgba(236, 250, 217, .3)"
                 maxLength={23}
-                // autoFocus={true}
+                autoFocus={true}
               />
             </View>
 
@@ -175,14 +175,15 @@ const AddTreeScreen = (props) => {
                 color="#e1eddf"
               />
               <TextInput
-                autoCorrect={false}
-                placeholder={"Address / Cross Street"}
+                multiline={true}
+                placeholder={"Address / Cross Street      "}
                 style={styles.input}
                 value={treeLocation}
                 onChangeText={setTreeLocation}
                 // returnKeyType={"next"}
                 placeholderTextColor="rgba(236, 250, 217, .3)"
                 maxLength={100}
+                autoCorrect={false}
                 // underlineColorAndroid={"#e1eddf"}
               />
             </View>
