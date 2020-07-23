@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import BottomDrawer from "rn-bottom-drawer";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -28,6 +27,8 @@ import { render } from "react-dom";
 // import { Collapse } from "react-collapse";
 
 const DrawerHomeSwipe = (props) => {
+
+  // const drawerRef = useRef(null);
 
   useEffect(() => {
     updateTreeList();
@@ -283,6 +284,9 @@ const DrawerHomeSwipe = (props) => {
     return (
       <React.Fragment>
         <ImageBackground source={maroonGradient} style={styles.gradientImage}>
+
+        {/* <Text style={{ fontSize: 40 }} onPress={() => {drawerRef.current.snapTo(0)}}>TEST</Text> */}
+
           <View style={styles.topStrip}>
             <View style={styles.dragView} />
           </View>
@@ -302,6 +306,7 @@ const DrawerHomeSwipe = (props) => {
 
   return (
     <BottomSheet
+      // ref={drawerRef}
       snapPoints={[drawerTopHeight, drawerHalfHeight, drawerBottomHeight]}
       renderContent={renderContent}
       initialSnap={2}

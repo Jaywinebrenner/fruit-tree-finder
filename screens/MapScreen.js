@@ -37,12 +37,7 @@ const MapScreen = ({navigation}) => {
   
 const mapRef = useRef(null);
 
-    
-const animateToSelectedTree = () => {
-  console.log("region", region);
-  setRegion(region);
-  mapRef.current.animateToRegion(region, 1000);
-}
+  
 
   const [region, setRegion] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -121,8 +116,6 @@ const animateToSelectedTree = () => {
     }
   };
 
-
-
   const renderAddATreeButton = () => {
     return (
       <TouchableOpacity
@@ -173,19 +166,20 @@ const animateToSelectedTree = () => {
                   latitude: e.nativeEvent.coordinate.latitude,
                   longitude: e.nativeEvent.coordinate.longitude,
                 },
-                600,
+                300,
               )
             }
           >
             <Callout
               tooltip
               style={styles.customView}
-              // onPress={() => alert("touched")}
+              onPress={() => alert("touched")}
             >
               <TouchableHighlight underlayColor="lightblue">
                 <View {...value}>
                   <View style={styles.calloutTop}>
                     <Text style={styles.calloutText}>{value.type}</Text>
+          
                   </View>
 
                   <View style={styles.calloutBottom}>
@@ -232,7 +226,7 @@ const animateToSelectedTree = () => {
                   latitude: e.nativeEvent.coordinate.latitude,
                   longitude: e.nativeEvent.coordinate.longitude,
                 },
-                600,
+                300,
               )
             }
           >
@@ -241,9 +235,7 @@ const animateToSelectedTree = () => {
               style={styles.customView}
               // onPress={() => alert("touched")}
             >
-              <TouchableHighlight
-                underlayColor="lightblue"
-              >
+              <TouchableHighlight underlayColor="lightblue">
                 <View {...value}>
                   <View style={styles.calloutTop}>
                     <Text style={styles.calloutText}>{value.type}</Text>
@@ -285,6 +277,21 @@ const animateToSelectedTree = () => {
       }
     }
 
+    const centerMap = () => {
+      const { 
+        latitude, longitude , latitudeDelta, longitudeDelta 
+    } = region
+        mapRef.current.animateToRegion(
+        {
+          latitude,
+          longitude,
+          latitudeDelta,
+          longitudeDelta,
+        },
+        300,
+      )
+    }
+
     
   return (
     <View style={styles.container}>
@@ -295,7 +302,7 @@ const animateToSelectedTree = () => {
       />
       <FilterDropDown filter={filter} setFilter={setFilter} />
       <CurrentLocationButton
-        cb={() => {
+        centerButton={() => {
           centerMap();
         }}
       />
