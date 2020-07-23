@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   cardTitleText: {
-    fontSize: 22,
+    fontSize: 21,
     color: "white",
   },
   cardDescriptionText: {
@@ -422,7 +422,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   treeLocationText: {
-    fontSize: 20,
+    fontSize: 18,
     color: "white",
   },
   deleteButtonWrapper: {

@@ -23,6 +23,8 @@ Customize the window that opens on the map when hovering over a tree // OPEN UP 
 
 Draggable marker functionality for my trees?
 
+Switching from AllTrees to MyTrees and back to AllTrees won't render All the Trees...
+
 //STRETCH
 Upload picture functionality to be inputted on the AddATreeScreen and to be displayed on the ListItemDetailScreen / MyTreeDetailScreen. If no custom pic is provided, write function to display default pic based on the users "Type" input. If pear is in type user input, default pic to pear tree etc. 
 

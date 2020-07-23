@@ -170,7 +170,10 @@ const markerRef = useRef();
             <Callout
               tooltip
               style={styles.customView}
-              onPress={() => alert("TOUCH")}
+              onPress={(e) =>
+                mapRef.current.console.log()
+              }
+              // onPress={() => alert("TOUCH")}
             >
               <TouchableHighlight underlayColor="lightblue">
                 <View {...value}>
@@ -239,11 +242,13 @@ const markerRef = useRef();
               >
                 <View {...value}>
                   <View style={styles.calloutTop}>
-                    <Text style={styles.calloutText}>{value.type}</Text>
+                    <Text numberOfLines={1} style={styles.calloutText}>
+                      {value.type}
+                    </Text>
                   </View>
 
                   <View style={styles.calloutBottom}>
-                    <Text>{value.description}</Text>
+                    <Text numberOfLines={5}>{value.description}</Text>
                   </View>
                 </View>
               </TouchableHighlight>

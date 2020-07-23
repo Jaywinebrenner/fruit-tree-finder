@@ -140,7 +140,7 @@ const AddTreeScreen = (props) => {
                 onChangeText={setType}
                 // returnKeyType={"next"}
                 placeholderTextColor="rgba(236, 250, 217, .3)"
-                maxLength={70}
+                maxLength={23}
                 // autoFocus={true}
               />
             </View>
