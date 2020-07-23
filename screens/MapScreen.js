@@ -17,11 +17,13 @@ import DestinationButton from "../components/DestinationButton";
 import { CurrentLocationButton } from "../components/CurrentLocationButton";
 import { API_KEY } from "../geocoder";
 import Geocoder from "react-native-geocoding";
+import Modal from "react-native-modal";
 Geocoder.init(API_KEY);
 import firebase, { database } from "firebase";
 import { Entypo } from '@expo/vector-icons';
 import { mapStyle } from "../constants/mapStyle";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+// import { Callout } from "react-native-maps";
 import Search from "../components/Search";
 import DrawerHomeSwipe from "./DrawerHomeSwipe";
 import FilterDropDown from "../components/FilterDropDown";
@@ -35,6 +37,13 @@ const MapScreen = ({navigation}) => {
   
 const mapRef = useRef(null);
 
+    
+const animateToSelectedTree = () => {
+  console.log("region", region);
+  setRegion(region);
+  mapRef.current.animateToRegion(region, 1000);
+}
+
   const [region, setRegion] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [allTrees, setAllTrees] = useState([]);
@@ -44,6 +53,7 @@ const mapRef = useRef(null);
   // const [searchedTrees, setSearchedTrees] = useState([])
    const [searchInput, setSearchInput] = useState("");
    const [searchInputArray, setSearchInputArray] = useState(null)
+
 
   // let searchedTrees = allTrees.filter((tree) => {
   //   return tree.type.toLowerCase().indexOf(searchInput.toLowerCase()) !== -1;
@@ -141,6 +151,12 @@ const mapRef = useRef(null);
       let latitude = value.treeCoordinates[0];
       let longitude = value.treeCoordinates[1];
       if (value.userID !== currentUserID) {
+        // let region = {
+        //   latitude: value.treeCoordinates[0],
+        //   longitude: value.treeCoordinates[1],
+        //   latitudeDelta: 0.0922,
+        //   longitudeDelta: 0.0421,
+        // };
         return (
           <Marker
             key={index}
@@ -223,9 +239,11 @@ const mapRef = useRef(null);
             <Callout
               tooltip
               style={styles.customView}
-              onPress={() => alert("touched")}
+              // onPress={() => alert("touched")}
             >
-              <TouchableHighlight underlayColor="lightblue">
+              <TouchableHighlight
+                underlayColor="lightblue"
+              >
                 <View {...value}>
                   <View style={styles.calloutTop}>
                     <Text style={styles.calloutText}>{value.type}</Text>
@@ -282,6 +300,7 @@ const mapRef = useRef(null);
         }}
       />
       <MapView
+        showsUserLocation={true}
         provider={PROVIDER_GOOGLE}
         loadingEnabled
         title="Not sure what this does"

@@ -3,7 +3,7 @@ DEFAULT DARK MAROON: #531613 / rgb(125, 19, 19)
 DEFAULT CREAM COLOR: #fdfcf8 / rgb(253, 252, 248)
 HIGHWAY MAROON: #692e2c / rgb(105,46,44)
 
-Error handle - no two trees at same location... PROBLEM
+Error handle - no two trees at same location... PROBLEM- GEOCODER ASSIGNS DIFFERENT COORDS FOR SAME LOCATION.  HUH?
 
 Investigate why user location is no longer visible.
 
