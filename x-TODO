@@ -3,11 +3,9 @@ DEFAULT DARK MAROON: #531613 / rgb(125, 19, 19)
 DEFAULT CREAM COLOR: #fdfcf8 / rgb(253, 252, 248)
 HIGHWAY MAROON: #692e2c / rgb(105,46,44)
 
+Deal with Admin. Admin will be able to add a verified tree. 
+
 Error handle - no two trees at same location... PROBLEM- GEOCODER ASSIGNS DIFFERENT COORDS FOR SAME LOCATION.  HUH?
-
-Investigate why user location is no longer visible.
-
-Figure out how get the Center Map Button to work on MapScreen, exorcise ghost
 
 Search by tree type in top Search Field. Make sure map as well as Drawer List is updated upon searching
 
@@ -25,6 +23,8 @@ Customize the window that opens on the map when hovering over a tree // OPEN UP 
 
 Draggable marker functionality for my trees?
 
+Switching from AllTrees to MyTrees and back to AllTrees won't render All the Trees...
+
 //STRETCH
 Upload picture functionality to be inputted on the AddATreeScreen and to be displayed on the ListItemDetailScreen / MyTreeDetailScreen. If no custom pic is provided, write function to display default pic based on the users "Type" input. If pear is in type user input, default pic to pear tree etc. 
 
@@ -33,6 +33,8 @@ Write comprehensive list of possible fruit trees.
 Think about adding profiles for users? 
 
 Getting that "User is already signed in if you accidently hit login button twice". Way to eliminate
+
+Fix wonky form on iOS for AddATree screen. 
 
 
 Likely rebrand the whole thing. 
