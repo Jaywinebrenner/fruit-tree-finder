@@ -36,7 +36,7 @@ const DrawerHomeSwipe = (props) => {
   }, []);
 
   const windowHeight = Dimensions.get('window').height;
-  const drawerTopHeight = (windowHeight * .59);
+  const drawerTopHeight = (windowHeight * .48);
   const drawerHalfHeight = (windowHeight * .18);
   let drawerBottomHeight = (windowHeight * .08);
 
@@ -125,6 +125,16 @@ const DrawerHomeSwipe = (props) => {
     }
   }
 
+  // const renderDetailsOrCloseText = () => {
+  //   if (treeCoordinates === expanded) {
+  //     return <Text style={styles.cardCloseButtonText}>Close</Text>;
+  //   } else {
+  //     return <Text style={styles.cardDetailsButtonText}>Details</Text>
+  //   }
+  // }
+
+
+
   const renderAllTrees =
     updateTreeList() &&
       treeArray.map((value, index) => {
@@ -143,7 +153,11 @@ const DrawerHomeSwipe = (props) => {
                   style={styles.cardDetailsButtonWrapper}
                   onPress={() => dropDown(value.treeID)}
                 >
-                  <Text style={styles.cardDetailsButtonText}>Details</Text>
+                  {expanded === value.treeID ? (
+                    <Text style={styles.cardCloseButtonText}>Close</Text>
+                  ) : (
+                    <Text style={styles.cardDetailsButtonText}>Details</Text>
+                  )}
                 </TouchableOpacity>
               </View>
 
@@ -346,6 +360,12 @@ const styles = StyleSheet.create({
   },
   cardDetailsButtonText: {
     color: "white",
+    width: 45,
+  },
+  cardCloseButtonText: {
+    color: "white",
+    width: 45,
+    paddingLeft: 3
   },
   cardDistanceText: {
     fontSize: 15,
@@ -399,7 +419,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   locationWrapper: {
-    marginTop: 10
+    marginTop: 10,
   },
   treeLocationText: {
     fontSize: 20,
@@ -408,7 +428,7 @@ const styles = StyleSheet.create({
   deleteButtonWrapper: {
     zIndex: 10,
     marginLeft: -8,
-    marginTop: 15
+    marginTop: 15,
   },
 });
 

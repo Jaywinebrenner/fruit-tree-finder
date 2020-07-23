@@ -87,6 +87,7 @@ const AddTreeScreen = (props) => {
   async function convertLocation(location) {
     let treeCoordinates = await Geocoder.from(location)
       .then((json) => {
+        console.log("Geocoder JSON object", json);
         const { lat, lng } = json.results[0].geometry.location;
         let treeCoords = [lat, lng];
         return treeCoords;

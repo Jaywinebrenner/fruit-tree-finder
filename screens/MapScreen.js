@@ -31,13 +31,14 @@ import customTree from "../media/customTree.png";
 import customTreeMyTree from "../media/customTreeMyTree.png";
 import customTreeVerified from "../media/customTreeVerified.png";
 
-
-
 const MapScreen = ({navigation}) => {
   
 const mapRef = useRef(null);
-
-  
+const markerRef = useRef();
+// if (mapRef && mapRef !== markerRef.current) {
+//   markerRef.current = data.posts.map(React.createRef);
+//   dataRef.current = data;
+// }
 
   const [region, setRegion] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -62,10 +63,6 @@ const mapRef = useRef(null);
   }
 
   useEffect(() => {
-
-    if (mapRef) {
-      console.log(mapRef);
-    }
 
     _getUserLocactionAsync();
     setTracksViewChanges(true);
@@ -173,17 +170,18 @@ const mapRef = useRef(null);
             <Callout
               tooltip
               style={styles.customView}
-              onPress={() => alert("touched")}
+              onPress={() => alert("TOUCH")}
             >
               <TouchableHighlight underlayColor="lightblue">
                 <View {...value}>
                   <View style={styles.calloutTop}>
-                    <Text style={styles.calloutText}>{value.type}</Text>
-          
+                    <Text numberOfLines={1} style={styles.calloutText}>
+                      {value.type}
+                    </Text>
                   </View>
 
                   <View style={styles.calloutBottom}>
-                    <Text>{value.description}</Text>
+                    <Text numberOfLines={5}>{value.description}</Text>
                   </View>
                 </View>
               </TouchableHighlight>
@@ -235,7 +233,10 @@ const mapRef = useRef(null);
               style={styles.customView}
               // onPress={() => alert("touched")}
             >
-              <TouchableHighlight underlayColor="lightblue">
+              <TouchableHighlight
+                underlayColor="lightblue"
+                // onPress={() => alert("touched")}
+              >
                 <View {...value}>
                   <View style={styles.calloutTop}>
                     <Text style={styles.calloutText}>{value.type}</Text>
@@ -406,7 +407,7 @@ const styles = StyleSheet.create({
   },
   customView: {
     width: 200,
-    height: 100,
+    maxHeight: 150,
     backgroundColor: "#fdfcf8",
     borderWidth: 3,
     borderColor: "#692e2c",
