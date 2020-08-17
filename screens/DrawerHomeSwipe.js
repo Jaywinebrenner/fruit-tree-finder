@@ -262,22 +262,20 @@ const DrawerHomeSwipe = (props) => {
   // const renderContent = () => {
 
     return (
-      <React.Fragment>
-        <ImageBackground source={maroonGradient} style={styles.gradientImage}>
-          <View style={styles.topStrip}>
-            <View style={styles.dragView} />
-          </View>
-          <Entypo
-            name="tree"
-            size={500}
-            color="rgba(163, 119, 125, 0.5)"
-            style={styles.bigTree}
-          />
-          <ScrollView>
-            {renderTreesToList()}
-          </ScrollView>
-        </ImageBackground>
-      </React.Fragment>
+      <ImageBackground source={maroonGradient} style={styles.gradientImage}>
+        <View style={styles.topStrip}>
+          <View style={styles.dragView} />
+        </View>
+        <Entypo
+          name="tree"
+          size={500}
+          color="rgba(163, 119, 125, 0.5)"
+          style={styles.bigTree}
+        />
+        <ScrollView>
+          {renderTreesToList()}
+        </ScrollView>
+      </ImageBackground>
     );
   // };
 
@@ -330,7 +328,7 @@ const styles = StyleSheet.create({
     color: "rgba(255, 255, 255, .5)",
   },
   gradientImage: {
-    height: "50%",
+    height: 450,
     width: "100%",
   },
   bigTree: {
