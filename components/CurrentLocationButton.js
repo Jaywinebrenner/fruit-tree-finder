@@ -16,14 +16,14 @@ export const CurrentLocationButton = (props) => {
     const cb = props.cb ? props.cb : () => console.log("callback function not passed to CurrentLocationButton")
     const bottom = props.bottom ? props.bottom : -150
 
-    
+
 
   return (
 
       <View style={[styles.container, {top: HEIGHT - bottom}]}>
-        <MaterialIcons 
-            name="my-location" 
-            color="black" 
+        <MaterialIcons
+            name="my-location"
+            color="black"
             size={25}
             onPress={()=> {cb()}}/>
       </View>
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
     backgroundColor: "white",
+    left: 20,
     left: WIDTH-60,
     borderRadius: 50,
     shadowColor: "black",

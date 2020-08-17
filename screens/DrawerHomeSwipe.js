@@ -262,6 +262,7 @@ const DrawerHomeSwipe = (props) => {
   // const renderContent = () => {
 
     return (
+      <ScrollView style={styles.wholeDrawer} disableScrollViewPanResponder={true}>
       <ImageBackground source={maroonGradient} style={styles.gradientImage}>
         <View style={styles.topStrip}>
           <View style={styles.dragView} />
@@ -276,6 +277,7 @@ const DrawerHomeSwipe = (props) => {
           {renderTreesToList()}
         </ScrollView>
       </ImageBackground>
+      </ScrollView>
     );
   // };
 
@@ -328,8 +330,14 @@ const styles = StyleSheet.create({
     color: "rgba(255, 255, 255, .5)",
   },
   gradientImage: {
-    height: 450,
+    height: 400,
     width: "100%",
+  },
+  wholeDrawer: {
+    height: 400,
+    position: "absolute",
+    // backgroundColor: "blue",
+    bottom: 0,
   },
   bigTree: {
     position: "absolute",

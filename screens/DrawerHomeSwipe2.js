@@ -268,6 +268,7 @@ const DrawerHomeSwipe = (props) => {
             <View style={styles.dragView} />
           </View>
           <ScrollView>
+            <TouchableOpacity>
             <Entypo
               name="tree"
               size={500}
@@ -275,6 +276,7 @@ const DrawerHomeSwipe = (props) => {
               style={styles.bigTree}
             />
             {renderTreesToList()}
+            </TouchableOpacity>
           </ScrollView>
         </ImageBackground>
       </React.Fragment>
@@ -286,6 +288,7 @@ const DrawerHomeSwipe = (props) => {
       snapPoints={[drawerTopHeight, drawerHalfHeight, drawerBottomHeight]}
       renderContent={renderContent}
       initialSnap={2}
+      style={{position: "absolute"}}
     />
   );
 }
@@ -338,6 +341,12 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
+  // wholeDrawer: {
+  //   // height: "100%",
+  //   position: "absolute",
+  //   // backgroundColor: "blue",
+  //   // bottom: 0
+  // },
   bigTree: {
     position: "absolute",
     bottom: -50,

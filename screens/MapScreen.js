@@ -193,11 +193,11 @@ const MapScreen = ({navigation}) => {
     <View style={styles.container}>
       <Search navigation={navigation} />
       <FilterDropDown filter={filter} setFilter={setFilter} />
-      <CurrentLocationButton
+      {/*}<CurrentLocationButton
         cb={() => {
           centerMap();
         }}
-      />
+      /> */}
       <MapView
         provider={PROVIDER_GOOGLE}
         loadingEnabled
