@@ -259,7 +259,7 @@ const DrawerHomeSwipe = (props) => {
      }
    };
 
-  // const renderContent = () => {
+  const renderContent = () => {
 
     return (
       <React.Fragment>
@@ -279,20 +279,25 @@ const DrawerHomeSwipe = (props) => {
         </ImageBackground>
       </React.Fragment>
     );
-  // };
+  };
 
-  // return (
-  //   <BottomSheet
-  //     snapPoints={[drawerTopHeight, drawerHalfHeight, drawerBottomHeight]}
-  //     renderContent={renderContent}
-  //     initialSnap={2}
-  //   />
-  // );
+  return (
+    <BottomSheet
+      snapPoints={[drawerTopHeight, drawerHalfHeight, drawerBottomHeight]}
+      renderContent={renderContent}
+      initialSnap={2}
+    />
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  top: {
+    paddingTop: 25,
+    height: 80,
+    backgroundColor: "rgba(236, 250, 217, .2)",
   },
   cardContainer: {
     justifyContent: "center",
@@ -330,7 +335,7 @@ const styles = StyleSheet.create({
     color: "rgba(255, 255, 255, .5)",
   },
   gradientImage: {
-    height: "50%",
+    height: "100%",
     width: "100%",
   },
   bigTree: {
