@@ -138,7 +138,7 @@ const DrawerHomeSwipe = (props) => {
                 </View>
                 <TouchableOpacity
                   style={styles.cardDetailsButtonWrapper}
-                  onPress={() => alert("pressed")}
+                  onPress={() => dropDown(value.treeID)}
                 >
                   <Text style={styles.cardDetailsButtonText}>Details</Text>
                 </TouchableOpacity>
@@ -267,13 +267,13 @@ const DrawerHomeSwipe = (props) => {
           <View style={styles.topStrip}>
             <View style={styles.dragView} />
           </View>
+          <Entypo
+            name="tree"
+            size={500}
+            color="rgba(163, 119, 125, 0.5)"
+            style={styles.bigTree}
+          />
           <ScrollView>
-            <Entypo
-              name="tree"
-              size={500}
-              color="rgba(163, 119, 125, 0.5)"
-              style={styles.bigTree}
-            />
             {renderTreesToList()}
           </ScrollView>
         </ImageBackground>
@@ -335,8 +335,8 @@ const styles = StyleSheet.create({
   },
   bigTree: {
     position: "absolute",
-    bottom: -50,
-    top: 300,
+    bottom: -20,
+    top: 100,
     right: -60,
   },
   boxTree: {
